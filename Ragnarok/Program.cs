@@ -21,8 +21,9 @@ namespace Ragnarok
 
             Dictionary<Item_Name, int> item_menu = new Dictionary<Item_Name, int>()
             {
-                { new Item_Name {item_name = "Potion" } , 3  }
-
+                { new Item_Name {item_name = "Potion" } , 4  },
+                { new Item_Name {item_name = "Hi-Potion" } , 1 },
+                { new Item_Name {item_name = "Ether"} , 2 }
             };
         }
 
