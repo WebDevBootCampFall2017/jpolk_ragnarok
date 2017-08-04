@@ -1,0 +1,12 @@
+c:\users\james e polk\documents\visual studio 2017\Projects\Ragnarok\Ragnarok\bin\Debug\Ragnarok.exe.config
+c:\users\james e polk\documents\visual studio 2017\Projects\Ragnarok\Ragnarok\bin\Debug\Ragnarok.exe
+c:\users\james e polk\documents\visual studio 2017\Projects\Ragnarok\Ragnarok\bin\Debug\Ragnarok.pdb
+c:\users\james e polk\documents\visual studio 2017\Projects\Ragnarok\Ragnarok\obj\Debug\Ragnarok.csprojResolveAssemblyReference.cache
+c:\users\james e polk\documents\visual studio 2017\Projects\Ragnarok\Ragnarok\obj\Debug\Ragnarok.exe
+c:\users\james e polk\documents\visual studio 2017\Projects\Ragnarok\Ragnarok\obj\Debug\Ragnarok.pdb
+F:\Coding\Ragnarok\Ragnarok\bin\Debug\Ragnarok.exe.config
+F:\Coding\Ragnarok\Ragnarok\bin\Debug\Ragnarok.exe
+F:\Coding\Ragnarok\Ragnarok\bin\Debug\Ragnarok.pdb
+F:\Coding\Ragnarok\Ragnarok\obj\Debug\Ragnarok.csprojResolveAssemblyReference.cache
+F:\Coding\Ragnarok\Ragnarok\obj\Debug\Ragnarok.exe
+F:\Coding\Ragnarok\Ragnarok\obj\Debug\Ragnarok.pdb
