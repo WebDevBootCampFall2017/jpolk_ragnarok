@@ -15,12 +15,15 @@ namespace Ragnarok
         class Item_Name
         {
             public string item_name { get; set; }
-            public int item_amount { get; set; }
         }
         class Item_Menu
         {
-            Dictionary<string , int> item_menu = new Dictionary<string , int>()
-            { }
+
+            Dictionary<Item_Name, int> item_menu = new Dictionary<Item_Name, int>()
+            {
+                { new Item_Name {item_name = "Potion" } , 3  }
+
+            };
         }
 
         static void Main(string[] args)
