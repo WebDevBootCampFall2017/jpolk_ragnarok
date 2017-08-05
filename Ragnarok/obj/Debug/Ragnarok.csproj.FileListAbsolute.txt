@@ -10,3 +10,9 @@ F:\Coding\Ragnarok\Ragnarok\bin\Debug\Ragnarok.pdb
 F:\Coding\Ragnarok\Ragnarok\obj\Debug\Ragnarok.csprojResolveAssemblyReference.cache
 F:\Coding\Ragnarok\Ragnarok\obj\Debug\Ragnarok.exe
 F:\Coding\Ragnarok\Ragnarok\obj\Debug\Ragnarok.pdb
+C:\Users\LabUser\Ragnarok\Ragnarok\bin\Debug\Ragnarok.exe.config
+C:\Users\LabUser\Ragnarok\Ragnarok\bin\Debug\Ragnarok.exe
+C:\Users\LabUser\Ragnarok\Ragnarok\bin\Debug\Ragnarok.pdb
+C:\Users\LabUser\Ragnarok\Ragnarok\obj\Debug\Ragnarok.csprojResolveAssemblyReference.cache
+C:\Users\LabUser\Ragnarok\Ragnarok\obj\Debug\Ragnarok.exe
+C:\Users\LabUser\Ragnarok\Ragnarok\obj\Debug\Ragnarok.pdb
