@@ -129,19 +129,19 @@ namespace Ragnarok
 			Player Wizard = new Player();
 			Player Monk = new Player();
 
-			Berserker.player_hp = 6500;//Berserker essentials
+			Berserker.player_hp = 8500;//Berserker essentials
 			Berserker.skill_points = 3;
 			Berserker.base_att_dmg = 3420;
 			
-			Wizard.player_hp = 5050;//Wizard essentials
+			Wizard.player_hp = 7350;//Wizard essentials
 			Wizard.skill_points = 300;
 			Wizard.base_att_dmg = 2101;
 
-			Monk.player_hp = 7700;//Monk essentials
+			Monk.player_hp = 9700;//Monk essentials
 			Monk.skill_points = 10;
 			Monk.base_att_dmg = 3778;
 
-			int nidhogg_hp = 40000;//Nidhogg essentials
+			int nidhogg_hp = 35000;//Nidhogg essentials
 			int nidhogg_base_dmg = 3701;
 
 			int potion_amt = 5;//item variables
@@ -219,7 +219,7 @@ namespace Ragnarok
 													case "2"://Bloodlust
 														if (Berserker.skill_points >= 2)
 														{
-															int bl_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .44) / 2.2 );
+															int bl_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .56) / 2 );
 															nidhogg_hp -= bl_dmg;
 															Berserker.player_hp += bl_dmg;
 															Berserker.skill_points -= 2;
@@ -547,9 +547,35 @@ namespace Ragnarok
 						default: break;
 					}
 				}
+
+				string defeat =
+				"\n	▓█████▄ ▓█████ ▄▄▄     ▄▄▄█████▓ ██░ ██  \n" +
+				"	▒██▀ ██▌▓█   ▀▒████▄   ▓  ██▒ ▓▒▓██░ ██▒ \n" +
+				"	░██   █▌▒███  ▒██  ▀█▄ ▒ ▓██░ ▒░▒██▀▀██░ \n" +
+				"	░▓█▄   ▌▒▓█  ▄░██▄▄▄▄██░ ▓██▓ ░ ░▓█ ░██  \n" +
+				"	░▒████▓ ░▒████▒▓█   ▓██▒ ▒██▒ ░ ░▓█▒░██▓ \n" +
+				"	▒▒▓  ▒ ░░ ▒░ ░▒▒    ▓▒█░ ▒ ░░    ▒ ░░▒░▒ \n" +
+				"	░ ▒  ▒  ░ ░  ░ ▒    ▒▒ ░   ░     ▒ ░▒░ ░ \n" +
+				"	░ ░  ░    ░    ░    ▒    ░       ░  ░░ ░ \n" +
+				"   ░    ░  ░      ░    ░            ░  ░	 \n" +
+				"	░										 \n";
+
+
+
+				string victory =
+
+				"\n	██╗   ██╗██╗ ██████╗████████╗ ██████╗ ██████╗ ██╗   ██╗\n" +
+				"	██║   ██║██║██╔════╝╚══██╔══╝██╔═══██╗██╔══██╗╚██╗ ██╔╝\n" +
+				"	██║   ██║██║██║        ██║   ██║   ██║██████╔╝ ╚████╔╝ \n" +
+				"	╚██╗ ██╔╝██║██║        ██║   ██║   ██║██╔══██╗  ╚██╔╝  \n" +
+				"	 ╚████╔╝ ██║╚██████╗   ██║   ╚██████╔╝██║  ██║   ██║   \n" +
+				"	  ╚═══╝  ╚═╝ ╚═════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ";
+                                                       
+
 				if (Berserker.player_hp <= 0 || Wizard.player_hp <= 0 || Monk.player_hp <= 0)//Defeat condition
 				{
 					Console.ForegroundColor = ConsoleColor.DarkRed;
+					Console.Write(defeat);
 					Console.WriteLine("\n\nTHE FUTURE OF HUMANITY IS LOST" + "\nThanks for playing though...");
 					Console.ForegroundColor = ConsoleColor.Gray;
 					break; //the last line of code becomes an infinite loop without this break
@@ -557,7 +583,8 @@ namespace Ragnarok
 				else if (nidhogg_hp <= 0)//Victory Condition
 				{
 					Console.ForegroundColor = ConsoleColor.DarkYellow;
-					Console.WriteLine("\n\nYOU WERE VICTORIOUS" + "\nHuman now has a future because of you!" + "\nTHANKS FOR PLAYING!!!!");
+					Console.Write(victory);
+					Console.WriteLine("\n\nYOU WERE VICTORIOUS" + "\nHumanity now has a future because of you!" + "\nTHANKS FOR PLAYING!!!!");
 					break;
 				}
 			}
