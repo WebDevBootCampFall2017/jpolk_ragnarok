@@ -22,3 +22,9 @@ F:\Coding\Projects\Ragnarok\Ragnarok\bin\Debug\Ragnarok.pdb
 F:\Coding\Projects\Ragnarok\Ragnarok\obj\Debug\Ragnarok.csprojResolveAssemblyReference.cache
 F:\Coding\Projects\Ragnarok\Ragnarok\obj\Debug\Ragnarok.exe
 F:\Coding\Projects\Ragnarok\Ragnarok\obj\Debug\Ragnarok.pdb
+C:\Users\James E Polk\Documents\Visual Studio 2017\Projects\Ragnarok\jpolk_ragnarok\Ragnarok\bin\Debug\Ragnarok.exe.config
+C:\Users\James E Polk\Documents\Visual Studio 2017\Projects\Ragnarok\jpolk_ragnarok\Ragnarok\bin\Debug\Ragnarok.exe
+C:\Users\James E Polk\Documents\Visual Studio 2017\Projects\Ragnarok\jpolk_ragnarok\Ragnarok\bin\Debug\Ragnarok.pdb
+C:\Users\James E Polk\Documents\Visual Studio 2017\Projects\Ragnarok\jpolk_ragnarok\Ragnarok\obj\Debug\Ragnarok.csprojResolveAssemblyReference.cache
+C:\Users\James E Polk\Documents\Visual Studio 2017\Projects\Ragnarok\jpolk_ragnarok\Ragnarok\obj\Debug\Ragnarok.exe
+C:\Users\James E Polk\Documents\Visual Studio 2017\Projects\Ragnarok\jpolk_ragnarok\Ragnarok\obj\Debug\Ragnarok.pdb

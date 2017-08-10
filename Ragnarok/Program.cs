@@ -30,7 +30,7 @@ namespace Ragnarok
 
 			Console.WriteLine("\n\nThe promised end is upon you\nSummon the courage to fight for your possibility of a future"); //Tagline
 
-			System.Threading.Thread.Sleep(2000);//provides a time interval before running the next line of code
+			System.Threading.Thread.Sleep(1500);//provides a time interval before running the next line of code
 			Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("\nDo you need instuctions? Type 1 (yes) or 0 (no), then press enter:"); //instruction question
 			Console.ForegroundColor = ConsoleColor.Gray;
@@ -46,33 +46,33 @@ namespace Ragnarok
                                     "Engage is a desperate turn based battle to rid the world of\n" +
                                     "NIDHOGG: The source of decay and blight upon this land\n" +
 									"Nidhogg is the dragon that threatens humanity as the prophecy demands\n");
-                    System.Threading.Thread.Sleep(3000); 
+                    System.Threading.Thread.Sleep(4000); 
                     Console.Write("------------------------\n" +
                                     "BERSERKER's main weapon is the sword\n" +
                                     "as Berserker uses the ATTACK command, it will build Rage and give access to\n" +
                                     "more skills with the RAGE command\n" +
-									"SHOULDER CHARGE: attack with higher minimum damage base than regular attack\n" +
-									"BLOODLUST: gains HP same as damage done to target\n" +
+									"SHOULDER CHARGE: attack with higher minimum damage base and slightly higher max than standard attack\n" +
+									"BLOODLUST: gains HP same as damage done to target, has a low possible minimum damage\n" +
 									"CHAOS BURST: high attack damage\n" +
                                     "------------------------\n");
-                    System.Threading.Thread.Sleep(3000);
+                    System.Threading.Thread.Sleep(4000);
                     Console.Write("WIZARD's main weapon is a Magic Staff\n" +
                                     "while the Wizard does not do much damage with the ATTACK command\n" +
                                     "Wizard does have access to damage dealing spells with the MAGIC command at the\n" +
                                     "cost of MP\n" +
                                     "------------------------\n");
-                    System.Threading.Thread.Sleep(3000);
+                    System.Threading.Thread.Sleep(4000);
                     Console.Write("MONK's main weapon are martial arts\n" +
                                     "Monk has a special command named HARNESS\n" +
                                     "by using harness you can build focus that will give you access to more skills\n" +
                                     "with the ARTS command\n" +
                                     "------------------------\n");
-					System.Threading.Thread.Sleep(3000);
+					System.Threading.Thread.Sleep(4000);
 					Console.Write("Every character has access to 5 Potions and 1 Hi-Potion\n" +
 									"Potions give 5,000 HP, Hi-Potion gives 10,000\n" +
 									"Wizard is given 2 Ethers to gain 300 MP on use\n" +
 									"------------------------\n\n");
-					System.Threading.Thread.Sleep(4000);
+					System.Threading.Thread.Sleep(5000);
 					Console.ForegroundColor = ConsoleColor.White;
 					Console.Write("STEEL YOUR NERVE and CHOOSE YOUR PATH\n");
 					Console.ForegroundColor = ConsoleColor.Yellow;
@@ -87,7 +87,7 @@ namespace Ragnarok
 					Console.ForegroundColor = ConsoleColor.White;
 					Console.Write("\nSTEEL YOUR NERVE and CHOSE YOUR PATH\n");
 					Console.ForegroundColor = ConsoleColor.Yellow;
-					Console.WriteLine("Please press enter:");
+					Console.Write("Please press enter:");
                     instruct_loop = false;
 					Console.ForegroundColor = ConsoleColor.Gray;
 				}
@@ -102,7 +102,7 @@ namespace Ragnarok
             }
             string player_choice = Console.ReadLine(); //Need this variable declared in the main body for use with battle loop
             string path;
-			System.Threading.Thread.Sleep(1000);
+			System.Threading.Thread.Sleep(700);
             bool player_select_loop = true;
             while (player_select_loop)
             {
@@ -113,7 +113,7 @@ namespace Ragnarok
 
                 switch (player_choice)
                 {
-                    case "1": path = "------------------------\n" + "Blood Boiling, You approach Nighogg\n" + "------------------------"; player_select_loop = false; break;
+                    case "1": path = "------------------------\n" + "Blood Boiling, You approach Nidhogg\n" + "------------------------"; player_select_loop = false; break;
                     case "2": path = "------------------------\n" + "Wise and Thoughtful, You approach Nidhogg\n" + "------------------------"; player_select_loop = false; break;
                     case "3": path = "------------------------\n" + "Centered and Focused, You approach Nidhogg\n" + "------------------------"; player_select_loop = false; break;
                     default: path = "\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"; break;
@@ -141,7 +141,7 @@ namespace Ragnarok
 			Monk.skill_points = 10;
 			Monk.base_att_dmg = 3778;
 
-			int nidhogg_hp = 25000;//Nidhogg essentials
+			int nidhogg_hp = 40000;//Nidhogg essentials
 			int nidhogg_base_dmg = 3701;
 
 			int potion_amt = 5;//item variables
@@ -161,7 +161,7 @@ namespace Ragnarok
 								case "1"://Berserker battle loop
 									while ((player_turn) & (Berserker.player_hp > 0))
 									{
-										System.Threading.Thread.Sleep(1000);
+										System.Threading.Thread.Sleep(900);
 										Console.Write("\n------------------------\n");
 										Console.WriteLine("Current HP: {0:N0}\t" + "Rage: {1}", Berserker.player_hp, Berserker.skill_points); 
 										Console.Write("------------------------\n" +
@@ -176,11 +176,11 @@ namespace Ragnarok
 										switch (player_action)
 										{
 											case "1": //Berserker standard attack
-												int physical_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .55) / 2 );
+												int physical_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .65) / 2 );
 												nidhogg_hp -= physical_dmg;
 												Berserker.skill_points++;
 												Console.ForegroundColor = ConsoleColor.Cyan;
-												Console.WriteLine("\nYou slashed Nidhogg for {0:N0} HP worth of damage!" , physical_dmg);
+												Console.WriteLine("\nYou slashed Nidhogg for {0:N0} HP worth of damage! +1 Rage!" , physical_dmg);
 												Console.ForegroundColor = ConsoleColor.Yellow;
 												Console.Write("\nPLAYER TURN END: Press enter");
 												Console.ForegroundColor = ConsoleColor.Gray;
@@ -189,9 +189,11 @@ namespace Ragnarok
 											case "2": //Berserker Rage Skill Menu
 												string berserker_rage_skill;
 												Console.Write("------------------------\n" +
-																"1. Shoulder Charge\t 2\n" +
-																"2. Bloodlust\t\t 4\n" +
-																"3. Chaos Burst\t\t 8\n" +
+																"   RAGE SKILL\t\tRAGE COST\n" +
+																"------------------------\n" +
+																"1. Shoulder Charge\t 2 Rage\n" +
+																"2. Bloodlust\t\t 2 Rage\n" +
+																"3. Chaos Burst\t\t 5 Rage\n" +
 																"------------------------\n");
 												Console.ForegroundColor = ConsoleColor.Yellow;
 												Console.Write("Type the corresponding number to the action you would like to execute:");
@@ -202,7 +204,7 @@ namespace Ragnarok
 													case "1"://Shoulder Charge
 														if (Berserker.skill_points >= 2)
 														{
-															int sc_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .98) / 2 );
+															int sc_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .99) / 1.77 );
 															nidhogg_hp -= sc_dmg;
 															Berserker.skill_points -= 2;
 															Console.ForegroundColor = ConsoleColor.DarkCyan;
@@ -215,16 +217,16 @@ namespace Ragnarok
 														else Console.WriteLine("\nYou haven't built enough rage to use that skill...");
 													break;
 													case "2"://Bloodlust
-														if (Berserker.skill_points >= 4)
+														if (Berserker.skill_points >= 2)
 														{
-															int bl_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .84) / 2 );
+															int bl_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .44) / 2.2 );
 															nidhogg_hp -= bl_dmg;
 															Berserker.player_hp += bl_dmg;
-															Berserker.skill_points -= 4;
+															Berserker.skill_points -= 2;
 															Console.ForegroundColor = ConsoleColor.DarkCyan;
 															Console.Write("\nYou inflicted {0:N0} HP with Bloodlust!", bl_dmg);
 															Console.ForegroundColor = ConsoleColor.Green;
-															Console.Write("\nYou gained {0:N0} HP with Bloodlust!\n", bl_dmg);
+															Console.Write("\nYou gained {0:N0} HP with Bloodlust! HP: {1:N0}\n", bl_dmg, Berserker.player_hp);
 															Console.ForegroundColor = ConsoleColor.Yellow;
 															Console.Write("\nPLAYER TURN END: Press enter");
 															Console.ForegroundColor = ConsoleColor.Gray;
@@ -233,12 +235,12 @@ namespace Ragnarok
 														else Console.WriteLine("\nYou haven't built enough rage to use that skill...");
 													break;
 													case "3"://Chaos Burst
-														if (Berserker.skill_points >= 8)
+														if (Berserker.skill_points >= 5)
 														{
 															int berserker_chaos = 9000;
-															int cb_dmg = (int)(berserker_chaos * (r.NextDouble() + .77) / 2 );
+															int cb_dmg = (int)(berserker_chaos * (r.NextDouble() + .91) / 2 );
 															nidhogg_hp -= cb_dmg;
-															Berserker.skill_points -= 8;
+															Berserker.skill_points -= 5;
 															Console.ForegroundColor = ConsoleColor.DarkCyan;
 															Console.Write("\nYou inflicted {0:N0} HP with Chaos Burst!\n", cb_dmg);
 															Console.ForegroundColor = ConsoleColor.Yellow;
@@ -246,13 +248,15 @@ namespace Ragnarok
 															Console.ForegroundColor = ConsoleColor.Gray;
 															Console.ReadKey(player_turn = false);
 														}
-														else Console.WriteLine("\nYou haven't built enough rage to use that skill...\n");
+														else Console.WriteLine("\nYou haven't built enough rage to use that skill...");
 													break;
 													default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
 												}
 											break;
 											case "3": //Berserker Item Menu
 												Console.Write("------------------------\n" +
+																"   ITEM\t\tQUANTITY\n" +
+																"------------------------\n" +
 																"1. Potion\t {0}\n" +
 																"2. Hi-Potion\t {1}\n", potion_amt, hipotion_amt);
 												Console.Write("------------------------\n");
@@ -274,7 +278,7 @@ namespace Ragnarok
 															Console.ForegroundColor = ConsoleColor.Gray;
 															Console.ReadKey(player_turn = false);
 														}
-														else Console.WriteLine("\nYou have no potions left to use");
+														else Console.WriteLine("\nYou have no Potions left to use");
 													break;
 													case "2"://Hi-Potion
 														if (hipotion_amt > 0)
@@ -288,7 +292,7 @@ namespace Ragnarok
 															Console.ForegroundColor = ConsoleColor.Gray;
 															Console.ReadKey(player_turn = false);
 														}
-														else Console.WriteLine("\nYou have no hi-potions left to use");
+														else Console.WriteLine("\nYou have no Hi-Potions left to use");
 													break;
 													default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
 												}		
@@ -301,7 +305,7 @@ namespace Ragnarok
 								case "2": //Wizard battle loop
 									while ((player_turn) & (Wizard.player_hp > 0 || nidhogg_hp > 0))
 									{
-										System.Threading.Thread.Sleep(1000);
+										System.Threading.Thread.Sleep(900);
 										Console.Write("\n------------------------\n");
 										Console.WriteLine("Current HP: {0:N0}\t" + "MP: {1}", Wizard.player_hp, Wizard.skill_points);
 										Console.Write("------------------------\n" +
@@ -319,7 +323,7 @@ namespace Ragnarok
 												int physical_dmg = (int)(Wizard.base_att_dmg * (r.NextDouble() + .56) / 2);
 												nidhogg_hp -= physical_dmg;
 												Console.ForegroundColor = ConsoleColor.Cyan;
-												Console.WriteLine("\nYou bashed Nidhogg for {0:N0}", physical_dmg + " HP worth of damage!");
+												Console.WriteLine("\nYou bashed Nidhogg for {0:N0} HP worth of damage!", physical_dmg);
 												Console.ForegroundColor = ConsoleColor.Yellow;
 												Console.Write("\nPLAYER TURN END: Press enter");
 												Console.ForegroundColor = ConsoleColor.Gray;
@@ -330,6 +334,8 @@ namespace Ragnarok
 												break;
 											case "3"://Wizard Item Menu
 												Console.Write("------------------------\n" +
+																"   ITEM\t\tQUANTITY\n" +
+																"------------------------\n" +
 																"1. Potion\t {0}\n" +
 																"2. Hi-Potion\t {1}\n" +
 																"3. Ether\t {2}\n" , potion_amt, hipotion_amt, ether_amt);
@@ -352,7 +358,7 @@ namespace Ragnarok
 															Console.ForegroundColor = ConsoleColor.Gray;
 															Console.ReadKey(player_turn = false);
 														}
-														else Console.WriteLine("\nYou have no potions left to use");
+														else Console.WriteLine("\nYou have no Potions left to use");
 													break;
 													case "2"://Hi-Potion
 														if (hipotion_amt > 0)
@@ -366,7 +372,7 @@ namespace Ragnarok
 															Console.ForegroundColor = ConsoleColor.Gray;
 															Console.ReadKey(player_turn = false);
 														}
-														else Console.WriteLine("\nYou have no hi-potions left to use");
+														else Console.WriteLine("\nYou have no Hi-Potions left to use");
 													break;
 													case "3"://Ether
 														if (ether_amt > 0)
@@ -392,7 +398,7 @@ namespace Ragnarok
 								case "3": //Monk Battle Loop
 									while ((player_turn) & (Monk.player_hp > 0 || nidhogg_hp > 0))
 									{
-										System.Threading.Thread.Sleep(1000);
+										System.Threading.Thread.Sleep(900);
 										Console.Write("\n------------------------\n");
 										Console.WriteLine("Current HP: {0:N0}\t" + "Focus: {1} | 50", Monk.player_hp, Monk.skill_points);
 										Console.Write("------------------------\n" +
@@ -411,7 +417,7 @@ namespace Ragnarok
 												int physical_dmg = (int)(Monk.base_att_dmg * (r.NextDouble() + .85) / 2);
 												nidhogg_hp -= physical_dmg;
 												Console.ForegroundColor = ConsoleColor.Cyan;
-												Console.WriteLine("\nYou pummeled Nidhogg for {0:N0}", physical_dmg + " HP worth of damage!");
+												Console.WriteLine("\nYou pummeled Nidhogg for {0:N0} HP worth of damage!", physical_dmg);
 												Console.ForegroundColor = ConsoleColor.Yellow;
 												Console.Write("\nPLAYER TURN END: Press enter");
 												Console.ReadKey(player_turn = false);
@@ -439,6 +445,8 @@ namespace Ragnarok
 												break;
 											case "4"://Monk Item Menu
 												Console.Write("------------------------\n" +
+																"   ITEM\t\tQUANTITY\n" +
+																"------------------------\n" +
 																"1. Potion\t {0}\n" +
 																"2. Hi-Potion\t {1}\n", potion_amt, hipotion_amt);
 												Console.Write("------------------------\n");
@@ -460,7 +468,7 @@ namespace Ragnarok
 															Console.ForegroundColor = ConsoleColor.Gray;
 															Console.ReadKey(player_turn = false);
 														}
-														else Console.WriteLine("\nYou have no potions left to use");
+														else Console.WriteLine("\nYou have no Potions left to use");
 													break;
 													case "2"://Hi-Potion
 														if (hipotion_amt > 0)
@@ -474,7 +482,7 @@ namespace Ragnarok
 															Console.ForegroundColor = ConsoleColor.Gray;
 															Console.ReadKey(player_turn = false);
 														}
-														else Console.WriteLine("\nYou have no hi-potions left to use");
+														else Console.WriteLine("\nYou have no Hi-Potions left to use");
 													break;
 													default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
 												}
@@ -542,14 +550,14 @@ namespace Ragnarok
 				if (Berserker.player_hp <= 0 || Wizard.player_hp <= 0 || Monk.player_hp <= 0)//Defeat condition
 				{
 					Console.ForegroundColor = ConsoleColor.DarkRed;
-					Console.WriteLine("THE FUTURE OF HUMANITY IS LOST" + "\nThanks for playing though...");
+					Console.WriteLine("\n\nTHE FUTURE OF HUMANITY IS LOST" + "\nThanks for playing though...");
 					Console.ForegroundColor = ConsoleColor.Gray;
 					break; //the last line of code becomes an infinite loop without this break
 				}
 				else if (nidhogg_hp <= 0)//Victory Condition
 				{
 					Console.ForegroundColor = ConsoleColor.DarkYellow;
-					Console.WriteLine("YOU WERE VICTORIOUS" + "\nHuman now has a future because of you!" + "\nTHANKS FOR PLAYING!!!!");
+					Console.WriteLine("\n\nYOU WERE VICTORIOUS" + "\nHuman now has a future because of you!" + "\nTHANKS FOR PLAYING!!!!");
 					break;
 				}
 			}
