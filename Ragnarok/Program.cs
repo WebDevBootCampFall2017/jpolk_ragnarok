@@ -190,8 +190,8 @@ namespace Ragnarok
 												string berserker_rage_skill;
 												Console.Write("------------------------\n" +
 																"1. Shoulder Charge\t 2\n" +
-																"2. Bloodlust\t\t 5\n" +
-																"3. Chaos Burst\t\t 10\n" +
+																"2. Bloodlust\t\t 4\n" +
+																"3. Chaos Burst\t\t 8\n" +
 																"------------------------\n");
 												Console.ForegroundColor = ConsoleColor.Yellow;
 												Console.Write("Type the corresponding number to the action you would like to execute:");
@@ -217,7 +217,7 @@ namespace Ragnarok
 													case "2"://Bloodlust
 														if (Berserker.skill_points >= 4)
 														{
-															int bl_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .74) / 2 );
+															int bl_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .84) / 2 );
 															nidhogg_hp -= bl_dmg;
 															Berserker.player_hp += bl_dmg;
 															Berserker.skill_points -= 4;
@@ -233,12 +233,12 @@ namespace Ragnarok
 														else Console.WriteLine("\nYou haven't built enough rage to use that skill...");
 													break;
 													case "3"://Chaos Burst
-														if (Berserker.skill_points >= 10)
+														if (Berserker.skill_points >= 8)
 														{
 															int berserker_chaos = 9000;
-															int cb_dmg = (int)(berserker_chaos * (r.NextDouble() + .8) / 2 );
+															int cb_dmg = (int)(berserker_chaos * (r.NextDouble() + .77) / 2 );
 															nidhogg_hp -= cb_dmg;
-															Berserker.skill_points -= 10;
+															Berserker.skill_points -= 8;
 															Console.ForegroundColor = ConsoleColor.DarkCyan;
 															Console.Write("\nYou inflicted {0:N0} HP with Chaos Burst!\n", cb_dmg);
 															Console.ForegroundColor = ConsoleColor.Yellow;
