@@ -192,7 +192,7 @@ namespace Ragnarok
 																"   RAGE SKILL\t\tRAGE COST\n" +
 																"------------------------\n" +
 																"1. Shoulder Charge\t 2 Rage\n" +
-																"2. Bloodlust\t\t 2 Rage\n" +
+																"2. Bloodlust\t\t 3 Rage\n" +
 																"3. Chaos Burst\t\t 5 Rage\n" +
 																"------------------------\n");
 												Console.ForegroundColor = ConsoleColor.Yellow;
