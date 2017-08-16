@@ -51,8 +51,8 @@ namespace Ragnarok
                                     "BERSERKER's main weapon is the sword\n" +
                                     "as Berserker uses the ATTACK command, it will build Rage and give access to\n" +
                                     "more skills with the RAGE command\n" +
-									"SHOULDER CHARGE: attack with higher minimum damage base and slightly higher max than standard attack\n" +
-									"BLOODLUST: gains HP same as damage done to target, has a low possible minimum damage\n" +
+									"SHOULDER CHARGE: moderate damage attack\n" +
+									"BLOODLUST: player gains 2x the HP done to the target\n" +
 									"CHAOS BURST: high attack damage\n" +
                                     "------------------------\n");
                     System.Threading.Thread.Sleep(4000);
@@ -217,16 +217,16 @@ namespace Ragnarok
 														else Console.WriteLine("\nYou haven't built enough rage to use that skill...");
 													break;
 													case "2"://Bloodlust
-														if (Berserker.skill_points >= 2)
+														if (Berserker.skill_points >= 3)
 														{
-															int bl_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .56) / 2 );
+															int bl_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .6) / 2 );
 															nidhogg_hp -= bl_dmg;
-															Berserker.player_hp += bl_dmg;
-															Berserker.skill_points -= 2;
+															Berserker.player_hp += (int)(bl_dmg * 2);
+															Berserker.skill_points -= 3;
 															Console.ForegroundColor = ConsoleColor.DarkCyan;
 															Console.Write("\nYou inflicted {0:N0} HP with Bloodlust!", bl_dmg);
 															Console.ForegroundColor = ConsoleColor.Green;
-															Console.Write("\nYou gained {0:N0} HP with Bloodlust! HP: {1:N0}\n", bl_dmg, Berserker.player_hp);
+															Console.Write("\nYou gained {0:N0} HP with Bloodlust! HP: {1:N0}\n", (int)(bl_dmg * 2), Berserker.player_hp);
 															Console.ForegroundColor = ConsoleColor.Yellow;
 															Console.Write("\nPLAYER TURN END: Press enter");
 															Console.ForegroundColor = ConsoleColor.Gray;
@@ -238,7 +238,7 @@ namespace Ragnarok
 														if (Berserker.skill_points >= 5)
 														{
 															int berserker_chaos = 9000;
-															int cb_dmg = (int)(berserker_chaos * (r.NextDouble() + .91) / 2 );
+															int cb_dmg = (int)(berserker_chaos * (r.NextDouble() + .96) / 2 );
 															nidhogg_hp -= cb_dmg;
 															Berserker.skill_points -= 5;
 															Console.ForegroundColor = ConsoleColor.DarkCyan;
@@ -574,6 +574,7 @@ namespace Ragnarok
 
 				if (Berserker.player_hp <= 0 || Wizard.player_hp <= 0 || Monk.player_hp <= 0)//Defeat condition
 				{
+					System.Threading.Thread.Sleep(5000);
 					Console.ForegroundColor = ConsoleColor.DarkRed;
 					Console.Write(defeat);
 					Console.WriteLine("\n\nTHE FUTURE OF HUMANITY IS LOST" + "\nThanks for playing though...");
@@ -582,6 +583,7 @@ namespace Ragnarok
 				}
 				else if (nidhogg_hp <= 0)//Victory Condition
 				{
+					System.Threading.Thread.Sleep(5000);
 					Console.ForegroundColor = ConsoleColor.DarkYellow;
 					Console.Write(victory);
 					Console.WriteLine("\n\nYOU WERE VICTORIOUS" + "\nHumanity now has a future because of you!" + "\nTHANKS FOR PLAYING!!!!");
