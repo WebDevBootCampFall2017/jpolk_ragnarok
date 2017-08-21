@@ -39,38 +39,44 @@ namespace Ragnarok
             while (instruct_loop) //The while loop is necessary to cycle back to the instruction question after the else condition
             {
                 string instruct = Console.ReadLine();
-                if (instruct == "1")
-                {
-                    Console.Write("\nIn this game you will have your choice of 3 classes:\n" +
-                                    "BESERKER, WIZARD, or MONK\n" +
-                                    "Engage is a desperate turn based battle to rid the world of\n" +
-                                    "NIDHOGG: The source of decay and blight upon this land\n" +
+				if (instruct == "1")
+				{
+					Console.Write("\nIn this game you will have your choice of 3 classes:\n" +
+									"BESERKER, WIZARD, or MONK\n" +
+									"Engage is a desperate turn based battle to rid the world of\n" +
+									"NIDHOGG: The source of decay and blight upon this land\n" +
 									"Nidhogg is the dragon that threatens humanity as the prophecy demands\n");
-                    System.Threading.Thread.Sleep(4000); 
-                    Console.Write("------------------------\n" +
-                                    "BERSERKER's main weapon is the sword\n" +
-                                    "as Berserker uses the ATTACK command, it will build Rage and give access to\n" +
-                                    "more skills with the RAGE command\n" +
+					System.Threading.Thread.Sleep(4000);
+					Console.Write("------------------------\n" +
+									"BERSERKER's main weapon is the sword\n" +
+									"as Berserker uses the ATTACK command, it will build Rage and give access to\n" +
+									"more skills with the RAGE command\n" +
 									"SHOULDER CHARGE: moderate damage attack\n" +
-									"BLOODLUST: player gains 2x the HP done to the target\n" +
+									"BLOODLUST: player gains HP 2.5x the damage done to the target\n" +
 									"CHAOS BURST: high attack damage\n" +
-                                    "------------------------\n");
-                    System.Threading.Thread.Sleep(4000);
-                    Console.Write("WIZARD's main weapon is a Magic Staff\n" +
-                                    "while the Wizard does not do much damage with the ATTACK command\n" +
-                                    "Wizard does have access to damage dealing spells with the MAGIC command at the\n" +
-                                    "cost of MP\n" +
+									"------------------------\n");
+					System.Threading.Thread.Sleep(4000);
+					Console.Write("WIZARD's main weapon is a Magic Staff\n" +
+									"while the Wizard does not do much damage with the ATTACK command\n" +
+									"Wizard does have access to damage dealing spells" +
+									"with the MAGIC command at the cost of MP\n" +
                                     "------------------------\n");
                     System.Threading.Thread.Sleep(4000);
                     Console.Write("MONK's main weapon are martial arts\n" +
                                     "Monk has a special command named HARNESS\n" +
-                                    "by using harness you can build focus that will give you access to more skills\n" +
-                                    "with the ARTS command\n" +
+                                    "by using harness you can build focus that will give you access" +
+									"to more skills with the ARTS command\n" +
+									"INNER HEALING: gain HP with high max and low min value\n" +
+									"RAPID PALM: combo attack with random hits and dmg that based off number of hits\n" +
+									"AURA BOLT: high attack damage\n" +
+									"Monk also gains a small amount of focus with the ATTACK command\n" +
                                     "------------------------\n");
 					System.Threading.Thread.Sleep(4000);
 					Console.Write("Every character has access to 5 Potions and 1 Hi-Potion\n" +
 									"Potions give 5,000 HP, Hi-Potion gives 10,000\n" +
 									"Wizard is given 2 Ethers to gain 300 MP on use\n" +
+									"You may enter an invalid selection in any of the battle submenus\n" +
+									"to take you back to the main battle menu\n" +
 									"------------------------\n\n");
 					System.Threading.Thread.Sleep(5000);
 					Console.ForegroundColor = ConsoleColor.White;
@@ -176,15 +182,28 @@ namespace Ragnarok
 										switch (player_action)
 										{
 											case "1": //Berserker standard attack
-												int physical_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .65) / 2 );
-												nidhogg_hp -= physical_dmg;
-												Berserker.skill_points++;
-												Console.ForegroundColor = ConsoleColor.Cyan;
-												Console.WriteLine("\nYou slashed Nidhogg for {0:N0} HP worth of damage! +1 Rage!" , physical_dmg);
-												Console.ForegroundColor = ConsoleColor.Yellow;
-												Console.Write("\nPLAYER TURN END: Press enter");
-												Console.ForegroundColor = ConsoleColor.Gray;
-												Console.ReadKey(player_turn = false);
+												int acc = r.Next(10);
+												if (acc == 6) //Provides a 10% chance for Nidhogg to dodge 
+												{
+													Console.ForegroundColor = ConsoleColor.Red;
+													Console.WriteLine("\nNidhogg anticpates your attack and swiftly dodges!");
+													Console.ForegroundColor = ConsoleColor.Yellow;
+													Console.Write("\nPLAYER TURN END: Press enter");
+													Console.ForegroundColor = ConsoleColor.Gray;
+													Console.ReadKey(player_turn = false);
+												}
+												else
+												{
+													int physical_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .65) / 2 );
+													nidhogg_hp -= physical_dmg;
+													Berserker.skill_points++;
+													Console.ForegroundColor = ConsoleColor.Cyan;
+													Console.WriteLine("\nYou slashed Nidhogg for {0:N0} damage! +1 Rage!" , physical_dmg);
+													Console.ForegroundColor = ConsoleColor.Yellow;
+													Console.Write("\nPLAYER TURN END: Press enter");
+													Console.ForegroundColor = ConsoleColor.Gray;
+													Console.ReadKey(player_turn = false);
+												}
 												break;
 											case "2": //Berserker Rage Skill Menu
 												string berserker_rage_skill;
@@ -204,11 +223,12 @@ namespace Ragnarok
 													case "1"://Shoulder Charge
 														if (Berserker.skill_points >= 2)
 														{
-															int sc_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .99) / 1.77 );
+															int sc_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .99) / 1.98 );
 															nidhogg_hp -= sc_dmg;
 															Berserker.skill_points -= 2;
 															Console.ForegroundColor = ConsoleColor.DarkCyan;
-															Console.Write("\nYou inflicted {0:N0} HP with Shoulder Charge!\n", sc_dmg);
+															Console.Write("\nWith reckless determination you charge with the spiked pauldron of your armor\n" +
+																			"You inflicted {0:N0} damage with Shoulder Charge!\n", sc_dmg);
 															Console.ForegroundColor = ConsoleColor.Yellow;
 															Console.Write("\nPLAYER TURN END: Press enter");
 															Console.ForegroundColor = ConsoleColor.Gray;
@@ -221,12 +241,13 @@ namespace Ragnarok
 														{
 															int bl_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .6) / 2 );
 															nidhogg_hp -= bl_dmg;
-															Berserker.player_hp += (int)(bl_dmg * 2);
+															Berserker.player_hp += (int)(bl_dmg * 2.5);
 															Berserker.skill_points -= 3;
 															Console.ForegroundColor = ConsoleColor.DarkCyan;
-															Console.Write("\nYou inflicted {0:N0} HP with Bloodlust!", bl_dmg);
+															Console.Write("\nYour lust for battle gives you strength\n" + 
+																			"You inflicted {0:N0} HP with Bloodlust!", bl_dmg);
 															Console.ForegroundColor = ConsoleColor.Green;
-															Console.Write("\nYou gained {0:N0} HP with Bloodlust! HP: {1:N0}\n", (int)(bl_dmg * 2), Berserker.player_hp);
+															Console.Write("\nYou gained {0:N0} HP with Bloodlust! HP: {1:N0}\n", (int)(bl_dmg * 2.5), Berserker.player_hp);
 															Console.ForegroundColor = ConsoleColor.Yellow;
 															Console.Write("\nPLAYER TURN END: Press enter");
 															Console.ForegroundColor = ConsoleColor.Gray;
@@ -242,7 +263,9 @@ namespace Ragnarok
 															nidhogg_hp -= cb_dmg;
 															Berserker.skill_points -= 5;
 															Console.ForegroundColor = ConsoleColor.DarkCyan;
-															Console.Write("\nYou inflicted {0:N0} HP with Chaos Burst!\n", cb_dmg);
+															Console.Write("\nUnable to contain it any longer\n" +
+																			"You release your fury in the form of dark energy that creates a spherical explosion\n" +
+																			"You inflicted {0:N0} damage with Chaos Burst!\n", cb_dmg);
 															Console.ForegroundColor = ConsoleColor.Yellow;
 															Console.Write("\nPLAYER TURN END: Press enter");
 															Console.ForegroundColor = ConsoleColor.Gray;
@@ -323,14 +346,21 @@ namespace Ragnarok
 												int physical_dmg = (int)(Wizard.base_att_dmg * (r.NextDouble() + .56) / 2);
 												nidhogg_hp -= physical_dmg;
 												Console.ForegroundColor = ConsoleColor.Cyan;
-												Console.WriteLine("\nYou bashed Nidhogg for {0:N0} HP worth of damage!", physical_dmg);
+												Console.WriteLine("\nYou bashed Nidhogg for {0:N0} damage!", physical_dmg);
 												Console.ForegroundColor = ConsoleColor.Yellow;
 												Console.Write("\nPLAYER TURN END: Press enter");
 												Console.ForegroundColor = ConsoleColor.Gray;
 												Console.ReadKey(player_turn = false);
 												break;
 											case "2": //Wizard Magic Menu
-												Console.Write("------------------------\n");
+												Console.Write("------------------------\n" +
+																"   MAGIC\t\tMP COST\n" +
+																"------------------------\n" +
+																"1. Ice Lance\t\t50 MP\n" +
+																"2. Fortify\t\t80 MP\n" +
+																"3. Hellfire\t\t100 MP\n" +
+																"4. Nova\t\t\t200 MP\n" +
+																"------------------------\n");
 												break;
 											case "3"://Wizard Item Menu
 												Console.Write("------------------------\n" +
@@ -414,22 +444,48 @@ namespace Ragnarok
 										switch (player_action)
 										{
 											case "1"://Monk standard attack
-												int physical_dmg = (int)(Monk.base_att_dmg * (r.NextDouble() + .85) / 2);
-												nidhogg_hp -= physical_dmg;
-												Console.ForegroundColor = ConsoleColor.Cyan;
-												Console.WriteLine("\nYou pummeled Nidhogg for {0:N0} HP worth of damage!", physical_dmg);
-												Console.ForegroundColor = ConsoleColor.Yellow;
-												Console.Write("\nPLAYER TURN END: Press enter");
-												Console.ReadKey(player_turn = false);
-												Console.ForegroundColor = ConsoleColor.Gray;
+												int acc = r.Next(8);
+												if (acc == 3) //Provides a 12.5% chance for Nidhogg to dodge 
+												{
+													Console.ForegroundColor = ConsoleColor.Red;
+													Console.WriteLine("\nNidhogg anticpates your attack and swiftly dodges!");
+													Console.ForegroundColor = ConsoleColor.Yellow;
+													Console.Write("\nPLAYER TURN END: Press enter");
+													Console.ForegroundColor = ConsoleColor.Gray;
+													Console.ReadKey(player_turn = false);
+												}
+												else
+												{
+													int physical_dmg = (int)(Monk.base_att_dmg * (r.NextDouble() + .85) / 2);
+													nidhogg_hp -= physical_dmg;
+													if (Monk.skill_points < 50)
+													{
+														Monk.skill_points += 5;
+														Console.ForegroundColor = ConsoleColor.Cyan;
+														Console.WriteLine("\nYou pummeled Nidhogg for {0:N0} damage! +5 focus gained", physical_dmg);
+														Console.ForegroundColor = ConsoleColor.Yellow;
+														Console.Write("\nPLAYER TURN END: Press enter");
+														Console.ReadKey(player_turn = false);
+														Console.ForegroundColor = ConsoleColor.Gray;
+													}
+													else
+													{
+														Console.ForegroundColor = ConsoleColor.Cyan;
+														Console.WriteLine("\nYou pummeled Nidhogg for {0:N0} damage!", physical_dmg);
+														Console.ForegroundColor = ConsoleColor.Yellow;
+														Console.Write("\nPLAYER TURN END: Press enter");
+														Console.ReadKey(player_turn = false);
+														Console.ForegroundColor = ConsoleColor.Gray;
+													}
+												}
 												break;
 											case "2"://Monk HARNESS cmd
-												if (Monk.skill_points < 50)
+												if (Monk.skill_points <= 29)
 												{
-													int focus_points = 10;
+													int focus_points = 20;
 													Monk.skill_points += focus_points;
 													Console.ForegroundColor = ConsoleColor.DarkGreen;
-													Console.WriteLine("\nYou harness your chi, +10 focus gained");
+													Console.WriteLine("\nYou harness your chi +20 focus gained!");
 													Console.ForegroundColor = ConsoleColor.Yellow;
 													Console.Write("\nPLAYER TURN END: Press enter");
 													Console.ForegroundColor = ConsoleColor.Gray;
@@ -439,9 +495,119 @@ namespace Ragnarok
 												{
 													Console.WriteLine("\nYour focus can be heightened no further, seize the moment and strike!");
 												}
+												else if (Monk.skill_points >= 30)
+												{
+													Monk.skill_points = 50;
+													Console.ForegroundColor = ConsoleColor.DarkGreen;
+													Console.WriteLine("\nYour focus is now max!");
+													Console.ForegroundColor = ConsoleColor.Yellow;
+													Console.Write("\nPLAYER TURN END: Press enter");
+													Console.ForegroundColor = ConsoleColor.Gray;
+													Console.ReadKey(player_turn = false);
+												}
 												break;
 											case "3"://Monk Arts Menu
-												Console.Write("------------------------\n");
+												Console.Write("------------------------\n" +
+																"   ART\t\t\tFOCUS COST\n" +
+																"------------------------\n" +
+																"1. Inner Healing\t 20 Focus\n" +
+																"2. Rapid Palm\t\t 30 Focus\n" +
+																"3. Aura Bolt\t\t 50 Focus\n" +
+																"------------------------\n");
+												Console.ForegroundColor = ConsoleColor.Yellow;
+												Console.Write("Type the corresponding number to the action you would like to execute:");
+												Console.ForegroundColor = ConsoleColor.Gray;
+												string art_choice = Console.ReadLine();
+												switch (art_choice)
+												{
+													case "1"://Inner Healing
+														if (Monk.skill_points >= 20)
+														{
+															int inner_heal = r.Next(5000, 10001);
+															Monk.player_hp += inner_heal;
+															Monk.skill_points -= 20;
+															Console.ForegroundColor = ConsoleColor.Green;
+															Console.WriteLine("\nYou gather your chi in your stomach and redisturb it throughout your body, gained {0:N0} HP! HP: {1:N0}", inner_heal, Monk.player_hp);
+															Console.ForegroundColor = ConsoleColor.Yellow;
+															Console.Write("\nPLAYER TURN END: Press enter");
+															Console.ForegroundColor = ConsoleColor.Gray;
+															Console.ReadKey(player_turn = false);
+														}
+														else
+														{
+															Console.WriteLine("\nYou must harness more focus to use this skill.");
+														}
+													break;
+													case "2"://Rapid Palm
+														if (Monk.skill_points >= 30)
+														{
+															int palm_combo = r.Next(2, 5);
+															Monk.skill_points -= 30;
+															switch (palm_combo)
+															{
+																case 2 :
+																	int palm_base_dmg = 4000;
+																	int palm_dmg = (int)((palm_base_dmg * (r.NextDouble() + .98)) / 1.34);
+																	nidhogg_hp -= palm_dmg;
+																	Console.ForegroundColor = ConsoleColor.DarkCyan;
+																	Console.WriteLine("\nYou landed {0} hits with Rapid Palm for {1:N0} damage!" , (palm_combo * 3), palm_dmg);
+																	Console.ForegroundColor = ConsoleColor.Yellow;
+																	Console.Write("\nPLAYER TURN END: Press enter");
+																	Console.ForegroundColor = ConsoleColor.Gray;
+																	Console.ReadKey(player_turn = false);
+																break;
+																case 3 :
+																	int palm_base_dmg2 = 4500;
+																	int palm_dmg2 = (int)((palm_base_dmg2 * (r.NextDouble() + 1.38)) / 1.54);
+																	nidhogg_hp -= palm_dmg2;
+																	Console.ForegroundColor = ConsoleColor.DarkCyan;
+																	Console.WriteLine("\nYou landed {0} hits with Rapid Palm for {1:N0} damage!" , (palm_combo * 3), palm_dmg2);
+																	Console.ForegroundColor = ConsoleColor.Yellow;
+																	Console.Write("\nPLAYER TURN END: Press enter");
+																	Console.ForegroundColor = ConsoleColor.Gray;
+																	Console.ReadKey(player_turn = false);
+																break;
+																case 4 :
+																	int palm_base_dmg3 = 5000;
+																	int palm_dmg3 = (int)((palm_base_dmg3 * (r.NextDouble() + 1.75)) / 1.64);
+																	nidhogg_hp -= palm_dmg3;
+																	Console.ForegroundColor = ConsoleColor.DarkCyan;
+																	Console.WriteLine("\nYou landed {0} hits with Rapid Palm for {1:N0} damage!" , (palm_combo * 3), palm_dmg3);
+																	Console.ForegroundColor = ConsoleColor.Yellow;
+																	Console.Write("\nPLAYER TURN END: Press enter");
+																	Console.ForegroundColor = ConsoleColor.Gray;
+																	Console.ReadKey(player_turn = false);
+																break;
+																default : break;
+															}
+														}
+														else
+														{
+															Console.WriteLine("\nYou must harness more focus to use this skill.");
+														}
+													break;
+													case "3"://Aura Bolt
+														if (Monk.skill_points >= 50)
+														{
+															Monk.skill_points -= 50;
+															int ab_dmg = (int)(Monk.base_att_dmg * (r.NextDouble() + 4.85) / 2);
+															nidhogg_hp -= ab_dmg;
+															Console.ForegroundColor = ConsoleColor.DarkCyan;
+															Console.WriteLine("\nYou gather ambient energy and sculpt it with your hands\n" + 
+																				"Once concentrated, you release a powerful beam with pinpoint accuracy\n" +
+																				"You inflicted {0:N0} damage with Aura Bolt!", (ab_dmg));
+															Console.ForegroundColor = ConsoleColor.Yellow;
+															Console.Write("\nPLAYER TURN END: Press enter");
+															Console.ForegroundColor = ConsoleColor.Gray;
+															Console.ReadKey(player_turn = false);
+														}
+														else
+														{
+															Console.WriteLine("\nYou must harness more focus to use this skill.");
+														}
+													break;
+													default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
+												}
 												break;
 											case "4"://Monk Item Menu
 												Console.Write("------------------------\n" +
@@ -557,7 +723,7 @@ namespace Ragnarok
 				"	▒▒▓  ▒ ░░ ▒░ ░▒▒    ▓▒█░ ▒ ░░    ▒ ░░▒░▒ \n" +
 				"	░ ▒  ▒  ░ ░  ░ ▒    ▒▒ ░   ░     ▒ ░▒░ ░ \n" +
 				"	░ ░  ░    ░    ░    ▒    ░       ░  ░░ ░ \n" +
-				"   ░    ░  ░      ░    ░            ░  ░	 \n" +
+				"        ░  ░      ░    ░            ░  ░	 \n" +
 				"	░										 \n";
 
 
@@ -574,18 +740,18 @@ namespace Ragnarok
 
 				if (Berserker.player_hp <= 0 || Wizard.player_hp <= 0 || Monk.player_hp <= 0)//Defeat condition
 				{
-					System.Threading.Thread.Sleep(5000);
+					System.Threading.Thread.Sleep(2000);
 					Console.ForegroundColor = ConsoleColor.DarkRed;
-					Console.Write(defeat);
+					Console.Write("\n {0}", defeat);
 					Console.WriteLine("\n\nTHE FUTURE OF HUMANITY IS LOST" + "\nThanks for playing though...");
 					Console.ForegroundColor = ConsoleColor.Gray;
 					break; //the last line of code becomes an infinite loop without this break
 				}
 				else if (nidhogg_hp <= 0)//Victory Condition
 				{
-					System.Threading.Thread.Sleep(5000);
+					System.Threading.Thread.Sleep(3500);
 					Console.ForegroundColor = ConsoleColor.DarkYellow;
-					Console.Write(victory);
+					Console.Write("\n\n {0}" , victory);
 					Console.WriteLine("\n\nYOU WERE VICTORIOUS" + "\nHumanity now has a future because of you!" + "\nTHANKS FOR PLAYING!!!!");
 					break;
 				}
