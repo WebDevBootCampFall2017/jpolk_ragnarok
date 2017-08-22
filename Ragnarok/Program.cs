@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Media;
 
 namespace Ragnarok
 {
@@ -18,19 +19,28 @@ namespace Ragnarok
 
 		static void Main(string[] args)
         {
+			SoundPlayer sp = new SoundPlayer();
+			sp.SoundLocation = Environment.CurrentDirectory + "\\Music\\Odin-Sphere-Soundtrack-A-Fate-Accepted-_1080p_.wav";
+			sp.PlayLooping();
 			Console.ForegroundColor = ConsoleColor.DarkRed;//Font color
-            Console.WriteLine("	 ______   _______ _______ __    _ _______ ______   _______ ___   _ "); //Title Block
-            Console.WriteLine("	|    _ | |   _   |       |  |  | |   _   |    _ | |       |   | | |");
-            Console.WriteLine("	|   | || |  |_|  |    ___|   |_| |  |_|  |   | || |   _   |   |_| |");
-            Console.WriteLine("	|   |_||_|       |   | __|       |       |   |_||_|  | |  |      _|");
-            Console.WriteLine("	|    __  |       |   ||  |  _    |       |    __  |  |_|  |     |_ ");
-            Console.WriteLine("	|   |  | |   _   |   |_| | | |   |   _   |   |  | |       |    _  |");
-            Console.WriteLine("	|___|  |_|__| |__|_______|_|  |__|__| |__|___|  |_|_______|___| |_|");
+			System.Threading.Thread.Sleep(2000);//provides a time interval before running the next line of code
+			Console.WriteLine("	 ______   _______ _______ __    _ _______ ______   _______ ___   _ "); //Title Block
+			System.Threading.Thread.Sleep(2000);
+			Console.WriteLine("	|    _ | |   _   |       |  |  | |   _   |    _ | |       |   | | |");
+			System.Threading.Thread.Sleep(2000);
+			Console.WriteLine("	|   | || |  |_|  |    ___|   |_| |  |_|  |   | || |   _   |   |_| |");
+			System.Threading.Thread.Sleep(2000);
+			Console.WriteLine("	|   |_||_|       |   | __|       |       |   |_||_|  | |  |      _|");
+			System.Threading.Thread.Sleep(2000);
+			Console.WriteLine("	|    __  |       |   ||  |  _    |       |    __  |  |_|  |     |_ ");
+			System.Threading.Thread.Sleep(2000);
+			Console.WriteLine("	|   |  | |   _   |   |_| | | |   |   _   |   |  | |       |    _  |");
+			System.Threading.Thread.Sleep(2000);
+			Console.WriteLine("	|___|  |_|__| |__|_______|_|  |__|__| |__|___|  |_|_______|___| |_|");
 			Console.ForegroundColor = ConsoleColor.Gray;
-
+			System.Threading.Thread.Sleep(1500);
 			Console.WriteLine("\n\nThe promised end is upon you\nSummon the courage to fight for your possibility of a future"); //Tagline
-
-			System.Threading.Thread.Sleep(1500);//provides a time interval before running the next line of code
+			System.Threading.Thread.Sleep(1500);
 			Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("\nDo you need instuctions? Type 1 (yes) or 0 (no), then press enter:"); //instruction question
 			Console.ForegroundColor = ConsoleColor.Gray;
@@ -106,7 +116,8 @@ namespace Ragnarok
 					Console.ForegroundColor = ConsoleColor.Gray;
 				}
             }
-            string player_choice = Console.ReadLine(); //Need this variable declared in the main body for use with battle loop
+			sp.Stop();
+			string player_choice = Console.ReadLine(); //Need this variable declared in the main body for use with battle loop
             string path;
 			System.Threading.Thread.Sleep(700);
             bool player_select_loop = true;
@@ -119,9 +130,15 @@ namespace Ragnarok
 
                 switch (player_choice)
                 {
-                    case "1": path = "------------------------\n" + "Blood Boiling, You approach Nidhogg\n" + "------------------------"; player_select_loop = false; break;
-                    case "2": path = "------------------------\n" + "Wise and Thoughtful, You approach Nidhogg\n" + "------------------------"; player_select_loop = false; break;
-                    case "3": path = "------------------------\n" + "Centered and Focused, You approach Nidhogg\n" + "------------------------"; player_select_loop = false; break;
+                    case "1": path = "------------------------\n" + "Blood Boiling, You approach Nidhogg\n" + "------------------------"; player_select_loop = false;
+						    sp.SoundLocation = Environment.CurrentDirectory + "\\Music\\Odin-Sphere-Soundtrack-Hope_-Following-The-Difficult-Battle-_1080p_.wav";
+							sp.PlayLooping(); break;
+                    case "2": path = "------------------------\n" + "Wise and Thoughtful, You approach Nidhogg\n" + "------------------------"; player_select_loop = false;
+							sp.SoundLocation = Environment.CurrentDirectory + "\\Music\\Odin-Sphere-Soundtrack-Battle-In-Fairy-Land-_1080p_.wav";
+							sp.PlayLooping(); break;
+                    case "3": path = "------------------------\n" + "Centered and Focused, You approach Nidhogg\n" + "------------------------"; player_select_loop = false;
+							sp.SoundLocation = Environment.CurrentDirectory + "\\Music\\Odin-Sphere-Soundtrack-Terror-And-Courage-_1080p_.wav";
+							sp.PlayLooping(); break;
                     default: path = "\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"; break;
                 }
                 Console.Write(path);
@@ -740,6 +757,7 @@ namespace Ragnarok
 
 				if (Berserker.player_hp <= 0 || Wizard.player_hp <= 0 || Monk.player_hp <= 0)//Defeat condition
 				{
+					sp.Stop();
 					System.Threading.Thread.Sleep(2000);
 					Console.ForegroundColor = ConsoleColor.DarkRed;
 					Console.Write("\n {0}", defeat);
@@ -749,6 +767,7 @@ namespace Ragnarok
 				}
 				else if (nidhogg_hp <= 0)//Victory Condition
 				{
+					sp.Stop();
 					System.Threading.Thread.Sleep(3500);
 					Console.ForegroundColor = ConsoleColor.DarkYellow;
 					Console.Write("\n\n {0}" , victory);
