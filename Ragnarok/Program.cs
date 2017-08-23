@@ -38,9 +38,9 @@ namespace Ragnarok
 			System.Threading.Thread.Sleep(2000);
 			Console.WriteLine("	|___|  |_|__| |__|_______|_|  |__|__| |__|___|  |_|_______|___| |_|");
 			Console.ForegroundColor = ConsoleColor.Gray;
-			System.Threading.Thread.Sleep(1500);
+			System.Threading.Thread.Sleep(5000);
 			Console.WriteLine("\n\nThe promised end is upon you\nSummon the courage to fight for your possibility of a future"); //Tagline
-			System.Threading.Thread.Sleep(1500);
+			System.Threading.Thread.Sleep(5000);
 			Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("\nDo you need instuctions? Type 1 (yes) or 0 (no), then press enter:"); //instruction question
 			Console.ForegroundColor = ConsoleColor.Gray;
@@ -56,7 +56,7 @@ namespace Ragnarok
 									"Engage is a desperate turn based battle to rid the world of\n" +
 									"NIDHOGG: The source of decay and blight upon this land\n" +
 									"Nidhogg is the dragon that threatens humanity as the prophecy demands\n");
-					System.Threading.Thread.Sleep(4000);
+					System.Threading.Thread.Sleep(6000);
 					Console.Write("------------------------\n" +
 									"BERSERKER's main weapon is the sword\n" +
 									"as Berserker uses the ATTACK command, it will build Rage and give access to\n" +
@@ -65,13 +65,13 @@ namespace Ragnarok
 									"BLOODLUST: player gains HP 2.5x the damage done to the target\n" +
 									"CHAOS BURST: high attack damage\n" +
 									"------------------------\n");
-					System.Threading.Thread.Sleep(4000);
+					System.Threading.Thread.Sleep(6000);
 					Console.Write("WIZARD's main weapon is a Magic Staff\n" +
 									"while the Wizard does not do much damage with the ATTACK command\n" +
 									"Wizard does have access to damage dealing spells" +
 									"with the MAGIC command at the cost of MP\n" +
                                     "------------------------\n");
-                    System.Threading.Thread.Sleep(4000);
+                    System.Threading.Thread.Sleep(6000);
                     Console.Write("MONK's main weapon are martial arts\n" +
                                     "Monk has a special command named HARNESS\n" +
                                     "by using harness you can build focus that will give you access" +
@@ -81,14 +81,17 @@ namespace Ragnarok
 									"AURA BOLT: high attack damage\n" +
 									"Monk also gains a small amount of focus with the ATTACK command\n" +
                                     "------------------------\n");
-					System.Threading.Thread.Sleep(4000);
+					System.Threading.Thread.Sleep(6000);
 					Console.Write("Every character has access to 5 Potions and 1 Hi-Potion\n" +
 									"Potions give 5,000 HP, Hi-Potion gives 10,000\n" +
 									"Wizard is given 2 Ethers to gain 300 MP on use\n" +
 									"You may enter an invalid selection in any of the battle submenus\n" +
 									"to take you back to the main battle menu\n" +
 									"------------------------\n\n");
-					System.Threading.Thread.Sleep(5000);
+					System.Threading.Thread.Sleep(3000);
+					Console.ForegroundColor = ConsoleColor.Yellow;
+					Console.Write("Press Enter to continue:");
+					Console.ReadKey();
 					Console.ForegroundColor = ConsoleColor.White;
 					Console.Write("STEEL YOUR NERVE and CHOOSE YOUR PATH\n");
 					Console.ForegroundColor = ConsoleColor.Yellow;
@@ -373,13 +376,95 @@ namespace Ragnarok
 												Console.Write("------------------------\n" +
 																"   MAGIC\t\tMP COST\n" +
 																"------------------------\n" +
-																"1. Ice Lance\t\t50 MP\n" +
-																"2. Fortify\t\t80 MP\n" +
-																"3. Hellfire\t\t100 MP\n" +
-																"4. Nova\t\t\t200 MP\n" +
+																"1. Ice Lance\t\t25 MP\n" +
+																"2. Fortify\t\t50 MP\n" +
+																"3. HellFire\t\t100 MP\n" +
+																"4. GravityWell\t\t\t200 MP\n" +
 																"------------------------\n");
+                                                Console.ForegroundColor = ConsoleColor.Yellow;
+												Console.Write("Type the corresponding number to the action you would like to execute:");
+												Console.ForegroundColor = ConsoleColor.Gray;
+                                                string spell_choice = Console.ReadLine();
+                                                switch (spell_choice)
+                                                {
+                                                    case "1" ://Ice Lance
+                                                        if (Wizard.skill_points >= 25)
+                                                        { 
+                                                            int il_dmg_range = r.Next(2500, 4511);
+                                                            nidhogg_hp -= il_dmg_range;
+                                                            Wizard.skill_points -= 25;
+                                                            Console.ForegroundColor = ConsoleColor.DarkCyan;
+                                                            Console.WriteLine("\nYou conjure a glistening Ice Lance and hurl it for {0:N0} damage!" , il_dmg_range);
+                                                            Console.ForegroundColor = ConsoleColor.Yellow;
+												            Console.Write("\nPLAYER TURN END: Press enter");
+												            Console.ForegroundColor = ConsoleColor.Gray;
+												            Console.ReadKey(player_turn = false);
+                                                        }
+                                                        else Console.WriteLine("\nYou do not have enough MP to cast this spell...");
+                                                    break;
+                                                    case "2" ://Fortify
+                                                        if (Wizard.skill_points >= 50)
+                                                        {
+                                                            int fort_heal_range = r.Next(10000, 15001);
+                                                            Wizard.player_hp += fort_heal_range;
+                                                            Wizard.skill_points -= 50;
+                                                            Console.ForegroundColor = ConsoleColor.Green;
+                                                            Console.WriteLine("Engulfed by a shimmering light you gained {0:N0} HP! HP: {1:N0}", fort_heal_range, Wizard.player_hp);
+                                                            Console.ForegroundColor = ConsoleColor.Yellow;
+												            Console.Write("\nPLAYER TURN END: Press enter");
+												            Console.ForegroundColor = ConsoleColor.Gray;
+												            Console.ReadKey(player_turn = false);
+                                                        }
+                                                        else Console.WriteLine("\nYou do not have enough MP to cast this spell...");
+                                                    break;
+                                                    case "3"://Hellfire
+                                                        if (Wizard.skill_points >= 100)
+                                                        {
+                                                            int hf_hit_range = r.Next(24, 99);
+                                                            Wizard.skill_points -= 100;
+                                                            if (hf_hit_range >= 24 && hf_hit_range <=37)
+                                                            {
+                                                                int hf_dmg1 = r.Next(5999, 7556);
+                                                                nidhogg_hp -= hf_dmg1;
+                                                                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                                                                Console.WriteLine("\nYou rained down streams of fire from the sky\n" +
+                                                                                    "Landed {0} hits for {1:N0} damage with Hellfire!\n", hf_hit_range, hf_dmg1);
+                                                                Console.ForegroundColor = ConsoleColor.Yellow;
+												                Console.Write("\nPLAYER TURN END: Press enter");
+												                Console.ForegroundColor = ConsoleColor.Gray;
+												                Console.ReadKey(player_turn = false);
+                                                            }
+                                                            else if (hf_hit_range >= 38 && hf_hit_range <=64)
+                                                            {
+                                                                int hf_dmg1 = r.Next(7556, 9123);
+                                                                nidhogg_hp -= hf_dmg1;
+                                                                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                                                                Console.WriteLine("\nYou rained down streams of fire from the sky\n" +
+                                                                                    "Landed {0} hits for {1:N0} damage with Hellfire!\n", hf_hit_range, hf_dmg1);
+                                                                Console.ForegroundColor = ConsoleColor.Yellow;
+												                Console.Write("\nPLAYER TURN END: Press enter");
+												                Console.ForegroundColor = ConsoleColor.Gray;
+												                Console.ReadKey(player_turn = false);
+                                                            }
+                                                            else if (hf_hit_range >= 65 && hf_hit_range <=99)
+                                                            {
+                                                                int hf_dmg1 = r.Next(9223 , 12141);
+                                                                nidhogg_hp -= hf_dmg1;
+                                                                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                                                                Console.WriteLine("\nYou rained down streams of fire from the sky\n" +
+                                                                                    "Landed {0} hits for {1:N0} damage with Hellfire!\n", hf_hit_range, hf_dmg1);
+                                                                Console.ForegroundColor = ConsoleColor.Yellow;
+												                Console.Write("\nPLAYER TURN END: Press enter");
+												                Console.ForegroundColor = ConsoleColor.Gray;
+												                Console.ReadKey(player_turn = false);
+                                                            }
+                                                        }
+                                                        else Console.WriteLine("\nYou do not have enough MP to cast this spell...");
+                                                    break;
+                                                    case "4" ://GravityWell
+                                                }
 												break;
-											case "3"://Wizard Item Menu
+                                            case "3"://Wizard Item Menu
 												Console.Write("------------------------\n" +
 																"   ITEM\t\tQUANTITY\n" +
 																"------------------------\n" +
@@ -707,7 +792,7 @@ namespace Ragnarok
 								Console.Write("\n\nNidhogg retaliates with a fericous blow\n" +
 													"You suffer {0:N0} HP worth of damage!\n", player_turn_dmg);
 								Console.ForegroundColor = ConsoleColor.Yellow;
-								Console.WriteLine("\nNIDHOGG TURN END: Press enter\n");
+								Console.Write("\nNIDHOGG TURN END: Press enter\n");
 								Console.ForegroundColor = ConsoleColor.Gray;
 								Console.ReadKey(player_turn = true);
 							}
@@ -722,7 +807,7 @@ namespace Ragnarok
 								Console.Write("\n\nNidhogg retaliates with a fericous blow\n" +
 													"You suffer {0:N0} HP worth of damage!\n", player_turn_dmg);
 								Console.ForegroundColor = ConsoleColor.Yellow;
-								Console.WriteLine("\nNIDHOGG TURN END: Press enter");
+								Console.Write("\nNIDHOGG TURN END: Press enter\n");
 								Console.ForegroundColor = ConsoleColor.Gray;
 								Console.ReadKey(player_turn = true);
 							}
