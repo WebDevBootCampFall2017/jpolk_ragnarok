@@ -376,13 +376,95 @@ namespace Ragnarok
 												Console.Write("------------------------\n" +
 																"   MAGIC\t\tMP COST\n" +
 																"------------------------\n" +
-																"1. Ice Lance\t\t50 MP\n" +
-																"2. Fortify\t\t80 MP\n" +
-																"3. Hellfire\t\t100 MP\n" +
-																"4. Nova\t\t\t200 MP\n" +
+																"1. Ice Lance\t\t25 MP\n" +
+																"2. Fortify\t\t50 MP\n" +
+																"3. HellFire\t\t100 MP\n" +
+																"4. GravityWell\t\t\t200 MP\n" +
 																"------------------------\n");
+                                                Console.ForegroundColor = ConsoleColor.Yellow;
+												Console.Write("Type the corresponding number to the action you would like to execute:");
+												Console.ForegroundColor = ConsoleColor.Gray;
+                                                string spell_choice = Console.ReadLine();
+                                                switch (spell_choice)
+                                                {
+                                                    case "1" ://Ice Lance
+                                                        if (Wizard.skill_points >= 25)
+                                                        { 
+                                                            int il_dmg_range = r.Next(2500, 4511);
+                                                            nidhogg_hp -= il_dmg_range;
+                                                            Wizard.skill_points -= 25;
+                                                            Console.ForegroundColor = ConsoleColor.DarkCyan;
+                                                            Console.WriteLine("\nYou conjure a glistening Ice Lance and hurl it for {0:N0} damage!" , il_dmg_range);
+                                                            Console.ForegroundColor = ConsoleColor.Yellow;
+												            Console.Write("\nPLAYER TURN END: Press enter");
+												            Console.ForegroundColor = ConsoleColor.Gray;
+												            Console.ReadKey(player_turn = false);
+                                                        }
+                                                        else Console.WriteLine("\nYou do not have enough MP to cast this spell...");
+                                                    break;
+                                                    case "2" ://Fortify
+                                                        if (Wizard.skill_points >= 50)
+                                                        {
+                                                            int fort_heal_range = r.Next(10000, 15001);
+                                                            Wizard.player_hp += fort_heal_range;
+                                                            Wizard.skill_points -= 50;
+                                                            Console.ForegroundColor = ConsoleColor.Green;
+                                                            Console.WriteLine("Engulfed by a shimmering light you gained {0:N0} HP! HP: {1:N0}", fort_heal_range, Wizard.player_hp);
+                                                            Console.ForegroundColor = ConsoleColor.Yellow;
+												            Console.Write("\nPLAYER TURN END: Press enter");
+												            Console.ForegroundColor = ConsoleColor.Gray;
+												            Console.ReadKey(player_turn = false);
+                                                        }
+                                                        else Console.WriteLine("\nYou do not have enough MP to cast this spell...");
+                                                    break;
+                                                    case "3"://Hellfire
+                                                        if (Wizard.skill_points >= 100)
+                                                        {
+                                                            int hf_hit_range = r.Next(24, 99);
+                                                            Wizard.skill_points -= 100;
+                                                            if (hf_hit_range >= 24 && hf_hit_range <=37)
+                                                            {
+                                                                int hf_dmg1 = r.Next(5999, 7556);
+                                                                nidhogg_hp -= hf_dmg1;
+                                                                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                                                                Console.WriteLine("\nYou rained down streams of fire from the sky\n" +
+                                                                                    "Landed {0} hits for {1:N0} damage with Hellfire!\n", hf_hit_range, hf_dmg1);
+                                                                Console.ForegroundColor = ConsoleColor.Yellow;
+												                Console.Write("\nPLAYER TURN END: Press enter");
+												                Console.ForegroundColor = ConsoleColor.Gray;
+												                Console.ReadKey(player_turn = false);
+                                                            }
+                                                            else if (hf_hit_range >= 38 && hf_hit_range <=64)
+                                                            {
+                                                                int hf_dmg1 = r.Next(7556, 9123);
+                                                                nidhogg_hp -= hf_dmg1;
+                                                                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                                                                Console.WriteLine("\nYou rained down streams of fire from the sky\n" +
+                                                                                    "Landed {0} hits for {1:N0} damage with Hellfire!\n", hf_hit_range, hf_dmg1);
+                                                                Console.ForegroundColor = ConsoleColor.Yellow;
+												                Console.Write("\nPLAYER TURN END: Press enter");
+												                Console.ForegroundColor = ConsoleColor.Gray;
+												                Console.ReadKey(player_turn = false);
+                                                            }
+                                                            else if (hf_hit_range >= 65 && hf_hit_range <=99)
+                                                            {
+                                                                int hf_dmg1 = r.Next(9223 , 12141);
+                                                                nidhogg_hp -= hf_dmg1;
+                                                                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                                                                Console.WriteLine("\nYou rained down streams of fire from the sky\n" +
+                                                                                    "Landed {0} hits for {1:N0} damage with Hellfire!\n", hf_hit_range, hf_dmg1);
+                                                                Console.ForegroundColor = ConsoleColor.Yellow;
+												                Console.Write("\nPLAYER TURN END: Press enter");
+												                Console.ForegroundColor = ConsoleColor.Gray;
+												                Console.ReadKey(player_turn = false);
+                                                            }
+                                                        }
+                                                        else Console.WriteLine("\nYou do not have enough MP to cast this spell...");
+                                                    break;
+                                                    case "4" ://GravityWell
+                                                }
 												break;
-											case "3"://Wizard Item Menu
+                                            case "3"://Wizard Item Menu
 												Console.Write("------------------------\n" +
 																"   ITEM\t\tQUANTITY\n" +
 																"------------------------\n" +
