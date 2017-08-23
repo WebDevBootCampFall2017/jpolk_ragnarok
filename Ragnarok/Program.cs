@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Media;
+using System.Media;//allows for bgm
 
 namespace Ragnarok
 {
@@ -21,7 +21,7 @@ namespace Ragnarok
         {
 			SoundPlayer sp = new SoundPlayer();
 			sp.SoundLocation = Environment.CurrentDirectory + "\\Music\\Odin-Sphere-Soundtrack-A-Fate-Accepted-_1080p_.wav";
-			sp.PlayLooping();
+			sp.PlayLooping();//Enivor.CDirect auto completes path so it doesn't matter what computer the program is opened in it will find the music folder
 			Console.ForegroundColor = ConsoleColor.DarkRed;//Font color
 			System.Threading.Thread.Sleep(2000);//provides a time interval before running the next line of code
 			Console.WriteLine("	 ______   _______ _______ __    _ _______ ______   _______ ___   _ "); //Title Block
@@ -59,22 +59,26 @@ namespace Ragnarok
 					System.Threading.Thread.Sleep(6000);
 					Console.Write("------------------------\n" +
 									"BERSERKER's main weapon is the sword\n" +
-									"as Berserker uses the ATTACK command, it will build Rage and give access to\n" +
-									"more skills with the RAGE command\n" +
-									"SHOULDER CHARGE: moderate damage attack\n" +
+									"when Berserker uses the ATTACK command, it will build Rage\n" + 
+									"and give access to more skills with the RAGE command\n" +
+									"SHOULDER CHARGE: moderate attack damage\n" +
 									"BLOODLUST: player gains HP 2.5x the damage done to the target\n" +
 									"CHAOS BURST: high attack damage\n" +
 									"------------------------\n");
 					System.Threading.Thread.Sleep(6000);
 					Console.Write("WIZARD's main weapon is a Magic Staff\n" +
 									"while the Wizard does not do much damage with the ATTACK command\n" +
-									"Wizard does have access to damage dealing spells" +
+									"Wizard does have access to damage dealing spells\n" +
 									"with the MAGIC command at the cost of MP\n" +
-                                    "------------------------\n");
+									"ICE LANCE: moderate attack damage\n" +
+									"FORTIFY: gain HP with high max and low min value\n" +
+									"HELLFIRE: random number of hits that scale up in damamge\n" +
+									"GRAVITYWELL: high attack damage\n" +
+									"------------------------\n");
                     System.Threading.Thread.Sleep(6000);
                     Console.Write("MONK's main weapon are martial arts\n" +
                                     "Monk has a special command named HARNESS\n" +
-                                    "by using harness you can build focus that will give you access" +
+                                    "by using harness you can build focus that will give you access\n" +
 									"to more skills with the ARTS command\n" +
 									"INNER HEALING: gain HP with high max and low min value\n" +
 									"RAPID PALM: combo attack with random hits and dmg that based off number of hits\n" +
@@ -90,10 +94,10 @@ namespace Ragnarok
 									"------------------------\n\n");
 					System.Threading.Thread.Sleep(3000);
 					Console.ForegroundColor = ConsoleColor.Yellow;
-					Console.Write("Press Enter to continue:");
+					Console.Write("Press Enter to continue:"); //Allows user to hear intro music until they are done reading
 					Console.ReadKey();
 					Console.ForegroundColor = ConsoleColor.White;
-					Console.Write("STEEL YOUR NERVE and CHOOSE YOUR PATH\n");
+					Console.Write("STEEL YOUR NERVE and CHOOSE YOUR PATH\n"); //2 C.Write cmds with no \n eats the previous line of code
 					Console.ForegroundColor = ConsoleColor.Yellow;
 					Console.Write("Please press enter:");
 					Console.ForegroundColor = ConsoleColor.Gray;
@@ -129,7 +133,7 @@ namespace Ragnarok
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write("\nType 1 for BERSKER, Type 2 for WIZARD, Type 3 for MONK:");
                 Console.ForegroundColor = ConsoleColor.Gray;
-                player_choice = Console.ReadLine(); //declared in player select loop to give custom intro for battle to each character
+                player_choice = Console.ReadLine(); //declared in player select loop to give custom intro and music for battle to each character
 
                 switch (player_choice)
                 {
@@ -159,15 +163,15 @@ namespace Ragnarok
 			Berserker.skill_points = 3;
 			Berserker.base_att_dmg = 3420;
 			
-			Wizard.player_hp = 7350;//Wizard essentials
+			Wizard.player_hp = 5350;//Wizard essentials
 			Wizard.skill_points = 300;
-			Wizard.base_att_dmg = 2101;
+			Wizard.base_att_dmg = 2401;
 
 			Monk.player_hp = 9700;//Monk essentials
 			Monk.skill_points = 10;
 			Monk.base_att_dmg = 3778;
 
-			int nidhogg_hp = 35000;//Nidhogg essentials
+			int nidhogg_hp = 50000;//Nidhogg essentials
 			int nidhogg_base_dmg = 3701;
 
 			int potion_amt = 5;//item variables
@@ -202,7 +206,7 @@ namespace Ragnarok
 										switch (player_action)
 										{
 											case "1": //Berserker standard attack
-												int acc = r.Next(10);
+												int acc = r.Next(11);
 												if (acc == 6) //Provides a 10% chance for Nidhogg to dodge 
 												{
 													Console.ForegroundColor = ConsoleColor.Red;
@@ -243,7 +247,7 @@ namespace Ragnarok
 													case "1"://Shoulder Charge
 														if (Berserker.skill_points >= 2)
 														{
-															int sc_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .99) / 1.98 );
+															int sc_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + 1.67) / 1.98 );
 															nidhogg_hp -= sc_dmg;
 															Berserker.skill_points -= 2;
 															Console.ForegroundColor = ConsoleColor.DarkCyan;
@@ -259,7 +263,7 @@ namespace Ragnarok
 													case "2"://Bloodlust
 														if (Berserker.skill_points >= 3)
 														{
-															int bl_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .6) / 2 );
+															int bl_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .90) / 2 );
 															nidhogg_hp -= bl_dmg;
 															Berserker.player_hp += (int)(bl_dmg * 2.5);
 															Berserker.skill_points -= 3;
@@ -279,7 +283,7 @@ namespace Ragnarok
 														if (Berserker.skill_points >= 5)
 														{
 															int berserker_chaos = 9000;
-															int cb_dmg = (int)(berserker_chaos * (r.NextDouble() + .96) / 2 );
+															int cb_dmg = (int)(berserker_chaos * (r.NextDouble() + 1.96) / 2 );
 															nidhogg_hp -= cb_dmg;
 															Berserker.skill_points -= 5;
 															Console.ForegroundColor = ConsoleColor.DarkCyan;
@@ -377,9 +381,9 @@ namespace Ragnarok
 																"   MAGIC\t\tMP COST\n" +
 																"------------------------\n" +
 																"1. Ice Lance\t\t25 MP\n" +
-																"2. Fortify\t\t50 MP\n" +
-																"3. HellFire\t\t100 MP\n" +
-																"4. GravityWell\t\t\t200 MP\n" +
+																"2. Fortify\t\t100 MP\n" +
+																"3. HellFire\t\t150 MP\n" +
+																"4. GravityWell\t\t300 MP\n" +
 																"------------------------\n");
                                                 Console.ForegroundColor = ConsoleColor.Yellow;
 												Console.Write("Type the corresponding number to the action you would like to execute:");
@@ -390,11 +394,11 @@ namespace Ragnarok
                                                     case "1" ://Ice Lance
                                                         if (Wizard.skill_points >= 25)
                                                         { 
-                                                            int il_dmg_range = r.Next(2500, 4511);
+                                                            int il_dmg_range = r.Next(2000, 3511);//using Next method for random dmg range
                                                             nidhogg_hp -= il_dmg_range;
                                                             Wizard.skill_points -= 25;
                                                             Console.ForegroundColor = ConsoleColor.DarkCyan;
-                                                            Console.WriteLine("\nYou conjure a glistening Ice Lance and hurl it for {0:N0} damage!" , il_dmg_range);
+                                                            Console.WriteLine("\nYou conjure a glistening Ice Lance and send it flying through the air for {0:N0} damage!" , il_dmg_range);
                                                             Console.ForegroundColor = ConsoleColor.Yellow;
 												            Console.Write("\nPLAYER TURN END: Press enter");
 												            Console.ForegroundColor = ConsoleColor.Gray;
@@ -403,13 +407,13 @@ namespace Ragnarok
                                                         else Console.WriteLine("\nYou do not have enough MP to cast this spell...");
                                                     break;
                                                     case "2" ://Fortify
-                                                        if (Wizard.skill_points >= 50)
+                                                        if (Wizard.skill_points >= 100)
                                                         {
-                                                            int fort_heal_range = r.Next(10000, 15001);
+                                                            int fort_heal_range = r.Next(3500, 10101);
                                                             Wizard.player_hp += fort_heal_range;
-                                                            Wizard.skill_points -= 50;
+                                                            Wizard.skill_points -= 100;
                                                             Console.ForegroundColor = ConsoleColor.Green;
-                                                            Console.WriteLine("Engulfed by a shimmering light you gained {0:N0} HP! HP: {1:N0}", fort_heal_range, Wizard.player_hp);
+                                                            Console.WriteLine("\nEngulfed by a shimmering light you gained {0:N0} HP! HP: {1:N0}", fort_heal_range, Wizard.player_hp);
                                                             Console.ForegroundColor = ConsoleColor.Yellow;
 												            Console.Write("\nPLAYER TURN END: Press enter");
 												            Console.ForegroundColor = ConsoleColor.Gray;
@@ -418,17 +422,17 @@ namespace Ragnarok
                                                         else Console.WriteLine("\nYou do not have enough MP to cast this spell...");
                                                     break;
                                                     case "3"://Hellfire
-                                                        if (Wizard.skill_points >= 100)
+                                                        if (Wizard.skill_points >= 150)
                                                         {
                                                             int hf_hit_range = r.Next(24, 99);
-                                                            Wizard.skill_points -= 100;
+                                                            Wizard.skill_points -= 150;
                                                             if (hf_hit_range >= 24 && hf_hit_range <=37)
                                                             {
-                                                                int hf_dmg1 = r.Next(5999, 7556);
+                                                                int hf_dmg1 = r.Next(3999, 5556);
                                                                 nidhogg_hp -= hf_dmg1;
                                                                 Console.ForegroundColor = ConsoleColor.DarkCyan;
                                                                 Console.WriteLine("\nYou rained down streams of fire from the sky\n" +
-                                                                                    "Landed {0} hits for {1:N0} damage with Hellfire!\n", hf_hit_range, hf_dmg1);
+                                                                                    "Landed {0} hits for {1:N0} damage with Hellfire!", hf_hit_range, hf_dmg1);
                                                                 Console.ForegroundColor = ConsoleColor.Yellow;
 												                Console.Write("\nPLAYER TURN END: Press enter");
 												                Console.ForegroundColor = ConsoleColor.Gray;
@@ -436,11 +440,11 @@ namespace Ragnarok
                                                             }
                                                             else if (hf_hit_range >= 38 && hf_hit_range <=64)
                                                             {
-                                                                int hf_dmg1 = r.Next(7556, 9123);
+                                                                int hf_dmg1 = r.Next(6556, 7123);
                                                                 nidhogg_hp -= hf_dmg1;
                                                                 Console.ForegroundColor = ConsoleColor.DarkCyan;
                                                                 Console.WriteLine("\nYou rained down streams of fire from the sky\n" +
-                                                                                    "Landed {0} hits for {1:N0} damage with Hellfire!\n", hf_hit_range, hf_dmg1);
+                                                                                    "Landed {0} hits for {1:N0} damage with Hellfire!", hf_hit_range, hf_dmg1);
                                                                 Console.ForegroundColor = ConsoleColor.Yellow;
 												                Console.Write("\nPLAYER TURN END: Press enter");
 												                Console.ForegroundColor = ConsoleColor.Gray;
@@ -448,11 +452,11 @@ namespace Ragnarok
                                                             }
                                                             else if (hf_hit_range >= 65 && hf_hit_range <=99)
                                                             {
-                                                                int hf_dmg1 = r.Next(9223 , 12141);
+                                                                int hf_dmg1 = r.Next(9223 , 10141);
                                                                 nidhogg_hp -= hf_dmg1;
                                                                 Console.ForegroundColor = ConsoleColor.DarkCyan;
                                                                 Console.WriteLine("\nYou rained down streams of fire from the sky\n" +
-                                                                                    "Landed {0} hits for {1:N0} damage with Hellfire!\n", hf_hit_range, hf_dmg1);
+                                                                                    "Landed {0} hits for {1:N0} damage with Hellfire!", hf_hit_range, hf_dmg1);
                                                                 Console.ForegroundColor = ConsoleColor.Yellow;
 												                Console.Write("\nPLAYER TURN END: Press enter");
 												                Console.ForegroundColor = ConsoleColor.Gray;
@@ -462,6 +466,22 @@ namespace Ragnarok
                                                         else Console.WriteLine("\nYou do not have enough MP to cast this spell...");
                                                     break;
                                                     case "4" ://GravityWell
+														if (Wizard.skill_points >= 300)
+														{
+															Wizard.skill_points -= 300;
+															int gw_dmg = r.Next(8650, 12441);
+															nidhogg_hp -= gw_dmg;
+															Console.ForegroundColor = ConsoleColor.DarkCyan;
+															Console.WriteLine("\nYou conjure a portal on the gound below, before your target realizes\n" +
+																				"it is hurtling down, high from the sky, slams with great impact!\n" +
+																				"Inflicted {0:N0} damage with GravityWell!", gw_dmg);
+															Console.ForegroundColor = ConsoleColor.Yellow;
+												            Console.Write("\nPLAYER TURN END: Press enter");
+												            Console.ForegroundColor = ConsoleColor.Gray;
+												            Console.ReadKey(player_turn = false);
+														}
+														else Console.WriteLine("\nYou do not have enough MP to cast this spell...");
+                                                    break;
                                                 }
 												break;
                                             case "3"://Wizard Item Menu
@@ -518,7 +538,7 @@ namespace Ragnarok
 															Console.ForegroundColor = ConsoleColor.Gray;
 															Console.ReadKey(player_turn = false);
 														}
-														else Console.WriteLine("\nYou have no ethers left to use");
+														else Console.WriteLine("\nYou have no Ethers left to use");
 														break;
 													default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
 												}
@@ -546,7 +566,7 @@ namespace Ragnarok
 										switch (player_action)
 										{
 											case "1"://Monk standard attack
-												int acc = r.Next(8);
+												int acc = r.Next(9);
 												if (acc == 3) //Provides a 12.5% chance for Nidhogg to dodge 
 												{
 													Console.ForegroundColor = ConsoleColor.Red;
@@ -625,7 +645,7 @@ namespace Ragnarok
 													case "1"://Inner Healing
 														if (Monk.skill_points >= 20)
 														{
-															int inner_heal = r.Next(5000, 10001);
+															int inner_heal = r.Next(5420, 10421);
 															Monk.player_hp += inner_heal;
 															Monk.skill_points -= 20;
 															Console.ForegroundColor = ConsoleColor.Green;
@@ -652,7 +672,8 @@ namespace Ragnarok
 																	int palm_dmg = (int)((palm_base_dmg * (r.NextDouble() + .98)) / 1.34);
 																	nidhogg_hp -= palm_dmg;
 																	Console.ForegroundColor = ConsoleColor.DarkCyan;
-																	Console.WriteLine("\nYou landed {0} hits with Rapid Palm for {1:N0} damage!" , (palm_combo * 3), palm_dmg);
+																	Console.WriteLine("\nWith a deep breath and a spark of brilliance in your eye\n" + 
+																						"You landed {0} hits with Rapid Palm for {1:N0} damage!" , (palm_combo * 3), palm_dmg);
 																	Console.ForegroundColor = ConsoleColor.Yellow;
 																	Console.Write("\nPLAYER TURN END: Press enter");
 																	Console.ForegroundColor = ConsoleColor.Gray;
@@ -663,7 +684,8 @@ namespace Ragnarok
 																	int palm_dmg2 = (int)((palm_base_dmg2 * (r.NextDouble() + 1.38)) / 1.54);
 																	nidhogg_hp -= palm_dmg2;
 																	Console.ForegroundColor = ConsoleColor.DarkCyan;
-																	Console.WriteLine("\nYou landed {0} hits with Rapid Palm for {1:N0} damage!" , (palm_combo * 3), palm_dmg2);
+																	Console.WriteLine("\nWith a deep breath and a spark of brilliance in your eye\n" + 
+																						"You landed {0} hits with Rapid Palm for {1:N0} damage!", (palm_combo * 3), palm_dmg2);
 																	Console.ForegroundColor = ConsoleColor.Yellow;
 																	Console.Write("\nPLAYER TURN END: Press enter");
 																	Console.ForegroundColor = ConsoleColor.Gray;
@@ -671,10 +693,11 @@ namespace Ragnarok
 																break;
 																case 4 :
 																	int palm_base_dmg3 = 5000;
-																	int palm_dmg3 = (int)((palm_base_dmg3 * (r.NextDouble() + 1.75)) / 1.64);
+																	int palm_dmg3 = (int)((palm_base_dmg3 * (r.NextDouble() + 1.95)) / 1.64);
 																	nidhogg_hp -= palm_dmg3;
 																	Console.ForegroundColor = ConsoleColor.DarkCyan;
-																	Console.WriteLine("\nYou landed {0} hits with Rapid Palm for {1:N0} damage!" , (palm_combo * 3), palm_dmg3);
+																	Console.WriteLine("\nWith a deep breath and a spark of brilliance in your eye\n" + 
+																						"You landed {0} hits with Rapid Palm for {1:N0} damage!", (palm_combo * 3), palm_dmg3);
 																	Console.ForegroundColor = ConsoleColor.Yellow;
 																	Console.Write("\nPLAYER TURN END: Press enter");
 																	Console.ForegroundColor = ConsoleColor.Gray;
