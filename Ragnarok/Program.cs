@@ -218,7 +218,7 @@ namespace Ragnarok
 								{
 									case "1": //Berserker standard attack
 										int acc = r.Next(11);
-										if (acc == 6) //Provides a 10% chance for Nidhogg to dodge 
+										if (acc == 6) //Provides a 8.3% chance for Nidhogg to dodge 
 										{
 											Console.ForegroundColor = ConsoleColor.Red;
 											Console.WriteLine("\nNidhogg anticpates your attack and swiftly dodges!");
@@ -578,7 +578,7 @@ namespace Ragnarok
 								{
 									case "1"://Monk standard attack
 										int acc = r.Next(9);
-										if (acc == 3) //Provides a 12.5% chance for Nidhogg to dodge 
+										if (acc == 3) //Provides a 10% chance for Nidhogg to dodge 
 										{
 											Console.ForegroundColor = ConsoleColor.Red;
 											Console.WriteLine("\nNidhogg anticpates your attack and swiftly dodges!");
@@ -801,7 +801,7 @@ namespace Ragnarok
 				NH_attacks.Add("Fang");  NH_attacks.Add("TailWhip");
 				NH_attacks.Add("Claw"); NH_attacks.Add("Fang");
 				NH_attacks.Add("TailWhip"); NH_attacks.Add("Fang");
-				NH_attacks.Add("DiveBomber");
+				NH_attacks.Add("DiveBomber"); NH_attacks.Add("Claw");
 
 				if (nidhogg_hp <= 20000 && nidhogg_hp > 0)
 				{
@@ -834,18 +834,50 @@ namespace Ragnarok
 							switch (NH_attacks[NH_attack_choice].ToString())
 							{
 								case "Claw":
-									Console.Write("\nClaw\n");
-									Console.ForegroundColor = ConsoleColor.Yellow;
-									Console.Write("\nNIDHOGG TURN END: Press enter\n");
-									Console.ForegroundColor = ConsoleColor.Gray;
-									Console.ReadKey(player_turn = true);
+									int claw_acc = r.Next(8);
+									if (claw_acc == 2)
+									{
+										Console.ForegroundColor = ConsoleColor.DarkGreen;
+										Console.Write("\n\nYou sidestep Nidhogg's massive claws!\n");
+										Console.ForegroundColor = ConsoleColor.Yellow;
+										Console.Write("\nNIDHOGG TURN END: Press enter\n");
+										Console.ForegroundColor = ConsoleColor.Gray;
+										Console.ReadKey(player_turn = true);
+									}
+									else
+									{
+										int claw_dmg = r.Next(899, 1760);
+										Berserker.player_hp -= claw_dmg;
+										Console.ForegroundColor = ConsoleColor.DarkMagenta;
+										Console.Write("\n\nNidhogg delivers a sudden strike with it's claws for {0:N0} damage!\n", claw_dmg);
+										Console.ForegroundColor = ConsoleColor.Yellow;
+										Console.Write("\nNIDHOGG TURN END: Press enter\n");
+										Console.ForegroundColor = ConsoleColor.Gray;
+										Console.ReadKey(player_turn = true);
+									}
 									break;
 								case "Fang":
-									Console.Write("\nFang\n");
-									Console.ForegroundColor = ConsoleColor.Yellow;
-									Console.Write("\nNIDHOGG TURN END: Press enter\n");
-									Console.ForegroundColor = ConsoleColor.Gray;
-									Console.ReadKey(player_turn = true);
+									int fang_acc = r.Next(9);
+									if (fang_acc == 0)
+									{
+										Console.ForegroundColor = ConsoleColor.DarkGreen;
+										Console.Write("\n\nNidhogg's razor sharp teeth barely miss your flesh!\n");
+										Console.ForegroundColor = ConsoleColor.Yellow;
+										Console.Write("\nNIDHOGG TURN END: Press enter\n");
+										Console.ForegroundColor = ConsoleColor.Gray;
+										Console.ReadKey(player_turn = true);
+									}
+									else
+									{
+										int fang_dmg = r.Next (1100, 2076);
+										Berserker.player_hp -= fang_dmg;
+										Console.ForegroundColor = ConsoleColor.DarkMagenta;
+										Console.Write("\n\nNidhogg's fangs find their mark for {0:N0} damage!\n", fang_dmg);
+										Console.ForegroundColor = ConsoleColor.Yellow;
+										Console.Write("\nNIDHOGG TURN END: Press enter\n");
+										Console.ForegroundColor = ConsoleColor.Gray;
+										Console.ReadKey(player_turn = true);
+									}
 									break;
 								case "TailWhip":
 									Console.Write("\nTailWhip\n");
@@ -876,30 +908,159 @@ namespace Ragnarok
 						while ((player_turn == false) & (Wizard.player_hp > 0 && nidhogg_hp > 0))
 						{
 							System.Threading.Thread.Sleep(1000);
-							int player_turn_dmg = (int)(nidhogg_base_dmg * (r.NextDouble() + .65) / 2);
-							Wizard.player_hp -= player_turn_dmg;
-							Console.ForegroundColor = ConsoleColor.DarkMagenta;
-							Console.Write("\n\nNidhogg retaliates with a fericous blow\n" +
-												"You suffer {0:N0} HP worth of damage!\n", player_turn_dmg);
-							Console.ForegroundColor = ConsoleColor.Yellow;
-							Console.Write("\nNIDHOGG TURN END: Press enter\n");
-							Console.ForegroundColor = ConsoleColor.Gray;
-							Console.ReadKey(player_turn = true);
+							int NH_attack_choice = r.Next(NH_attacks.Count);
+							switch (NH_attacks[NH_attack_choice].ToString())
+							{
+								case "Claw":
+									int claw_acc = r.Next(8);
+									if (claw_acc == 2)
+									{
+										Console.ForegroundColor = ConsoleColor.DarkGreen;
+										Console.Write("\n\nYou gracefully backstep Nidhogg's massive claws!\n");
+										Console.ForegroundColor = ConsoleColor.Yellow;
+										Console.Write("\nNIDHOGG TURN END: Press enter\n");
+										Console.ForegroundColor = ConsoleColor.Gray;
+										Console.ReadKey(player_turn = true);
+									}
+									else
+									{
+										int claw_dmg = r.Next(899, 1560);
+										Wizard.player_hp -= claw_dmg;
+										Console.ForegroundColor = ConsoleColor.DarkMagenta;
+										Console.Write("\n\nNidhogg delivers a sudden strike with it's claws for {0:N0} damage!\n", claw_dmg);
+										Console.ForegroundColor = ConsoleColor.Yellow;
+										Console.Write("\nNIDHOGG TURN END: Press enter\n");
+										Console.ForegroundColor = ConsoleColor.Gray;
+										Console.ReadKey(player_turn = true);
+									}
+									break;
+								case "Fang":
+									int fang_acc = r.Next(9);
+									if (fang_acc == 0)
+									{
+										Console.ForegroundColor = ConsoleColor.DarkGreen;
+										Console.Write("\n\nYou create a mist image of yourself, causing Nidhogg to bite through thin air!\n");
+										Console.ForegroundColor = ConsoleColor.Yellow;
+										Console.Write("\nNIDHOGG TURN END: Press enter\n");
+										Console.ForegroundColor = ConsoleColor.Gray;
+										Console.ReadKey(player_turn = true);
+									}
+									else
+									{
+										int fang_dmg = r.Next(1100, 2076);
+										Wizard.player_hp -= fang_dmg;
+										Console.ForegroundColor = ConsoleColor.DarkMagenta;
+										Console.Write("\n\nNidhogg's fangs find their mark for {0:N0} damage!\n", fang_dmg);
+										Console.ForegroundColor = ConsoleColor.Yellow;
+										Console.Write("\nNIDHOGG TURN END: Press enter\n");
+										Console.ForegroundColor = ConsoleColor.Gray;
+										Console.ReadKey(player_turn = true);
+									}
+									break;
+								case "TailWhip":
+									Console.Write("\nTailWhip\n");
+									Console.ForegroundColor = ConsoleColor.Yellow;
+									Console.Write("\nNIDHOGG TURN END: Press enter\n");
+									Console.ForegroundColor = ConsoleColor.Gray;
+									Console.ReadKey(player_turn = true);
+									break;
+								case "DiveBomber":
+									Console.Write("\nDiveBomber\n");
+									Console.ForegroundColor = ConsoleColor.Yellow;
+									Console.Write("\nNIDHOGG TURN END: Press enter\n");
+									Console.ForegroundColor = ConsoleColor.Gray;
+									Console.ReadKey(player_turn = true);
+									break;
+								case "DragonBreath":
+									Console.Write("\nDragonBreath\n");
+									Console.ForegroundColor = ConsoleColor.Yellow;
+									Console.Write("\nNIDHOGG TURN END: Press enter\n");
+									Console.ForegroundColor = ConsoleColor.Gray;
+									Console.ReadKey(player_turn = true);
+									break;
+							}
+							break;
 						}
 						break;
-						case "3"://Attack against monk
+						case "3"://Attack against Monk
 						while ((player_turn == false) & (Monk.player_hp > 0 && nidhogg_hp > 0))
 						{
 							System.Threading.Thread.Sleep(1000);
-							int player_turn_dmg = (int)(nidhogg_base_dmg * (r.NextDouble() + .65) / 2); 
-							Monk.player_hp -= player_turn_dmg;
-							Console.ForegroundColor = ConsoleColor.DarkMagenta;
-							Console.Write("\n\nNidhogg retaliates with a fericous blow\n" +
-												"You suffer {0:N0} HP worth of damage!\n", player_turn_dmg);
-							Console.ForegroundColor = ConsoleColor.Yellow;
-							Console.Write("\nNIDHOGG TURN END: Press enter\n");
-							Console.ForegroundColor = ConsoleColor.Gray;
-							Console.ReadKey(player_turn = true);
+							int NH_attack_choice = r.Next(NH_attacks.Count);
+							switch (NH_attacks[NH_attack_choice].ToString())
+							{
+								case "Claw":
+									int claw_acc = r.Next(8);
+									if (claw_acc == 2)
+									{
+										Console.ForegroundColor = ConsoleColor.DarkGreen;
+										Console.Write("\n\nYou parry Nidhogg's massive claws with the back of your forearm!\n");
+										Console.ForegroundColor = ConsoleColor.Yellow;
+										Console.Write("\nNIDHOGG TURN END: Press enter\n");
+										Console.ForegroundColor = ConsoleColor.Gray;
+										Console.ReadKey(player_turn = true);
+									}
+									else
+									{
+										int claw_dmg = r.Next(899, 1860);
+										Monk.player_hp -= claw_dmg;
+										Console.ForegroundColor = ConsoleColor.DarkMagenta;
+										Console.Write("\n\nNidhogg delivers a sudden strike with it's claws for {0:N0} damage!\n", claw_dmg);
+										Console.ForegroundColor = ConsoleColor.Yellow;
+										Console.Write("\nNIDHOGG TURN END: Press enter\n");
+										Console.ForegroundColor = ConsoleColor.Gray;
+										Console.ReadKey(player_turn = true);
+									}
+									break;
+								case "Fang":
+									int fang_acc = r.Next(9);
+									if (fang_acc == 0)
+									{
+										int deflect_dmg = r.Next(1000, 1501);
+										nidhogg_hp -= deflect_dmg;
+										Console.ForegroundColor = ConsoleColor.DarkGreen;
+										Console.Write("\n\nYou deflect Nidhogg's fercious bite with a well timed kick!\n" +
+														"Inflicting {0:N0} damage in the process!\n", deflect_dmg);
+										Console.ForegroundColor = ConsoleColor.Yellow;
+										Console.Write("\nNIDHOGG TURN END: Press enter\n");
+										Console.ForegroundColor = ConsoleColor.Gray;
+										Console.ReadKey(player_turn = true);
+									}
+									else
+									{
+										int fang_dmg = r.Next(1100, 2076);
+										Monk.player_hp -= fang_dmg;
+										Console.ForegroundColor = ConsoleColor.DarkMagenta;
+										Console.Write("\n\nNidhogg's fangs find their mark for {0:N0} damage!\n", fang_dmg);
+										Console.ForegroundColor = ConsoleColor.Yellow;
+										Console.Write("\nNIDHOGG TURN END: Press enter\n");
+										Console.ForegroundColor = ConsoleColor.Gray;
+										Console.ReadKey(player_turn = true);
+									}
+									break;
+								case "TailWhip":
+									Console.Write("\nTailWhip\n");
+									Console.ForegroundColor = ConsoleColor.Yellow;
+									Console.Write("\nNIDHOGG TURN END: Press enter\n");
+									Console.ForegroundColor = ConsoleColor.Gray;
+									Console.ReadKey(player_turn = true);
+									break;
+								case "DiveBomber":
+									Console.Write("\nDiveBomber\n");
+									Console.ForegroundColor = ConsoleColor.Yellow;
+									Console.Write("\nNIDHOGG TURN END: Press enter\n");
+									Console.ForegroundColor = ConsoleColor.Gray;
+									Console.ReadKey(player_turn = true);
+									break;
+								case "DragonBreath":
+									Console.Write("\nDragonBreath\n");
+									Console.ForegroundColor = ConsoleColor.Yellow;
+									Console.Write("\nNIDHOGG TURN END: Press enter\n");
+									Console.ForegroundColor = ConsoleColor.Gray;
+									Console.ReadKey(player_turn = true);
+									break;
+							}
+							break;
 						}
 						break;
 						default: break;
