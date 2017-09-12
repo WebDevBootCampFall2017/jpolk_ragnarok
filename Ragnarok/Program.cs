@@ -123,38 +123,9 @@ namespace Ragnarok
 					Console.ForegroundColor = ConsoleColor.Gray;
 				}
             }
-			sp.Stop();
-			string player_choice = Console.ReadLine(); //Need this variable declared in the main body for use with battle loop
-            string path;
-			System.Threading.Thread.Sleep(700);
-            bool player_select_loop = true;
-            while (player_select_loop)
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write("\nType 1 for BERSKER, Type 2 for WIZARD, Type 3 for MONK:");
-                Console.ForegroundColor = ConsoleColor.Gray;
-                player_choice = Console.ReadLine(); //declared in player select loop to give custom intro and music for battle to each character
-
-                switch (player_choice)
-                {
-                    case "1": path = "------------------------\n" + "Blood Boiling, You approach Nidhogg\n" + "------------------------"; player_select_loop = false;
-						    sp.SoundLocation = Environment.CurrentDirectory + "\\Music\\Odin-Sphere-Soundtrack-Hope_-Following-The-Difficult-Battle-_1080p_.wav";
-							sp.PlayLooping(); break;
-                    case "2": path = "------------------------\n" + "Wise and Thoughtful, You approach Nidhogg\n" + "------------------------"; player_select_loop = false;
-							sp.SoundLocation = Environment.CurrentDirectory + "\\Music\\Odin-Sphere-Soundtrack-Battle-In-Fairy-Land-_1080p_.wav";
-							sp.PlayLooping(); break;
-                    case "3": path = "------------------------\n" + "Centered and Focused, You approach Nidhogg\n" + "------------------------"; player_select_loop = false;
-							sp.SoundLocation = Environment.CurrentDirectory + "\\Music\\Odin-Sphere-Soundtrack-Terror-And-Courage-_1080p_.wav";
-							sp.PlayLooping(); break;
-                    default: path = "\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"; break;
-                }
-                Console.Write(path);
-            }
-
-            
-
-            Random r = new Random(); //generic random variable for dmg modifying
 			
+			Random r = new Random(); //generic random variable for dmg modifying
+
 			Player Berserker = new Player();
 			Player Wizard = new Player();
 			Player Monk = new Player();
@@ -162,7 +133,7 @@ namespace Ragnarok
 			Berserker.player_hp = 8500;//Berserker essentials
 			Berserker.skill_points = 3;
 			Berserker.base_att_dmg = 3420;
-			
+
 			Wizard.player_hp = 5350;//Wizard essentials
 			Wizard.skill_points = 300;
 			Wizard.base_att_dmg = 2401;
@@ -179,7 +150,48 @@ namespace Ragnarok
 			int ether_amt = 2;
 			string item_choice;
 
-			string player_action;//variable to take player's choice in the battle menu
+			string player_choice = Console.ReadLine(); //Need this variable declared in the main body for use with battle loop
+
+			bool wasexecuted = false; //Declared before the batteloops for use with nidhogg low hp music change
+
+			System.Threading.Thread.Sleep(700);
+            bool player_select_loop = true;
+            while (player_select_loop)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("\nType 1 for BERSKER, Type 2 for WIZARD, Type 3 for MONK:");
+                Console.ForegroundColor = ConsoleColor.Gray;
+                player_choice = Console.ReadLine(); //declared in player select loop to give custom intro and music for battle to each character
+
+                switch (player_choice)
+                {
+                    case "1":
+						sp.Stop();
+						Console.Write("------------------------\n" + "Blood Boiling, You approach Nidhogg\n" + "------------------------");
+						player_select_loop = false;
+						sp.SoundLocation = Environment.CurrentDirectory + "\\Music\\Odin-Sphere-Soundtrack-Hope_-Following-The-Difficult-Battle-_1080p_.wav";
+						sp.PlayLooping();
+					break;
+                    case "2":
+						sp.Stop();
+						Console.Write("------------------------\n" + "Wise and Thoughtful, You approach Nidhogg\n" + "------------------------");
+						player_select_loop = false;
+						sp.SoundLocation = Environment.CurrentDirectory + "\\Music\\Odin-Sphere-Soundtrack-Battle-In-Fairy-Land-_1080p_.wav";
+						sp.PlayLooping();
+					break;
+                    case "3":
+						sp.Stop();
+						Console.Write("------------------------\n" + "Centered and Focused, You approach Nidhogg\n" + "------------------------");
+						player_select_loop = false;
+						sp.SoundLocation = Environment.CurrentDirectory + "\\Music\\Odin-Sphere-Soundtrack-Terror-And-Courage-_1080p_.wav";
+						sp.PlayLooping();
+					break;
+                    default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
+                }
+                
+            }
+
+            string player_action;//variable to take player's choice in the battle menu
 
 			bool player_turn = true;//needed for switching between player and nidhogg turn
 
@@ -187,7 +199,7 @@ namespace Ragnarok
 			{
 					switch (player_choice) //branches correctly for the character chosen
 					{
-			
+						
 								case "1"://Berserker battle loop
 									while ((player_turn) & (Berserker.player_hp > 0))
 									{
@@ -784,6 +796,17 @@ namespace Ragnarok
 									break;
 									default: break;
 					}
+				if (wasexecuted == false) //Nidhogg low hp battle theme
+				{
+					if (nidhogg_hp <= 20000 && nidhogg_hp > 0)
+					{
+						sp.Stop();
+						sp.SoundLocation = Environment.CurrentDirectory + "\\Music\\Odin Sphere Leifthrasir OST - Battle in RagnanivalFinal Chapter.wav";
+						sp.PlayLooping();
+						wasexecuted = true;
+					}
+				}
+
 				if (player_turn == false) //At first I tried using 2 while loops but figured out the code needs to be nested inside the same 
 										//loop to actually recall the first player_choice switch
 				{
@@ -861,11 +884,14 @@ namespace Ragnarok
 				"	╚██╗ ██╔╝██║██║        ██║   ██║   ██║██╔══██╗  ╚██╔╝  \n" +
 				"	 ╚████╔╝ ██║╚██████╗   ██║   ╚██████╔╝██║  ██║   ██║   \n" +
 				"	  ╚═══╝  ╚═╝ ╚═════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ";
-                                                       
-
+				
+				
 				if (Berserker.player_hp <= 0 || Wizard.player_hp <= 0 || Monk.player_hp <= 0)//Defeat condition
 				{
 					sp.Stop();
+					System.Threading.Thread.Sleep(1000);
+					sp.SoundLocation = Environment.CurrentDirectory + "\\Music\\07-Guadosalam.wav";
+					sp.Play();
 					System.Threading.Thread.Sleep(2000);
 					Console.ForegroundColor = ConsoleColor.DarkRed;
 					Console.Write("\n {0}", defeat);
@@ -876,6 +902,9 @@ namespace Ragnarok
 				else if (nidhogg_hp <= 0)//Victory Condition
 				{
 					sp.Stop();
+					System.Threading.Thread.Sleep(1000);
+					sp.SoundLocation = Environment.CurrentDirectory + "\\Music\\09-Attack.wav";
+					sp.Play();
 					System.Threading.Thread.Sleep(3500);
 					Console.ForegroundColor = ConsoleColor.DarkYellow;
 					Console.Write("\n\n {0}" , victory);
