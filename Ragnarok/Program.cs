@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Media;//allows for bgm
-
+using System.Collections;//allows for use of arraylists
 namespace Ragnarok
 {
 	class Program
 	{
-        public class Player
-        {
+		public class Player
+		{
 			public int player_hp { get; set; }
 			public int skill_points { get; set; }
 			public int base_att_dmg { get; set; }
@@ -199,390 +199,468 @@ namespace Ragnarok
 			{
 					switch (player_choice) //branches correctly for the character chosen
 					{
-						
-								case "1"://Berserker battle loop
-									while ((player_turn) & (Berserker.player_hp > 0))
-									{
-										System.Threading.Thread.Sleep(900);
-										Console.Write("\n------------------------\n");
-										Console.WriteLine("Current HP: {0:N0}\t" + "Rage: {1}", Berserker.player_hp, Berserker.skill_points); 
+						case "1"://Berserker battle loop
+							while ((player_turn) & (Berserker.player_hp > 0))
+							{
+								System.Threading.Thread.Sleep(900);
+								Console.Write("\n------------------------\n");
+								Console.WriteLine("Current HP: {0:N0}\t" + "Rage: {1}", Berserker.player_hp, Berserker.skill_points); 
+								Console.Write("------------------------\n" +
+												"1. ATTACK\n" + 
+												"2. RAGE\n" + 
+												"3. ITEM\n" +
+												"------------------------\n");
+								Console.ForegroundColor = ConsoleColor.Yellow;
+								Console.Write("Type the corresponding number to the action you would like to execute:");
+								Console.ForegroundColor = ConsoleColor.Gray;
+								player_action = Console.ReadLine();
+								switch (player_action)
+								{
+									case "1": //Berserker standard attack
+										int acc = r.Next(11);
+										if (acc == 6) //Provides a 10% chance for Nidhogg to dodge 
+										{
+											Console.ForegroundColor = ConsoleColor.Red;
+											Console.WriteLine("\nNidhogg anticpates your attack and swiftly dodges!");
+											Console.ForegroundColor = ConsoleColor.Yellow;
+											Console.Write("\nPLAYER TURN END: Press enter");
+											Console.ForegroundColor = ConsoleColor.Gray;
+											Console.ReadKey(player_turn = false);
+										}
+										else
+										{
+											int physical_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .65) / 2 );
+											nidhogg_hp -= physical_dmg;
+											Berserker.skill_points++;
+											Console.ForegroundColor = ConsoleColor.Cyan;
+											Console.WriteLine("\nYou slashed Nidhogg for {0:N0} damage! +1 Rage!" , physical_dmg);
+											Console.ForegroundColor = ConsoleColor.Yellow;
+											Console.Write("\nPLAYER TURN END: Press enter");
+											Console.ForegroundColor = ConsoleColor.Gray;
+											Console.ReadKey(player_turn = false);
+										}
+										break;
+									case "2": //Berserker Rage Skill Menu
+										string berserker_rage_skill;
 										Console.Write("------------------------\n" +
-														"1. ATTACK\n" + 
-														"2. RAGE\n" + 
-														"3. ITEM\n" +
+														"   RAGE SKILL\t\tRAGE COST\n" +
+														"------------------------\n" +
+														"1. Shoulder Charge\t 2 Rage\n" +
+														"2. Bloodlust\t\t 3 Rage\n" +
+														"3. Chaos Burst\t\t 5 Rage\n" +
 														"------------------------\n");
 										Console.ForegroundColor = ConsoleColor.Yellow;
 										Console.Write("Type the corresponding number to the action you would like to execute:");
 										Console.ForegroundColor = ConsoleColor.Gray;
-										player_action = Console.ReadLine();
-										switch (player_action)
+										berserker_rage_skill = Console.ReadLine();
+										switch (berserker_rage_skill)
 										{
-											case "1": //Berserker standard attack
-												int acc = r.Next(11);
-												if (acc == 6) //Provides a 10% chance for Nidhogg to dodge 
+											case "1"://Shoulder Charge
+												if (Berserker.skill_points >= 2)
 												{
-													Console.ForegroundColor = ConsoleColor.Red;
-													Console.WriteLine("\nNidhogg anticpates your attack and swiftly dodges!");
+													int sc_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + 1.67) / 1.98 );
+													nidhogg_hp -= sc_dmg;
+													Berserker.skill_points -= 2;
+													Console.ForegroundColor = ConsoleColor.DarkCyan;
+													Console.Write("\nWith reckless determination you charge with the spiked pauldron of your armor\n" +
+																	"You inflicted {0:N0} damage with Shoulder Charge!\n", sc_dmg);
 													Console.ForegroundColor = ConsoleColor.Yellow;
 													Console.Write("\nPLAYER TURN END: Press enter");
 													Console.ForegroundColor = ConsoleColor.Gray;
 													Console.ReadKey(player_turn = false);
 												}
-												else
-												{
-													int physical_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .65) / 2 );
-													nidhogg_hp -= physical_dmg;
-													Berserker.skill_points++;
-													Console.ForegroundColor = ConsoleColor.Cyan;
-													Console.WriteLine("\nYou slashed Nidhogg for {0:N0} damage! +1 Rage!" , physical_dmg);
-													Console.ForegroundColor = ConsoleColor.Yellow;
-													Console.Write("\nPLAYER TURN END: Press enter");
-													Console.ForegroundColor = ConsoleColor.Gray;
-													Console.ReadKey(player_turn = false);
-												}
-												break;
-											case "2": //Berserker Rage Skill Menu
-												string berserker_rage_skill;
-												Console.Write("------------------------\n" +
-																"   RAGE SKILL\t\tRAGE COST\n" +
-																"------------------------\n" +
-																"1. Shoulder Charge\t 2 Rage\n" +
-																"2. Bloodlust\t\t 3 Rage\n" +
-																"3. Chaos Burst\t\t 5 Rage\n" +
-																"------------------------\n");
-												Console.ForegroundColor = ConsoleColor.Yellow;
-												Console.Write("Type the corresponding number to the action you would like to execute:");
-												Console.ForegroundColor = ConsoleColor.Gray;
-												berserker_rage_skill = Console.ReadLine();
-												switch (berserker_rage_skill)
-												{
-													case "1"://Shoulder Charge
-														if (Berserker.skill_points >= 2)
-														{
-															int sc_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + 1.67) / 1.98 );
-															nidhogg_hp -= sc_dmg;
-															Berserker.skill_points -= 2;
-															Console.ForegroundColor = ConsoleColor.DarkCyan;
-															Console.Write("\nWith reckless determination you charge with the spiked pauldron of your armor\n" +
-																			"You inflicted {0:N0} damage with Shoulder Charge!\n", sc_dmg);
-															Console.ForegroundColor = ConsoleColor.Yellow;
-															Console.Write("\nPLAYER TURN END: Press enter");
-															Console.ForegroundColor = ConsoleColor.Gray;
-															Console.ReadKey(player_turn = false);
-														}
-														else Console.WriteLine("\nYou haven't built enough rage to use that skill...");
-													break;
-													case "2"://Bloodlust
-														if (Berserker.skill_points >= 3)
-														{
-															int bl_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .90) / 2 );
-															nidhogg_hp -= bl_dmg;
-															Berserker.player_hp += (int)(bl_dmg * 2.5);
-															Berserker.skill_points -= 3;
-															Console.ForegroundColor = ConsoleColor.DarkCyan;
-															Console.Write("\nYour lust for battle gives you strength\n" + 
-																			"You inflicted {0:N0} HP with Bloodlust!", bl_dmg);
-															Console.ForegroundColor = ConsoleColor.Green;
-															Console.Write("\nYou gained {0:N0} HP with Bloodlust! HP: {1:N0}\n", (int)(bl_dmg * 2.5), Berserker.player_hp);
-															Console.ForegroundColor = ConsoleColor.Yellow;
-															Console.Write("\nPLAYER TURN END: Press enter");
-															Console.ForegroundColor = ConsoleColor.Gray;
-															Console.ReadKey(player_turn = false);
-														}
-														else Console.WriteLine("\nYou haven't built enough rage to use that skill...");
-													break;
-													case "3"://Chaos Burst
-														if (Berserker.skill_points >= 5)
-														{
-															int berserker_chaos = 9000;
-															int cb_dmg = (int)(berserker_chaos * (r.NextDouble() + 1.96) / 2 );
-															nidhogg_hp -= cb_dmg;
-															Berserker.skill_points -= 5;
-															Console.ForegroundColor = ConsoleColor.DarkCyan;
-															Console.Write("\nUnable to contain it any longer\n" +
-																			"You release your fury in the form of dark energy that creates a spherical explosion\n" +
-																			"You inflicted {0:N0} damage with Chaos Burst!\n", cb_dmg);
-															Console.ForegroundColor = ConsoleColor.Yellow;
-															Console.Write("\nPLAYER TURN END: Press enter");
-															Console.ForegroundColor = ConsoleColor.Gray;
-															Console.ReadKey(player_turn = false);
-														}
-														else Console.WriteLine("\nYou haven't built enough rage to use that skill...");
-													break;
-													default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
-												}
+												else Console.WriteLine("\nYou haven't built enough rage to use that skill...");
 											break;
-											case "3": //Berserker Item Menu
-												Console.Write("------------------------\n" +
-																"   ITEM\t\tQUANTITY\n" +
-																"------------------------\n" +
-																"1. Potion\t {0}\n" +
-																"2. Hi-Potion\t {1}\n", potion_amt, hipotion_amt);
-												Console.Write("------------------------\n");
-												Console.ForegroundColor = ConsoleColor.Yellow;
-												Console.Write("Type the corresponding number to the action you would like to execute:");
-												Console.ForegroundColor = ConsoleColor.Gray;
-												item_choice = Console.ReadLine();
-												switch (item_choice)
+											case "2"://Bloodlust
+												if (Berserker.skill_points >= 3)
 												{
-													case "1"://Potion
-														if (potion_amt > 0)
-														{
-															potion_amt--;
-															Berserker.player_hp += 5000;
-															Console.ForegroundColor = ConsoleColor.Green;
-															Console.WriteLine("\nYou gained 5,000 HP! HP: {0:N0}", Berserker.player_hp);
-															Console.ForegroundColor = ConsoleColor.Yellow;
-															Console.Write("\nPLAYER TURN END: Press enter");
-															Console.ForegroundColor = ConsoleColor.Gray;
-															Console.ReadKey(player_turn = false);
-														}
-														else Console.WriteLine("\nYou have no Potions left to use");
-													break;
-													case "2"://Hi-Potion
-														if (hipotion_amt > 0)
-														{
-															hipotion_amt--;
-															Berserker.player_hp += 10000;
-															Console.ForegroundColor = ConsoleColor.Green;
-															Console.WriteLine("\nYou gained 10,000 HP! HP: {0:N0}", Berserker.player_hp);
-															Console.ForegroundColor = ConsoleColor.Yellow;
-															Console.Write("\nPLAYER TURN END: Press enter");
-															Console.ForegroundColor = ConsoleColor.Gray;
-															Console.ReadKey(player_turn = false);
-														}
-														else Console.WriteLine("\nYou have no Hi-Potions left to use");
-													break;
-													default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
-												}		
+													int bl_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .90) / 2 );
+													nidhogg_hp -= bl_dmg;
+													Berserker.player_hp += (int)(bl_dmg * 2.5);
+													Berserker.skill_points -= 3;
+													Console.ForegroundColor = ConsoleColor.DarkCyan;
+													Console.Write("\nYour lust for battle gives you strength\n" + 
+																	"You inflicted {0:N0} HP with Bloodlust!", bl_dmg);
+													Console.ForegroundColor = ConsoleColor.Green;
+													Console.Write("\nYou gained {0:N0} HP with Bloodlust! HP: {1:N0}\n", (int)(bl_dmg * 2.5), Berserker.player_hp);
+													Console.ForegroundColor = ConsoleColor.Yellow;
+													Console.Write("\nPLAYER TURN END: Press enter");
+													Console.ForegroundColor = ConsoleColor.Gray;
+													Console.ReadKey(player_turn = false);
+												}
+												else Console.WriteLine("\nYou haven't built enough rage to use that skill...");
+											break;
+											case "3"://Chaos Burst
+												if (Berserker.skill_points >= 5)
+												{
+													int berserker_chaos = 9000;
+													int cb_dmg = (int)(berserker_chaos * (r.NextDouble() + 1.96) / 2 );
+													nidhogg_hp -= cb_dmg;
+													Berserker.skill_points -= 5;
+													Console.ForegroundColor = ConsoleColor.DarkCyan;
+													Console.Write("\nUnable to contain it any longer\n" +
+																	"You release your fury in the form of dark energy that creates a spherical explosion\n" +
+																	"You inflicted {0:N0} damage with Chaos Burst!\n", cb_dmg);
+													Console.ForegroundColor = ConsoleColor.Yellow;
+													Console.Write("\nPLAYER TURN END: Press enter");
+													Console.ForegroundColor = ConsoleColor.Gray;
+													Console.ReadKey(player_turn = false);
+												}
+												else Console.WriteLine("\nYou haven't built enough rage to use that skill...");
+											break;
+											default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
+										}
+									break;
+									case "3": //Berserker Item Menu
+										Console.Write("------------------------\n" +
+														"   ITEM\t\tQUANTITY\n" +
+														"------------------------\n" +
+														"1. Potion\t {0}\n" +
+														"2. Hi-Potion\t {1}\n", potion_amt, hipotion_amt);
+										Console.Write("------------------------\n");
+										Console.ForegroundColor = ConsoleColor.Yellow;
+										Console.Write("Type the corresponding number to the action you would like to execute:");
+										Console.ForegroundColor = ConsoleColor.Gray;
+										item_choice = Console.ReadLine();
+										switch (item_choice)
+										{
+											case "1"://Potion
+												if (potion_amt > 0)
+												{
+													potion_amt--;
+													Berserker.player_hp += 5000;
+													Console.ForegroundColor = ConsoleColor.Green;
+													Console.WriteLine("\nYou gained 5,000 HP! HP: {0:N0}", Berserker.player_hp);
+													Console.ForegroundColor = ConsoleColor.Yellow;
+													Console.Write("\nPLAYER TURN END: Press enter");
+													Console.ForegroundColor = ConsoleColor.Gray;
+													Console.ReadKey(player_turn = false);
+												}
+												else Console.WriteLine("\nYou have no Potions left to use");
+											break;
+											case "2"://Hi-Potion
+												if (hipotion_amt > 0)
+												{
+													hipotion_amt--;
+													Berserker.player_hp += 10000;
+													Console.ForegroundColor = ConsoleColor.Green;
+													Console.WriteLine("\nYou gained 10,000 HP! HP: {0:N0}", Berserker.player_hp);
+													Console.ForegroundColor = ConsoleColor.Yellow;
+													Console.Write("\nPLAYER TURN END: Press enter");
+													Console.ForegroundColor = ConsoleColor.Gray;
+													Console.ReadKey(player_turn = false);
+												}
+												else Console.WriteLine("\nYou have no Hi-Potions left to use");
+											break;
+											default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
+										}		
+										break;
+									default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
+								}
+
+							}	
+							break;
+						case "2": //Wizard battle loop
+							while ((player_turn) & (Wizard.player_hp > 0 || nidhogg_hp > 0))
+							{
+								System.Threading.Thread.Sleep(900);
+								Console.Write("\n------------------------\n");
+								Console.WriteLine("Current HP: {0:N0}\t" + "MP: {1}", Wizard.player_hp, Wizard.skill_points);
+								Console.Write("------------------------\n" +
+												"1. ATTACK\n" +
+												"2. MAGIC\n" +
+												"3. ITEM\n" +
+												"------------------------\n");
+								Console.ForegroundColor = ConsoleColor.Yellow;
+								Console.Write("Type the corresponding number to the action you would like to execute:");
+								Console.ForegroundColor = ConsoleColor.Gray;
+								player_action = Console.ReadLine();
+								switch (player_action)
+								{
+									case "1": //Wizard standard attack
+										int physical_dmg = (int)(Wizard.base_att_dmg * (r.NextDouble() + .56) / 2);
+										nidhogg_hp -= physical_dmg;
+										Console.ForegroundColor = ConsoleColor.Cyan;
+										Console.WriteLine("\nYou bashed Nidhogg for {0:N0} damage!", physical_dmg);
+										Console.ForegroundColor = ConsoleColor.Yellow;
+										Console.Write("\nPLAYER TURN END: Press enter");
+										Console.ForegroundColor = ConsoleColor.Gray;
+										Console.ReadKey(player_turn = false);
+										break;
+									case "2": //Wizard Magic Menu
+										Console.Write("------------------------\n" +
+														"   MAGIC\t\tMP COST\n" +
+														"------------------------\n" +
+														"1. Ice Lance\t\t25 MP\n" +
+														"2. Fortify\t\t100 MP\n" +
+														"3. HellFire\t\t150 MP\n" +
+														"4. GravityWell\t\t300 MP\n" +
+														"------------------------\n");
+                                        Console.ForegroundColor = ConsoleColor.Yellow;
+										Console.Write("Type the corresponding number to the action you would like to execute:");
+										Console.ForegroundColor = ConsoleColor.Gray;
+                                        string spell_choice = Console.ReadLine();
+                                        switch (spell_choice)
+                                        {
+                                            case "1" ://Ice Lance
+                                                if (Wizard.skill_points >= 25)
+                                                { 
+                                                    int il_dmg_range = r.Next(2000, 3511);//using Next method for random dmg range
+                                                    nidhogg_hp -= il_dmg_range;
+                                                    Wizard.skill_points -= 25;
+                                                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                                                    Console.WriteLine("\nYou conjure a glistening Ice Lance and send it flying through the air for {0:N0} damage!" , il_dmg_range);
+                                                    Console.ForegroundColor = ConsoleColor.Yellow;
+												    Console.Write("\nPLAYER TURN END: Press enter");
+												    Console.ForegroundColor = ConsoleColor.Gray;
+												    Console.ReadKey(player_turn = false);
+                                                }
+                                                else Console.WriteLine("\nYou do not have enough MP to cast this spell...");
+                                            break;
+                                            case "2" ://Fortify
+                                                if (Wizard.skill_points >= 100)
+                                                {
+                                                    int fort_heal_range = r.Next(3500, 10101);
+                                                    Wizard.player_hp += fort_heal_range;
+                                                    Wizard.skill_points -= 100;
+                                                    Console.ForegroundColor = ConsoleColor.Green;
+                                                    Console.WriteLine("\nEngulfed by a shimmering light you gained {0:N0} HP! HP: {1:N0}", fort_heal_range, Wizard.player_hp);
+                                                    Console.ForegroundColor = ConsoleColor.Yellow;
+												    Console.Write("\nPLAYER TURN END: Press enter");
+												    Console.ForegroundColor = ConsoleColor.Gray;
+												    Console.ReadKey(player_turn = false);
+                                                }
+                                                else Console.WriteLine("\nYou do not have enough MP to cast this spell...");
+                                            break;
+                                            case "3"://Hellfire
+                                                if (Wizard.skill_points >= 150)
+                                                {
+                                                    int hf_hit_range = r.Next(24, 99);
+                                                    Wizard.skill_points -= 150;
+                                                    if (hf_hit_range >= 24 && hf_hit_range <=37)
+                                                    {
+                                                        int hf_dmg1 = r.Next(3999, 5556);
+                                                        nidhogg_hp -= hf_dmg1;
+                                                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                                                        Console.WriteLine("\nYou rained down streams of fire from the sky\n" +
+                                                                            "Landed {0} hits for {1:N0} damage with Hellfire!", hf_hit_range, hf_dmg1);
+                                                        Console.ForegroundColor = ConsoleColor.Yellow;
+												        Console.Write("\nPLAYER TURN END: Press enter");
+												        Console.ForegroundColor = ConsoleColor.Gray;
+												        Console.ReadKey(player_turn = false);
+                                                    }
+                                                    else if (hf_hit_range >= 38 && hf_hit_range <=64)
+                                                    {
+                                                        int hf_dmg1 = r.Next(6556, 7123);
+                                                        nidhogg_hp -= hf_dmg1;
+                                                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                                                        Console.WriteLine("\nYou rained down streams of fire from the sky\n" +
+                                                                            "Landed {0} hits for {1:N0} damage with Hellfire!", hf_hit_range, hf_dmg1);
+                                                        Console.ForegroundColor = ConsoleColor.Yellow;
+												        Console.Write("\nPLAYER TURN END: Press enter");
+												        Console.ForegroundColor = ConsoleColor.Gray;
+												        Console.ReadKey(player_turn = false);
+                                                    }
+                                                    else if (hf_hit_range >= 65 && hf_hit_range <=99)
+                                                    {
+                                                        int hf_dmg1 = r.Next(9223 , 10141);
+                                                        nidhogg_hp -= hf_dmg1;
+                                                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                                                        Console.WriteLine("\nYou rained down streams of fire from the sky\n" +
+                                                                            "Landed {0} hits for {1:N0} damage with Hellfire!", hf_hit_range, hf_dmg1);
+                                                        Console.ForegroundColor = ConsoleColor.Yellow;
+												        Console.Write("\nPLAYER TURN END: Press enter");
+												        Console.ForegroundColor = ConsoleColor.Gray;
+												        Console.ReadKey(player_turn = false);
+                                                    }
+                                                }
+                                                else Console.WriteLine("\nYou do not have enough MP to cast this spell...");
+                                            break;
+                                            case "4" ://GravityWell
+												if (Wizard.skill_points >= 300)
+												{
+													Wizard.skill_points -= 300;
+													int gw_dmg = r.Next(8650, 12441);
+													nidhogg_hp -= gw_dmg;
+													Console.ForegroundColor = ConsoleColor.DarkCyan;
+													Console.WriteLine("\nYou conjure a portal on the gound below, before your target realizes\n" +
+																		"it is hurtling down, high from the sky, slams with great impact!\n" +
+																		"Inflicted {0:N0} damage with GravityWell!", gw_dmg);
+													Console.ForegroundColor = ConsoleColor.Yellow;
+												    Console.Write("\nPLAYER TURN END: Press enter");
+												    Console.ForegroundColor = ConsoleColor.Gray;
+												    Console.ReadKey(player_turn = false);
+												}
+												else Console.WriteLine("\nYou do not have enough MP to cast this spell...");
+                                            break;
+                                        }
+										break;
+                                    case "3"://Wizard Item Menu
+										Console.Write("------------------------\n" +
+														"   ITEM\t\tQUANTITY\n" +
+														"------------------------\n" +
+														"1. Potion\t {0}\n" +
+														"2. Hi-Potion\t {1}\n" +
+														"3. Ether\t {2}\n" , potion_amt, hipotion_amt, ether_amt);
+										Console.Write("------------------------\n");
+										Console.ForegroundColor = ConsoleColor.Yellow;
+										Console.Write("Type the corresponding number to the action you would like to execute:");
+										Console.ForegroundColor = ConsoleColor.Gray;
+										item_choice = Console.ReadLine();
+										switch (item_choice)
+										{
+											case "1"://Potion
+												if (potion_amt > 0)
+												{
+													potion_amt--;
+													Wizard.player_hp += 5000;
+													Console.ForegroundColor = ConsoleColor.Green;
+													Console.WriteLine("\nYou gained 5,000 HP! HP: {0:N0}", Wizard.player_hp);
+													Console.ForegroundColor = ConsoleColor.Yellow;
+													Console.Write("\nPLAYER TURN END: Press enter");
+													Console.ForegroundColor = ConsoleColor.Gray;
+													Console.ReadKey(player_turn = false);
+												}
+												else Console.WriteLine("\nYou have no Potions left to use");
+											break;
+											case "2"://Hi-Potion
+												if (hipotion_amt > 0)
+												{
+													hipotion_amt--;
+													Wizard.player_hp += 10000;
+													Console.ForegroundColor = ConsoleColor.Green;
+													Console.WriteLine("\nYou gained 10,000 HP! HP: {0:N0}", Wizard.player_hp);
+													Console.ForegroundColor = ConsoleColor.Yellow;
+													Console.Write("\nPLAYER TURN END: Press enter");
+													Console.ForegroundColor = ConsoleColor.Gray;
+													Console.ReadKey(player_turn = false);
+												}
+												else Console.WriteLine("\nYou have no Hi-Potions left to use");
+											break;
+											case "3"://Ether
+												if (ether_amt > 0)
+												{
+													ether_amt--;
+													Wizard.skill_points += 300;
+													Console.ForegroundColor = ConsoleColor.Green;
+													Console.WriteLine("\nYou gained 300 MP! MP: {0}", Wizard.skill_points);
+													Console.ForegroundColor = ConsoleColor.Yellow;
+													Console.Write("\nPLAYER TURN END: Press enter");
+													Console.ForegroundColor = ConsoleColor.Gray;
+													Console.ReadKey(player_turn = false);
+												}
+												else Console.WriteLine("\nYou have no Ethers left to use");
 												break;
 											default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
 										}
-
-									}	
 									break;
-								case "2": //Wizard battle loop
-									while ((player_turn) & (Wizard.player_hp > 0 || nidhogg_hp > 0))
-									{
-										System.Threading.Thread.Sleep(900);
-										Console.Write("\n------------------------\n");
-										Console.WriteLine("Current HP: {0:N0}\t" + "MP: {1}", Wizard.player_hp, Wizard.skill_points);
-										Console.Write("------------------------\n" +
-														"1. ATTACK\n" +
-														"2. MAGIC\n" +
-														"3. ITEM\n" +
-														"------------------------\n");
-										Console.ForegroundColor = ConsoleColor.Yellow;
-										Console.Write("Type the corresponding number to the action you would like to execute:");
-										Console.ForegroundColor = ConsoleColor.Gray;
-										player_action = Console.ReadLine();
-										switch (player_action)
+									default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
+								}
+							}
+							break;
+						case "3": //Monk Battle Loop
+							while ((player_turn) & (Monk.player_hp > 0 || nidhogg_hp > 0))
+							{
+								System.Threading.Thread.Sleep(900);
+								Console.Write("\n------------------------\n");
+								Console.WriteLine("Current HP: {0:N0}\t" + "Focus: {1} | 50", Monk.player_hp, Monk.skill_points);
+								Console.Write("------------------------\n" +
+												"1. ATTACK\n" +
+												"2. HARNESS\n" +
+												"3. ARTS\n" +
+												"4. ITEM\n" +
+												"------------------------\n");
+								Console.ForegroundColor = ConsoleColor.Yellow;
+								Console.Write("Type the corresponding number to the action you would like to execute:");
+								Console.ForegroundColor = ConsoleColor.Gray;
+								player_action = Console.ReadLine();
+								switch (player_action)
+								{
+									case "1"://Monk standard attack
+										int acc = r.Next(9);
+										if (acc == 3) //Provides a 12.5% chance for Nidhogg to dodge 
 										{
-											case "1": //Wizard standard attack
-												int physical_dmg = (int)(Wizard.base_att_dmg * (r.NextDouble() + .56) / 2);
-												nidhogg_hp -= physical_dmg;
+											Console.ForegroundColor = ConsoleColor.Red;
+											Console.WriteLine("\nNidhogg anticpates your attack and swiftly dodges!");
+											Console.ForegroundColor = ConsoleColor.Yellow;
+											Console.Write("\nPLAYER TURN END: Press enter");
+											Console.ForegroundColor = ConsoleColor.Gray;
+											Console.ReadKey(player_turn = false);
+										}
+										else
+										{
+											int physical_dmg = (int)(Monk.base_att_dmg * (r.NextDouble() + .85) / 2);
+											nidhogg_hp -= physical_dmg;
+											if (Monk.skill_points < 50)
+											{
+												Monk.skill_points += 5;
 												Console.ForegroundColor = ConsoleColor.Cyan;
-												Console.WriteLine("\nYou bashed Nidhogg for {0:N0} damage!", physical_dmg);
+												Console.WriteLine("\nYou pummeled Nidhogg for {0:N0} damage! +5 focus gained", physical_dmg);
 												Console.ForegroundColor = ConsoleColor.Yellow;
 												Console.Write("\nPLAYER TURN END: Press enter");
-												Console.ForegroundColor = ConsoleColor.Gray;
 												Console.ReadKey(player_turn = false);
-												break;
-											case "2": //Wizard Magic Menu
-												Console.Write("------------------------\n" +
-																"   MAGIC\t\tMP COST\n" +
-																"------------------------\n" +
-																"1. Ice Lance\t\t25 MP\n" +
-																"2. Fortify\t\t100 MP\n" +
-																"3. HellFire\t\t150 MP\n" +
-																"4. GravityWell\t\t300 MP\n" +
-																"------------------------\n");
-                                                Console.ForegroundColor = ConsoleColor.Yellow;
-												Console.Write("Type the corresponding number to the action you would like to execute:");
 												Console.ForegroundColor = ConsoleColor.Gray;
-                                                string spell_choice = Console.ReadLine();
-                                                switch (spell_choice)
-                                                {
-                                                    case "1" ://Ice Lance
-                                                        if (Wizard.skill_points >= 25)
-                                                        { 
-                                                            int il_dmg_range = r.Next(2000, 3511);//using Next method for random dmg range
-                                                            nidhogg_hp -= il_dmg_range;
-                                                            Wizard.skill_points -= 25;
-                                                            Console.ForegroundColor = ConsoleColor.DarkCyan;
-                                                            Console.WriteLine("\nYou conjure a glistening Ice Lance and send it flying through the air for {0:N0} damage!" , il_dmg_range);
-                                                            Console.ForegroundColor = ConsoleColor.Yellow;
-												            Console.Write("\nPLAYER TURN END: Press enter");
-												            Console.ForegroundColor = ConsoleColor.Gray;
-												            Console.ReadKey(player_turn = false);
-                                                        }
-                                                        else Console.WriteLine("\nYou do not have enough MP to cast this spell...");
-                                                    break;
-                                                    case "2" ://Fortify
-                                                        if (Wizard.skill_points >= 100)
-                                                        {
-                                                            int fort_heal_range = r.Next(3500, 10101);
-                                                            Wizard.player_hp += fort_heal_range;
-                                                            Wizard.skill_points -= 100;
-                                                            Console.ForegroundColor = ConsoleColor.Green;
-                                                            Console.WriteLine("\nEngulfed by a shimmering light you gained {0:N0} HP! HP: {1:N0}", fort_heal_range, Wizard.player_hp);
-                                                            Console.ForegroundColor = ConsoleColor.Yellow;
-												            Console.Write("\nPLAYER TURN END: Press enter");
-												            Console.ForegroundColor = ConsoleColor.Gray;
-												            Console.ReadKey(player_turn = false);
-                                                        }
-                                                        else Console.WriteLine("\nYou do not have enough MP to cast this spell...");
-                                                    break;
-                                                    case "3"://Hellfire
-                                                        if (Wizard.skill_points >= 150)
-                                                        {
-                                                            int hf_hit_range = r.Next(24, 99);
-                                                            Wizard.skill_points -= 150;
-                                                            if (hf_hit_range >= 24 && hf_hit_range <=37)
-                                                            {
-                                                                int hf_dmg1 = r.Next(3999, 5556);
-                                                                nidhogg_hp -= hf_dmg1;
-                                                                Console.ForegroundColor = ConsoleColor.DarkCyan;
-                                                                Console.WriteLine("\nYou rained down streams of fire from the sky\n" +
-                                                                                    "Landed {0} hits for {1:N0} damage with Hellfire!", hf_hit_range, hf_dmg1);
-                                                                Console.ForegroundColor = ConsoleColor.Yellow;
-												                Console.Write("\nPLAYER TURN END: Press enter");
-												                Console.ForegroundColor = ConsoleColor.Gray;
-												                Console.ReadKey(player_turn = false);
-                                                            }
-                                                            else if (hf_hit_range >= 38 && hf_hit_range <=64)
-                                                            {
-                                                                int hf_dmg1 = r.Next(6556, 7123);
-                                                                nidhogg_hp -= hf_dmg1;
-                                                                Console.ForegroundColor = ConsoleColor.DarkCyan;
-                                                                Console.WriteLine("\nYou rained down streams of fire from the sky\n" +
-                                                                                    "Landed {0} hits for {1:N0} damage with Hellfire!", hf_hit_range, hf_dmg1);
-                                                                Console.ForegroundColor = ConsoleColor.Yellow;
-												                Console.Write("\nPLAYER TURN END: Press enter");
-												                Console.ForegroundColor = ConsoleColor.Gray;
-												                Console.ReadKey(player_turn = false);
-                                                            }
-                                                            else if (hf_hit_range >= 65 && hf_hit_range <=99)
-                                                            {
-                                                                int hf_dmg1 = r.Next(9223 , 10141);
-                                                                nidhogg_hp -= hf_dmg1;
-                                                                Console.ForegroundColor = ConsoleColor.DarkCyan;
-                                                                Console.WriteLine("\nYou rained down streams of fire from the sky\n" +
-                                                                                    "Landed {0} hits for {1:N0} damage with Hellfire!", hf_hit_range, hf_dmg1);
-                                                                Console.ForegroundColor = ConsoleColor.Yellow;
-												                Console.Write("\nPLAYER TURN END: Press enter");
-												                Console.ForegroundColor = ConsoleColor.Gray;
-												                Console.ReadKey(player_turn = false);
-                                                            }
-                                                        }
-                                                        else Console.WriteLine("\nYou do not have enough MP to cast this spell...");
-                                                    break;
-                                                    case "4" ://GravityWell
-														if (Wizard.skill_points >= 300)
-														{
-															Wizard.skill_points -= 300;
-															int gw_dmg = r.Next(8650, 12441);
-															nidhogg_hp -= gw_dmg;
-															Console.ForegroundColor = ConsoleColor.DarkCyan;
-															Console.WriteLine("\nYou conjure a portal on the gound below, before your target realizes\n" +
-																				"it is hurtling down, high from the sky, slams with great impact!\n" +
-																				"Inflicted {0:N0} damage with GravityWell!", gw_dmg);
-															Console.ForegroundColor = ConsoleColor.Yellow;
-												            Console.Write("\nPLAYER TURN END: Press enter");
-												            Console.ForegroundColor = ConsoleColor.Gray;
-												            Console.ReadKey(player_turn = false);
-														}
-														else Console.WriteLine("\nYou do not have enough MP to cast this spell...");
-                                                    break;
-                                                }
-												break;
-                                            case "3"://Wizard Item Menu
-												Console.Write("------------------------\n" +
-																"   ITEM\t\tQUANTITY\n" +
-																"------------------------\n" +
-																"1. Potion\t {0}\n" +
-																"2. Hi-Potion\t {1}\n" +
-																"3. Ether\t {2}\n" , potion_amt, hipotion_amt, ether_amt);
-												Console.Write("------------------------\n");
+											}
+											else
+											{
+												Console.ForegroundColor = ConsoleColor.Cyan;
+												Console.WriteLine("\nYou pummeled Nidhogg for {0:N0} damage!", physical_dmg);
 												Console.ForegroundColor = ConsoleColor.Yellow;
-												Console.Write("Type the corresponding number to the action you would like to execute:");
+												Console.Write("\nPLAYER TURN END: Press enter");
+												Console.ReadKey(player_turn = false);
 												Console.ForegroundColor = ConsoleColor.Gray;
-												item_choice = Console.ReadLine();
-												switch (item_choice)
-												{
-													case "1"://Potion
-														if (potion_amt > 0)
-														{
-															potion_amt--;
-															Wizard.player_hp += 5000;
-															Console.ForegroundColor = ConsoleColor.Green;
-															Console.WriteLine("\nYou gained 5,000 HP! HP: {0:N0}", Wizard.player_hp);
-															Console.ForegroundColor = ConsoleColor.Yellow;
-															Console.Write("\nPLAYER TURN END: Press enter");
-															Console.ForegroundColor = ConsoleColor.Gray;
-															Console.ReadKey(player_turn = false);
-														}
-														else Console.WriteLine("\nYou have no Potions left to use");
-													break;
-													case "2"://Hi-Potion
-														if (hipotion_amt > 0)
-														{
-															hipotion_amt--;
-															Wizard.player_hp += 10000;
-															Console.ForegroundColor = ConsoleColor.Green;
-															Console.WriteLine("\nYou gained 10,000 HP! HP: {0:N0}", Wizard.player_hp);
-															Console.ForegroundColor = ConsoleColor.Yellow;
-															Console.Write("\nPLAYER TURN END: Press enter");
-															Console.ForegroundColor = ConsoleColor.Gray;
-															Console.ReadKey(player_turn = false);
-														}
-														else Console.WriteLine("\nYou have no Hi-Potions left to use");
-													break;
-													case "3"://Ether
-														if (ether_amt > 0)
-														{
-															ether_amt--;
-															Wizard.skill_points += 300;
-															Console.ForegroundColor = ConsoleColor.Green;
-															Console.WriteLine("\nYou gained 300 MP! MP: {0}", Wizard.skill_points);
-															Console.ForegroundColor = ConsoleColor.Yellow;
-															Console.Write("\nPLAYER TURN END: Press enter");
-															Console.ForegroundColor = ConsoleColor.Gray;
-															Console.ReadKey(player_turn = false);
-														}
-														else Console.WriteLine("\nYou have no Ethers left to use");
-														break;
-													default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
-												}
-											break;
-											default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
+											}
 										}
-									}
-									break;
-								case "3": //Monk Battle Loop
-									while ((player_turn) & (Monk.player_hp > 0 || nidhogg_hp > 0))
-									{
-										System.Threading.Thread.Sleep(900);
-										Console.Write("\n------------------------\n");
-										Console.WriteLine("Current HP: {0:N0}\t" + "Focus: {1} | 50", Monk.player_hp, Monk.skill_points);
+										break;
+									case "2"://Monk HARNESS cmd
+										if (Monk.skill_points <= 29)
+										{
+											int focus_points = 20;
+											Monk.skill_points += focus_points;
+											Console.ForegroundColor = ConsoleColor.DarkGreen;
+											Console.WriteLine("\nYou harness your chi +20 focus gained!");
+											Console.ForegroundColor = ConsoleColor.Yellow;
+											Console.Write("\nPLAYER TURN END: Press enter");
+											Console.ForegroundColor = ConsoleColor.Gray;
+											Console.ReadKey(player_turn = false);
+										}
+										else if (Monk.skill_points == 50)
+										{
+											Console.WriteLine("\nYour focus can be heightened no further, seize the moment and strike!");
+										}
+										else if (Monk.skill_points >= 30)
+										{
+											Monk.skill_points = 50;
+											Console.ForegroundColor = ConsoleColor.DarkGreen;
+											Console.WriteLine("\nYour focus is now max!");
+											Console.ForegroundColor = ConsoleColor.Yellow;
+											Console.Write("\nPLAYER TURN END: Press enter");
+											Console.ForegroundColor = ConsoleColor.Gray;
+											Console.ReadKey(player_turn = false);
+										}
+										break;
+									case "3"://Monk Arts Menu
 										Console.Write("------------------------\n" +
-														"1. ATTACK\n" +
-														"2. HARNESS\n" +
-														"3. ARTS\n" +
-														"4. ITEM\n" +
+														"   ART\t\t\tFOCUS COST\n" +
+														"------------------------\n" +
+														"1. Inner Healing\t 20 Focus\n" +
+														"2. Rapid Palm\t\t 30 Focus\n" +
+														"3. Aura Bolt\t\t 50 Focus\n" +
 														"------------------------\n");
 										Console.ForegroundColor = ConsoleColor.Yellow;
 										Console.Write("Type the corresponding number to the action you would like to execute:");
 										Console.ForegroundColor = ConsoleColor.Gray;
-										player_action = Console.ReadLine();
-										switch (player_action)
+										string art_choice = Console.ReadLine();
+										switch (art_choice)
 										{
-											case "1"://Monk standard attack
-												int acc = r.Next(9);
-												if (acc == 3) //Provides a 12.5% chance for Nidhogg to dodge 
+											case "1"://Inner Healing
+												if (Monk.skill_points >= 20)
 												{
-													Console.ForegroundColor = ConsoleColor.Red;
-													Console.WriteLine("\nNidhogg anticpates your attack and swiftly dodges!");
+													int inner_heal = r.Next(5420, 10421);
+													Monk.player_hp += inner_heal;
+													Monk.skill_points -= 20;
+													Console.ForegroundColor = ConsoleColor.Green;
+													Console.WriteLine("\nYou gather your chi in your stomach and redisturb it throughout your body, gained {0:N0} HP! HP: {1:N0}", inner_heal, Monk.player_hp);
 													Console.ForegroundColor = ConsoleColor.Yellow;
 													Console.Write("\nPLAYER TURN END: Press enter");
 													Console.ForegroundColor = ConsoleColor.Gray;
@@ -590,215 +668,152 @@ namespace Ragnarok
 												}
 												else
 												{
-													int physical_dmg = (int)(Monk.base_att_dmg * (r.NextDouble() + .85) / 2);
-													nidhogg_hp -= physical_dmg;
-													if (Monk.skill_points < 50)
+													Console.WriteLine("\nYou must harness more focus to use this skill.");
+												}
+											break;
+											case "2"://Rapid Palm
+												if (Monk.skill_points >= 30)
+												{
+													int palm_combo = r.Next(2, 5);
+													Monk.skill_points -= 30;
+													switch (palm_combo)
 													{
-														Monk.skill_points += 5;
-														Console.ForegroundColor = ConsoleColor.Cyan;
-														Console.WriteLine("\nYou pummeled Nidhogg for {0:N0} damage! +5 focus gained", physical_dmg);
-														Console.ForegroundColor = ConsoleColor.Yellow;
-														Console.Write("\nPLAYER TURN END: Press enter");
-														Console.ReadKey(player_turn = false);
-														Console.ForegroundColor = ConsoleColor.Gray;
-													}
-													else
-													{
-														Console.ForegroundColor = ConsoleColor.Cyan;
-														Console.WriteLine("\nYou pummeled Nidhogg for {0:N0} damage!", physical_dmg);
-														Console.ForegroundColor = ConsoleColor.Yellow;
-														Console.Write("\nPLAYER TURN END: Press enter");
-														Console.ReadKey(player_turn = false);
-														Console.ForegroundColor = ConsoleColor.Gray;
-													}
-												}
-												break;
-											case "2"://Monk HARNESS cmd
-												if (Monk.skill_points <= 29)
-												{
-													int focus_points = 20;
-													Monk.skill_points += focus_points;
-													Console.ForegroundColor = ConsoleColor.DarkGreen;
-													Console.WriteLine("\nYou harness your chi +20 focus gained!");
-													Console.ForegroundColor = ConsoleColor.Yellow;
-													Console.Write("\nPLAYER TURN END: Press enter");
-													Console.ForegroundColor = ConsoleColor.Gray;
-													Console.ReadKey(player_turn = false);
-												}
-												else if (Monk.skill_points == 50)
-												{
-													Console.WriteLine("\nYour focus can be heightened no further, seize the moment and strike!");
-												}
-												else if (Monk.skill_points >= 30)
-												{
-													Monk.skill_points = 50;
-													Console.ForegroundColor = ConsoleColor.DarkGreen;
-													Console.WriteLine("\nYour focus is now max!");
-													Console.ForegroundColor = ConsoleColor.Yellow;
-													Console.Write("\nPLAYER TURN END: Press enter");
-													Console.ForegroundColor = ConsoleColor.Gray;
-													Console.ReadKey(player_turn = false);
-												}
-												break;
-											case "3"://Monk Arts Menu
-												Console.Write("------------------------\n" +
-																"   ART\t\t\tFOCUS COST\n" +
-																"------------------------\n" +
-																"1. Inner Healing\t 20 Focus\n" +
-																"2. Rapid Palm\t\t 30 Focus\n" +
-																"3. Aura Bolt\t\t 50 Focus\n" +
-																"------------------------\n");
-												Console.ForegroundColor = ConsoleColor.Yellow;
-												Console.Write("Type the corresponding number to the action you would like to execute:");
-												Console.ForegroundColor = ConsoleColor.Gray;
-												string art_choice = Console.ReadLine();
-												switch (art_choice)
-												{
-													case "1"://Inner Healing
-														if (Monk.skill_points >= 20)
-														{
-															int inner_heal = r.Next(5420, 10421);
-															Monk.player_hp += inner_heal;
-															Monk.skill_points -= 20;
-															Console.ForegroundColor = ConsoleColor.Green;
-															Console.WriteLine("\nYou gather your chi in your stomach and redisturb it throughout your body, gained {0:N0} HP! HP: {1:N0}", inner_heal, Monk.player_hp);
-															Console.ForegroundColor = ConsoleColor.Yellow;
-															Console.Write("\nPLAYER TURN END: Press enter");
-															Console.ForegroundColor = ConsoleColor.Gray;
-															Console.ReadKey(player_turn = false);
-														}
-														else
-														{
-															Console.WriteLine("\nYou must harness more focus to use this skill.");
-														}
-													break;
-													case "2"://Rapid Palm
-														if (Monk.skill_points >= 30)
-														{
-															int palm_combo = r.Next(2, 5);
-															Monk.skill_points -= 30;
-															switch (palm_combo)
-															{
-																case 2 :
-																	int palm_base_dmg = 4000;
-																	int palm_dmg = (int)((palm_base_dmg * (r.NextDouble() + .98)) / 1.34);
-																	nidhogg_hp -= palm_dmg;
-																	Console.ForegroundColor = ConsoleColor.DarkCyan;
-																	Console.WriteLine("\nWith a deep breath and a spark of brilliance in your eye\n" + 
-																						"You landed {0} hits with Rapid Palm for {1:N0} damage!" , (palm_combo * 3), palm_dmg);
-																	Console.ForegroundColor = ConsoleColor.Yellow;
-																	Console.Write("\nPLAYER TURN END: Press enter");
-																	Console.ForegroundColor = ConsoleColor.Gray;
-																	Console.ReadKey(player_turn = false);
-																break;
-																case 3 :
-																	int palm_base_dmg2 = 4500;
-																	int palm_dmg2 = (int)((palm_base_dmg2 * (r.NextDouble() + 1.38)) / 1.54);
-																	nidhogg_hp -= palm_dmg2;
-																	Console.ForegroundColor = ConsoleColor.DarkCyan;
-																	Console.WriteLine("\nWith a deep breath and a spark of brilliance in your eye\n" + 
-																						"You landed {0} hits with Rapid Palm for {1:N0} damage!", (palm_combo * 3), palm_dmg2);
-																	Console.ForegroundColor = ConsoleColor.Yellow;
-																	Console.Write("\nPLAYER TURN END: Press enter");
-																	Console.ForegroundColor = ConsoleColor.Gray;
-																	Console.ReadKey(player_turn = false);
-																break;
-																case 4 :
-																	int palm_base_dmg3 = 5000;
-																	int palm_dmg3 = (int)((palm_base_dmg3 * (r.NextDouble() + 1.95)) / 1.64);
-																	nidhogg_hp -= palm_dmg3;
-																	Console.ForegroundColor = ConsoleColor.DarkCyan;
-																	Console.WriteLine("\nWith a deep breath and a spark of brilliance in your eye\n" + 
-																						"You landed {0} hits with Rapid Palm for {1:N0} damage!", (palm_combo * 3), palm_dmg3);
-																	Console.ForegroundColor = ConsoleColor.Yellow;
-																	Console.Write("\nPLAYER TURN END: Press enter");
-																	Console.ForegroundColor = ConsoleColor.Gray;
-																	Console.ReadKey(player_turn = false);
-																break;
-																default : break;
-															}
-														}
-														else
-														{
-															Console.WriteLine("\nYou must harness more focus to use this skill.");
-														}
-													break;
-													case "3"://Aura Bolt
-														if (Monk.skill_points >= 50)
-														{
-															Monk.skill_points -= 50;
-															int ab_dmg = (int)(Monk.base_att_dmg * (r.NextDouble() + 4.85) / 2);
-															nidhogg_hp -= ab_dmg;
+														case 2 :
+															int palm_base_dmg = 4000;
+															int palm_dmg = (int)((palm_base_dmg * (r.NextDouble() + .98)) / 1.34);
+															nidhogg_hp -= palm_dmg;
 															Console.ForegroundColor = ConsoleColor.DarkCyan;
-															Console.WriteLine("\nYou gather ambient energy and sculpt it with your hands\n" + 
-																				"Once concentrated, you release a powerful beam with pinpoint accuracy\n" +
-																				"You inflicted {0:N0} damage with Aura Bolt!", (ab_dmg));
+															Console.WriteLine("\nWith a deep breath and a spark of brilliance in your eye\n" + 
+																				"You landed {0} hits with Rapid Palm for {1:N0} damage!" , (palm_combo * 3), palm_dmg);
 															Console.ForegroundColor = ConsoleColor.Yellow;
 															Console.Write("\nPLAYER TURN END: Press enter");
 															Console.ForegroundColor = ConsoleColor.Gray;
 															Console.ReadKey(player_turn = false);
-														}
-														else
-														{
-															Console.WriteLine("\nYou must harness more focus to use this skill.");
-														}
-													break;
-													default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
+														break;
+														case 3 :
+															int palm_base_dmg2 = 4500;
+															int palm_dmg2 = (int)((palm_base_dmg2 * (r.NextDouble() + 1.38)) / 1.54);
+															nidhogg_hp -= palm_dmg2;
+															Console.ForegroundColor = ConsoleColor.DarkCyan;
+															Console.WriteLine("\nWith a deep breath and a spark of brilliance in your eye\n" + 
+																				"You landed {0} hits with Rapid Palm for {1:N0} damage!", (palm_combo * 3), palm_dmg2);
+															Console.ForegroundColor = ConsoleColor.Yellow;
+															Console.Write("\nPLAYER TURN END: Press enter");
+															Console.ForegroundColor = ConsoleColor.Gray;
+															Console.ReadKey(player_turn = false);
+														break;
+														case 4 :
+															int palm_base_dmg3 = 5000;
+															int palm_dmg3 = (int)((palm_base_dmg3 * (r.NextDouble() + 1.95)) / 1.64);
+															nidhogg_hp -= palm_dmg3;
+															Console.ForegroundColor = ConsoleColor.DarkCyan;
+															Console.WriteLine("\nWith a deep breath and a spark of brilliance in your eye\n" + 
+																				"You landed {0} hits with Rapid Palm for {1:N0} damage!", (palm_combo * 3), palm_dmg3);
+															Console.ForegroundColor = ConsoleColor.Yellow;
+															Console.Write("\nPLAYER TURN END: Press enter");
+															Console.ForegroundColor = ConsoleColor.Gray;
+															Console.ReadKey(player_turn = false);
+														break;
+														default : break;
+													}
 												}
-												break;
-											case "4"://Monk Item Menu
-												Console.Write("------------------------\n" +
-																"   ITEM\t\tQUANTITY\n" +
-																"------------------------\n" +
-																"1. Potion\t {0}\n" +
-																"2. Hi-Potion\t {1}\n", potion_amt, hipotion_amt);
-												Console.Write("------------------------\n");
-												Console.ForegroundColor = ConsoleColor.Yellow;
-												Console.Write("Type the corresponding number to the action you would like to execute:");
-												Console.ForegroundColor = ConsoleColor.Gray;
-												item_choice = Console.ReadLine();
-												switch (item_choice)
+												else
 												{
-													case "1"://Potion
-														if (potion_amt > 0)
-														{
-															potion_amt--;
-															Monk.player_hp += 5000;
-															Console.ForegroundColor = ConsoleColor.Green;
-															Console.WriteLine("\nYou gained 5,000 HP! HP: {0:N0}", Monk.player_hp);
-															Console.ForegroundColor = ConsoleColor.Yellow;
-															Console.Write("\nPLAYER TURN END: Press enter");
-															Console.ForegroundColor = ConsoleColor.Gray;
-															Console.ReadKey(player_turn = false);
-														}
-														else Console.WriteLine("\nYou have no Potions left to use");
-													break;
-													case "2"://Hi-Potion
-														if (hipotion_amt > 0)
-														{
-															hipotion_amt--;
-															Monk.player_hp += 10000;
-															Console.ForegroundColor = ConsoleColor.Green;
-															Console.WriteLine("\nYou gained 10,000 HP! HP: {0:N0}", Monk.player_hp);
-															Console.ForegroundColor = ConsoleColor.Yellow;
-															Console.Write("\nPLAYER TURN END: Press enter");
-															Console.ForegroundColor = ConsoleColor.Gray;
-															Console.ReadKey(player_turn = false);
-														}
-														else Console.WriteLine("\nYou have no Hi-Potions left to use");
-													break;
-													default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
+													Console.WriteLine("\nYou must harness more focus to use this skill.");
 												}
-												break;
+											break;
+											case "3"://Aura Bolt
+												if (Monk.skill_points >= 50)
+												{
+													Monk.skill_points -= 50;
+													int ab_dmg = (int)(Monk.base_att_dmg * (r.NextDouble() + 4.85) / 2);
+													nidhogg_hp -= ab_dmg;
+													Console.ForegroundColor = ConsoleColor.DarkCyan;
+													Console.WriteLine("\nYou gather ambient energy and sculpt it with your hands\n" + 
+																		"Once concentrated, you release a powerful beam with pinpoint accuracy\n" +
+																		"You inflicted {0:N0} damage with Aura Bolt!", (ab_dmg));
+													Console.ForegroundColor = ConsoleColor.Yellow;
+													Console.Write("\nPLAYER TURN END: Press enter");
+													Console.ForegroundColor = ConsoleColor.Gray;
+													Console.ReadKey(player_turn = false);
+												}
+												else
+												{
+													Console.WriteLine("\nYou must harness more focus to use this skill.");
+												}
+											break;
 											default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
 										}
-									}
-									break;
-									default: break;
+										break;
+									case "4"://Monk Item Menu
+										Console.Write("------------------------\n" +
+														"   ITEM\t\tQUANTITY\n" +
+														"------------------------\n" +
+														"1. Potion\t {0}\n" +
+														"2. Hi-Potion\t {1}\n", potion_amt, hipotion_amt);
+										Console.Write("------------------------\n");
+										Console.ForegroundColor = ConsoleColor.Yellow;
+										Console.Write("Type the corresponding number to the action you would like to execute:");
+										Console.ForegroundColor = ConsoleColor.Gray;
+										item_choice = Console.ReadLine();
+										switch (item_choice)
+										{
+											case "1"://Potion
+												if (potion_amt > 0)
+												{
+													potion_amt--;
+													Monk.player_hp += 5000;
+													Console.ForegroundColor = ConsoleColor.Green;
+													Console.WriteLine("\nYou gained 5,000 HP! HP: {0:N0}", Monk.player_hp);
+													Console.ForegroundColor = ConsoleColor.Yellow;
+													Console.Write("\nPLAYER TURN END: Press enter");
+													Console.ForegroundColor = ConsoleColor.Gray;
+													Console.ReadKey(player_turn = false);
+												}
+												else Console.WriteLine("\nYou have no Potions left to use");
+											break;
+											case "2"://Hi-Potion
+												if (hipotion_amt > 0)
+												{
+													hipotion_amt--;
+													Monk.player_hp += 10000;
+													Console.ForegroundColor = ConsoleColor.Green;
+													Console.WriteLine("\nYou gained 10,000 HP! HP: {0:N0}", Monk.player_hp);
+													Console.ForegroundColor = ConsoleColor.Yellow;
+													Console.Write("\nPLAYER TURN END: Press enter");
+													Console.ForegroundColor = ConsoleColor.Gray;
+													Console.ReadKey(player_turn = false);
+												}
+												else Console.WriteLine("\nYou have no Hi-Potions left to use");
+											break;
+											default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
+										}
+										break;
+									default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
+								}
+							}
+							break;
+							default: break;
 					}
+
+				ArrayList NH_attacks = new ArrayList();
+				NH_attacks.Add("Claw"); NH_attacks.Add("Claw"); NH_attacks.Add("Claw"); 
+				NH_attacks.Add("Fang");  NH_attacks.Add("TailWhip");
+				NH_attacks.Add("Claw"); NH_attacks.Add("Fang");
+				NH_attacks.Add("TailWhip"); NH_attacks.Add("Fang");
+				NH_attacks.Add("DiveBomber");
+
+				if (nidhogg_hp <= 20000 && nidhogg_hp > 0)
+				{
+					NH_attacks.Add("DragonBreath");
+					NH_attacks.Add("DiveBomber");
+					NH_attacks.Add("TailWhip");
+					NH_attacks.Remove("Claw");
+				}
+
 				if (wasexecuted == false) //Nidhogg low hp battle theme
 				{
-					if (nidhogg_hp <= 20000 && nidhogg_hp > 0)
+					if (nidhogg_hp <= 25000 && nidhogg_hp > 0)
 					{
 						sp.Stop();
 						sp.SoundLocation = Environment.CurrentDirectory + "\\Music\\Odin Sphere Leifthrasir OST - Battle in RagnanivalFinal Chapter.wav";
@@ -808,71 +823,97 @@ namespace Ragnarok
 				}
 
 				if (player_turn == false) //At first I tried using 2 while loops but figured out the code needs to be nested inside the same 
-										//loop to actually recall the first player_choice switch
-				{
+				{                           //loop to actually recall the first player_choice switch
 					switch (player_choice) //Nidhogg battle loop
 					{
-						
-							case "1"://Attack against Berserker
-							while ((player_turn == false) & (Berserker.player_hp > 0 && nidhogg_hp > 0))
+						case "1"://Attack against Berserker
+						while ((player_turn == false) & (Berserker.player_hp > 0 && nidhogg_hp > 0))
+						{
+							System.Threading.Thread.Sleep(1000);
+							int NH_attack_choice = r.Next(NH_attacks.Count);
+							switch (NH_attacks[NH_attack_choice].ToString())
 							{
-								System.Threading.Thread.Sleep(1000);
-								int player_turn_dmg = (int)(nidhogg_base_dmg * (r.NextDouble() + .65) / 2);
-								Berserker.player_hp -= player_turn_dmg;
-								Console.ForegroundColor = ConsoleColor.DarkMagenta;
-								Console.Write("\n\nNidhogg retaliates with a fericous blow\n" +
-													"You suffer {0:N0} HP worth of damage!\n", player_turn_dmg);
-								Console.ForegroundColor = ConsoleColor.Yellow;
-								Console.Write("\nNIDHOGG TURN END: Press enter\n");
-								Console.ForegroundColor = ConsoleColor.Gray;
-								Console.ReadKey(player_turn = true);
+								case "Claw":
+									Console.Write("\nClaw\n");
+									Console.ForegroundColor = ConsoleColor.Yellow;
+									Console.Write("\nNIDHOGG TURN END: Press enter\n");
+									Console.ForegroundColor = ConsoleColor.Gray;
+									Console.ReadKey(player_turn = true);
+									break;
+								case "Fang":
+									Console.Write("\nFang\n");
+									Console.ForegroundColor = ConsoleColor.Yellow;
+									Console.Write("\nNIDHOGG TURN END: Press enter\n");
+									Console.ForegroundColor = ConsoleColor.Gray;
+									Console.ReadKey(player_turn = true);
+									break;
+								case "TailWhip":
+									Console.Write("\nTailWhip\n");
+									Console.ForegroundColor = ConsoleColor.Yellow;
+									Console.Write("\nNIDHOGG TURN END: Press enter\n");
+									Console.ForegroundColor = ConsoleColor.Gray;
+									Console.ReadKey(player_turn = true);
+									break;
+								case "DiveBomber":
+									Console.Write("\nDiveBomber\n");
+									Console.ForegroundColor = ConsoleColor.Yellow;
+									Console.Write("\nNIDHOGG TURN END: Press enter\n");
+									Console.ForegroundColor = ConsoleColor.Gray;
+									Console.ReadKey(player_turn = true);
+									break;
+								case "DragonBreath":
+									Console.Write("\nDragonBreath\n");
+									Console.ForegroundColor = ConsoleColor.Yellow;
+									Console.Write("\nNIDHOGG TURN END: Press enter\n");
+									Console.ForegroundColor = ConsoleColor.Gray;
+									Console.ReadKey(player_turn = true);
+									break;
 							}
 							break;
-							case "2"://Attack against Wizard
-							while ((player_turn == false) & (Wizard.player_hp > 0 && nidhogg_hp > 0))
-							{
-								System.Threading.Thread.Sleep(1000);
-								int player_turn_dmg = (int)(nidhogg_base_dmg * (r.NextDouble() + .65) / 2);
-								Wizard.player_hp -= player_turn_dmg;
-								Console.ForegroundColor = ConsoleColor.DarkMagenta;
-								Console.Write("\n\nNidhogg retaliates with a fericous blow\n" +
-													"You suffer {0:N0} HP worth of damage!\n", player_turn_dmg);
-								Console.ForegroundColor = ConsoleColor.Yellow;
-								Console.Write("\nNIDHOGG TURN END: Press enter\n");
-								Console.ForegroundColor = ConsoleColor.Gray;
-								Console.ReadKey(player_turn = true);
-							}
-							break;
-							case "3"://Attack against monk
-							while ((player_turn == false) & (Monk.player_hp > 0 && nidhogg_hp > 0))
-							{
-								System.Threading.Thread.Sleep(1000);
-								int player_turn_dmg = (int)(nidhogg_base_dmg * (r.NextDouble() + .65) / 2); 
-								Monk.player_hp -= player_turn_dmg;
-								Console.ForegroundColor = ConsoleColor.DarkMagenta;
-								Console.Write("\n\nNidhogg retaliates with a fericous blow\n" +
-													"You suffer {0:N0} HP worth of damage!\n", player_turn_dmg);
-								Console.ForegroundColor = ConsoleColor.Yellow;
-								Console.Write("\nNIDHOGG TURN END: Press enter\n");
-								Console.ForegroundColor = ConsoleColor.Gray;
-								Console.ReadKey(player_turn = true);
-							}
-							break;
+						}
+						break;
+						case "2"://Attack against Wizard
+						while ((player_turn == false) & (Wizard.player_hp > 0 && nidhogg_hp > 0))
+						{
+							System.Threading.Thread.Sleep(1000);
+							int player_turn_dmg = (int)(nidhogg_base_dmg * (r.NextDouble() + .65) / 2);
+							Wizard.player_hp -= player_turn_dmg;
+							Console.ForegroundColor = ConsoleColor.DarkMagenta;
+							Console.Write("\n\nNidhogg retaliates with a fericous blow\n" +
+												"You suffer {0:N0} HP worth of damage!\n", player_turn_dmg);
+							Console.ForegroundColor = ConsoleColor.Yellow;
+							Console.Write("\nNIDHOGG TURN END: Press enter\n");
+							Console.ForegroundColor = ConsoleColor.Gray;
+							Console.ReadKey(player_turn = true);
+						}
+						break;
+						case "3"://Attack against monk
+						while ((player_turn == false) & (Monk.player_hp > 0 && nidhogg_hp > 0))
+						{
+							System.Threading.Thread.Sleep(1000);
+							int player_turn_dmg = (int)(nidhogg_base_dmg * (r.NextDouble() + .65) / 2); 
+							Monk.player_hp -= player_turn_dmg;
+							Console.ForegroundColor = ConsoleColor.DarkMagenta;
+							Console.Write("\n\nNidhogg retaliates with a fericous blow\n" +
+												"You suffer {0:N0} HP worth of damage!\n", player_turn_dmg);
+							Console.ForegroundColor = ConsoleColor.Yellow;
+							Console.Write("\nNIDHOGG TURN END: Press enter\n");
+							Console.ForegroundColor = ConsoleColor.Gray;
+							Console.ReadKey(player_turn = true);
+						}
+						break;
 						default: break;
 					}
 				}
 
 				string defeat =
-				"\n	▓█████▄ ▓█████ ▄▄▄     ▄▄▄█████▓ ██░ ██  \n" +
-				"	▒██▀ ██▌▓█   ▀▒████▄   ▓  ██▒ ▓▒▓██░ ██▒ \n" +
-				"	░██   █▌▒███  ▒██  ▀█▄ ▒ ▓██░ ▒░▒██▀▀██░ \n" +
-				"	░▓█▄   ▌▒▓█  ▄░██▄▄▄▄██░ ▓██▓ ░ ░▓█ ░██  \n" +
-				"	░▒████▓ ░▒████▒▓█   ▓██▒ ▒██▒ ░ ░▓█▒░██▓ \n" +
-				"	▒▒▓  ▒ ░░ ▒░ ░▒▒    ▓▒█░ ▒ ░░    ▒ ░░▒░▒ \n" +
-				"	░ ▒  ▒  ░ ░  ░ ▒    ▒▒ ░   ░     ▒ ░▒░ ░ \n" +
-				"	░ ░  ░    ░    ░    ▒    ░       ░  ░░ ░ \n" +
-				"        ░  ░      ░    ░            ░  ░	 \n" +
-				"	░										 \n";
+
+				"		██████╗ ███████╗ █████╗ ████████╗██╗  ██╗\n" +
+				"		██╔══██╗██╔════╝██╔══██╗╚══██╔══╝██║  ██║\n" +
+				"		██║  ██║█████╗  ███████║   ██║   ███████║\n" +
+				"		██║  ██║██╔══╝  ██╔══██║   ██║   ██╔══██║\n" +
+				"		██████╔╝███████╗██║  ██║   ██║   ██║  ██║\n" +
+				"		╚═════╝ ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝";
 
 
 
@@ -892,10 +933,27 @@ namespace Ragnarok
 					System.Threading.Thread.Sleep(1000);
 					sp.SoundLocation = Environment.CurrentDirectory + "\\Music\\07-Guadosalam.wav";
 					sp.Play();
-					System.Threading.Thread.Sleep(2000);
-					Console.ForegroundColor = ConsoleColor.DarkRed;
-					Console.Write("\n {0}", defeat);
-					Console.WriteLine("\n\nTHE FUTURE OF HUMANITY IS LOST" + "\nThanks for playing though...");
+					System.Threading.Thread.Sleep(3500);
+					Console.WriteLine("\n");
+					foreach (char a in defeat)//scroll like print for defeat string
+					{
+						Console.ForegroundColor = ConsoleColor.DarkRed;
+						Console.Write(a);
+						System.Threading.Thread.Sleep(100);
+					}
+					Console.Write("\n\nTHE ");
+					System.Threading.Thread.Sleep(1500);
+					Console.Write("FUTURE ");
+					System.Threading.Thread.Sleep(1500);
+					Console.Write("OF ");
+					System.Threading.Thread.Sleep(1500);
+					Console.Write("HUMANITY ");
+					System.Threading.Thread.Sleep(1500);
+					Console.Write("IS ");
+					System.Threading.Thread.Sleep(4000);
+					Console.Write("LOST ");
+					System.Threading.Thread.Sleep(1000);
+					Console.Write("\nThanks for playing though...");
 					Console.ForegroundColor = ConsoleColor.Gray;
 					break; //the last line of code becomes an infinite loop without this break
 				}
@@ -906,8 +964,15 @@ namespace Ragnarok
 					sp.SoundLocation = Environment.CurrentDirectory + "\\Music\\09-Attack.wav";
 					sp.Play();
 					System.Threading.Thread.Sleep(3500);
+					Console.WriteLine("\n");
+					foreach (char a in victory)
+					{
+						Console.ForegroundColor = ConsoleColor.White;
+						Console.Write(a);
+						System.Threading.Thread.Sleep(100);
+					}
 					Console.ForegroundColor = ConsoleColor.DarkYellow;
-					Console.Write("\n\n {0}" , victory);
+					System.Threading.Thread.Sleep(2500);
 					Console.WriteLine("\n\nYOU WERE VICTORIOUS" + "\nHumanity now has a future because of you!" + "\nTHANKS FOR PLAYING!!!!");
 					break;
 				}
