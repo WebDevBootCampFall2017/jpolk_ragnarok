@@ -34,3 +34,9 @@ F:\jpolk_ragnarok\Ragnarok\bin\Debug\Ragnarok.pdb
 F:\jpolk_ragnarok\Ragnarok\obj\Debug\Ragnarok.csprojResolveAssemblyReference.cache
 F:\jpolk_ragnarok\Ragnarok\obj\Debug\Ragnarok.exe
 F:\jpolk_ragnarok\Ragnarok\obj\Debug\Ragnarok.pdb
+J:\jpolk_ragnarok\Ragnarok\obj\Debug\Ragnarok.csprojResolveAssemblyReference.cache
+J:\jpolk_ragnarok\Ragnarok\obj\Debug\Ragnarok.exe
+J:\jpolk_ragnarok\Ragnarok\obj\Debug\Ragnarok.pdb
+J:\jpolk_ragnarok\Ragnarok\bin\Debug\Ragnarok.exe.config
+J:\jpolk_ragnarok\Ragnarok\bin\Debug\Ragnarok.exe
+J:\jpolk_ragnarok\Ragnarok\bin\Debug\Ragnarok.pdb

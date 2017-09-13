@@ -143,8 +143,7 @@ namespace Ragnarok
 			Monk.base_att_dmg = 3778;
 
 			int nidhogg_hp = 50000;//Nidhogg essentials
-			int nidhogg_base_dmg = 3701;
-
+			
 			int potion_amt = 5;//item variables
 			int hipotion_amt = 1;
 			int ether_amt = 2;
@@ -299,7 +298,8 @@ namespace Ragnarok
 													Berserker.skill_points -= 5;
 													Console.ForegroundColor = ConsoleColor.DarkCyan;
 													Console.Write("\nUnable to contain it any longer\n" +
-																	"You release your fury in the form of dark energy that creates a spherical explosion\n" +
+																	"You release your fury in the form of dark energy" + 
+																	"\nthat creates a spherical explosion\n" +
 																	"You inflicted {0:N0} damage with Chaos Burst!\n", cb_dmg);
 													Console.ForegroundColor = ConsoleColor.Yellow;
 													Console.Write("\nPLAYER TURN END: Press enter");
@@ -359,7 +359,7 @@ namespace Ragnarok
 								}
 
 							}	
-							break;
+						break;
 						case "2": //Wizard battle loop
 							while ((player_turn) & (Wizard.player_hp > 0 || nidhogg_hp > 0))
 							{
@@ -386,7 +386,7 @@ namespace Ragnarok
 										Console.Write("\nPLAYER TURN END: Press enter");
 										Console.ForegroundColor = ConsoleColor.Gray;
 										Console.ReadKey(player_turn = false);
-										break;
+									break;
 									case "2": //Wizard Magic Menu
 										Console.Write("------------------------\n" +
 														"   MAGIC\t\tMP COST\n" +
@@ -394,7 +394,7 @@ namespace Ragnarok
 														"1. Ice Lance\t\t25 MP\n" +
 														"2. Fortify\t\t100 MP\n" +
 														"3. HellFire\t\t150 MP\n" +
-														"4. GravityWell\t\t300 MP\n" +
+														"4. GravityWell\t\t250 MP\n" +
 														"------------------------\n");
                                         Console.ForegroundColor = ConsoleColor.Yellow;
 										Console.Write("Type the corresponding number to the action you would like to execute:");
@@ -409,7 +409,8 @@ namespace Ragnarok
                                                     nidhogg_hp -= il_dmg_range;
                                                     Wizard.skill_points -= 25;
                                                     Console.ForegroundColor = ConsoleColor.DarkCyan;
-                                                    Console.WriteLine("\nYou conjure a glistening Ice Lance and send it flying through the air for {0:N0} damage!" , il_dmg_range);
+                                                    Console.WriteLine("\nYou conjure a glistening Ice Lance and send it" +
+																		"\nflying through the air for {0:N0} damage!" , il_dmg_range);
                                                     Console.ForegroundColor = ConsoleColor.Yellow;
 												    Console.Write("\nPLAYER TURN END: Press enter");
 												    Console.ForegroundColor = ConsoleColor.Gray;
@@ -477,9 +478,9 @@ namespace Ragnarok
                                                 else Console.WriteLine("\nYou do not have enough MP to cast this spell...");
                                             break;
                                             case "4" ://GravityWell
-												if (Wizard.skill_points >= 300)
+												if (Wizard.skill_points >= 250)
 												{
-													Wizard.skill_points -= 300;
+													Wizard.skill_points -= 250;
 													int gw_dmg = r.Next(8650, 12441);
 													nidhogg_hp -= gw_dmg;
 													Console.ForegroundColor = ConsoleColor.DarkCyan;
@@ -494,7 +495,7 @@ namespace Ragnarok
 												else Console.WriteLine("\nYou do not have enough MP to cast this spell...");
                                             break;
                                         }
-										break;
+									break;
                                     case "3"://Wizard Item Menu
 										Console.Write("------------------------\n" +
 														"   ITEM\t\tQUANTITY\n" +
@@ -557,7 +558,7 @@ namespace Ragnarok
 									default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
 								}
 							}
-							break;
+						break;
 						case "3": //Monk Battle Loop
 							while ((player_turn) & (Monk.player_hp > 0 || nidhogg_hp > 0))
 							{
@@ -660,7 +661,8 @@ namespace Ragnarok
 													Monk.player_hp += inner_heal;
 													Monk.skill_points -= 20;
 													Console.ForegroundColor = ConsoleColor.Green;
-													Console.WriteLine("\nYou gather your chi in your stomach and redisturb it throughout your body, gained {0:N0} HP! HP: {1:N0}", inner_heal, Monk.player_hp);
+													Console.WriteLine("\nYou gather your chi in your stomach and redisturb it throughout your body" +
+																		"\ngained {0:N0} HP! HP: {1:N0}", inner_heal, Monk.player_hp);
 													Console.ForegroundColor = ConsoleColor.Yellow;
 													Console.Write("\nPLAYER TURN END: Press enter");
 													Console.ForegroundColor = ConsoleColor.Gray;
@@ -744,7 +746,7 @@ namespace Ragnarok
 											break;
 											default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
 										}
-										break;
+									break;
 									case "4"://Monk Item Menu
 										Console.Write("------------------------\n" +
 														"   ITEM\t\tQUANTITY\n" +
@@ -792,8 +794,8 @@ namespace Ragnarok
 									default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
 								}
 							}
-							break;
-							default: break;
+						break;
+						default: break;
 					}
 
 				ArrayList NH_attacks = new ArrayList();
@@ -835,7 +837,7 @@ namespace Ragnarok
 							{
 								case "Claw":
 									int claw_acc = r.Next(8);
-									if (claw_acc == 2)
+									if (claw_acc == 6)
 									{
 										Console.ForegroundColor = ConsoleColor.DarkGreen;
 										Console.Write("\n\nYou sidestep Nidhogg's massive claws!\n");
@@ -858,7 +860,7 @@ namespace Ragnarok
 									break;
 								case "Fang":
 									int fang_acc = r.Next(9);
-									if (fang_acc == 0)
+									if (fang_acc == 3)
 									{
 										Console.ForegroundColor = ConsoleColor.DarkGreen;
 										Console.Write("\n\nNidhogg's razor sharp teeth barely miss your flesh!\n");
@@ -878,28 +880,28 @@ namespace Ragnarok
 										Console.ForegroundColor = ConsoleColor.Gray;
 										Console.ReadKey(player_turn = true);
 									}
-									break;
+								break;
 								case "TailWhip":
 									Console.Write("\nTailWhip\n");
 									Console.ForegroundColor = ConsoleColor.Yellow;
 									Console.Write("\nNIDHOGG TURN END: Press enter\n");
 									Console.ForegroundColor = ConsoleColor.Gray;
 									Console.ReadKey(player_turn = true);
-									break;
+								break;
 								case "DiveBomber":
 									Console.Write("\nDiveBomber\n");
 									Console.ForegroundColor = ConsoleColor.Yellow;
 									Console.Write("\nNIDHOGG TURN END: Press enter\n");
 									Console.ForegroundColor = ConsoleColor.Gray;
 									Console.ReadKey(player_turn = true);
-									break;
+								break;
 								case "DragonBreath":
 									Console.Write("\nDragonBreath\n");
 									Console.ForegroundColor = ConsoleColor.Yellow;
 									Console.Write("\nNIDHOGG TURN END: Press enter\n");
 									Console.ForegroundColor = ConsoleColor.Gray;
 									Console.ReadKey(player_turn = true);
-									break;
+								break;
 							}
 							break;
 						}
@@ -913,7 +915,7 @@ namespace Ragnarok
 							{
 								case "Claw":
 									int claw_acc = r.Next(8);
-									if (claw_acc == 2)
+									if (claw_acc == 7)
 									{
 										Console.ForegroundColor = ConsoleColor.DarkGreen;
 										Console.Write("\n\nYou gracefully backstep Nidhogg's massive claws!\n");
@@ -933,7 +935,7 @@ namespace Ragnarok
 										Console.ForegroundColor = ConsoleColor.Gray;
 										Console.ReadKey(player_turn = true);
 									}
-									break;
+								break;
 								case "Fang":
 									int fang_acc = r.Next(9);
 									if (fang_acc == 0)
@@ -956,7 +958,7 @@ namespace Ragnarok
 										Console.ForegroundColor = ConsoleColor.Gray;
 										Console.ReadKey(player_turn = true);
 									}
-									break;
+								break;
 								case "TailWhip":
 									Console.Write("\nTailWhip\n");
 									Console.ForegroundColor = ConsoleColor.Yellow;
@@ -977,7 +979,7 @@ namespace Ragnarok
 									Console.Write("\nNIDHOGG TURN END: Press enter\n");
 									Console.ForegroundColor = ConsoleColor.Gray;
 									Console.ReadKey(player_turn = true);
-									break;
+								break;
 							}
 							break;
 						}
@@ -990,31 +992,58 @@ namespace Ragnarok
 							switch (NH_attacks[NH_attack_choice].ToString())
 							{
 								case "Claw":
-									int claw_acc = r.Next(8);
-									if (claw_acc == 2)
+									if (Monk.skill_points == 50)//Gives 25% miss chance when focus is max
 									{
-										Console.ForegroundColor = ConsoleColor.DarkGreen;
-										Console.Write("\n\nYou parry Nidhogg's massive claws with the back of your forearm!\n");
-										Console.ForegroundColor = ConsoleColor.Yellow;
-										Console.Write("\nNIDHOGG TURN END: Press enter\n");
-										Console.ForegroundColor = ConsoleColor.Gray;
-										Console.ReadKey(player_turn = true);
+										int claw_focusmax_acc = r.Next(3); 
+										if (claw_focusmax_acc == 2)
+										{
+											Console.ForegroundColor = ConsoleColor.DarkGreen;
+											Console.Write("\n\nYou parry Nidhogg's massive claws with the back of your forearm!\n");
+											Console.ForegroundColor = ConsoleColor.Yellow;
+											Console.Write("\nNIDHOGG TURN END: Press enter\n");
+											Console.ForegroundColor = ConsoleColor.Gray;
+											Console.ReadKey(player_turn = true);
+										}
+										else
+										{
+											int claw_dmg = r.Next(799, 1760);
+											Monk.player_hp -= claw_dmg;
+											Console.ForegroundColor = ConsoleColor.DarkMagenta;
+											Console.Write("\n\nNidhogg delivers a sudden strike with it's claws for {0:N0} damage!\n", claw_dmg);
+											Console.ForegroundColor = ConsoleColor.Yellow;
+											Console.Write("\nNIDHOGG TURN END: Press enter\n");
+											Console.ForegroundColor = ConsoleColor.Gray;
+											Console.ReadKey(player_turn = true);
+										}
 									}
-									else
+									else if (Monk.skill_points < 50)
 									{
-										int claw_dmg = r.Next(899, 1860);
-										Monk.player_hp -= claw_dmg;
-										Console.ForegroundColor = ConsoleColor.DarkMagenta;
-										Console.Write("\n\nNidhogg delivers a sudden strike with it's claws for {0:N0} damage!\n", claw_dmg);
-										Console.ForegroundColor = ConsoleColor.Yellow;
-										Console.Write("\nNIDHOGG TURN END: Press enter\n");
-										Console.ForegroundColor = ConsoleColor.Gray;
-										Console.ReadKey(player_turn = true);
+										int claw_acc = r.Next(8);
+										if (claw_acc == 7)
+										{
+											Console.ForegroundColor = ConsoleColor.DarkGreen;
+											Console.Write("\n\nYou parry Nidhogg's massive claws with the back of your forearm!\n");
+											Console.ForegroundColor = ConsoleColor.Yellow;
+											Console.Write("\nNIDHOGG TURN END: Press enter\n");
+											Console.ForegroundColor = ConsoleColor.Gray;
+											Console.ReadKey(player_turn = true);
+										}
+										else
+										{
+											int claw_dmg = r.Next(899, 1860);
+											Monk.player_hp -= claw_dmg;
+											Console.ForegroundColor = ConsoleColor.DarkMagenta;
+											Console.Write("\n\nNidhogg delivers a sudden strike with it's claws for {0:N0} damage!\n", claw_dmg);
+											Console.ForegroundColor = ConsoleColor.Yellow;
+											Console.Write("\nNIDHOGG TURN END: Press enter\n");
+											Console.ForegroundColor = ConsoleColor.Gray;
+											Console.ReadKey(player_turn = true);
+										}
 									}
-									break;
+								break;
 								case "Fang":
 									int fang_acc = r.Next(9);
-									if (fang_acc == 0)
+									if (fang_acc == 6)
 									{
 										int deflect_dmg = r.Next(1000, 1501);
 										nidhogg_hp -= deflect_dmg;
@@ -1037,28 +1066,28 @@ namespace Ragnarok
 										Console.ForegroundColor = ConsoleColor.Gray;
 										Console.ReadKey(player_turn = true);
 									}
-									break;
+								break;
 								case "TailWhip":
 									Console.Write("\nTailWhip\n");
 									Console.ForegroundColor = ConsoleColor.Yellow;
 									Console.Write("\nNIDHOGG TURN END: Press enter\n");
 									Console.ForegroundColor = ConsoleColor.Gray;
 									Console.ReadKey(player_turn = true);
-									break;
+								break;
 								case "DiveBomber":
 									Console.Write("\nDiveBomber\n");
 									Console.ForegroundColor = ConsoleColor.Yellow;
 									Console.Write("\nNIDHOGG TURN END: Press enter\n");
 									Console.ForegroundColor = ConsoleColor.Gray;
 									Console.ReadKey(player_turn = true);
-									break;
+								break;
 								case "DragonBreath":
 									Console.Write("\nDragonBreath\n");
 									Console.ForegroundColor = ConsoleColor.Yellow;
 									Console.Write("\nNIDHOGG TURN END: Press enter\n");
 									Console.ForegroundColor = ConsoleColor.Gray;
 									Console.ReadKey(player_turn = true);
-									break;
+								break;
 							}
 							break;
 						}
