@@ -74,6 +74,7 @@ namespace Ragnarok
 									"FORTIFY: gain HP with high max and low min value\n" +
 									"HELLFIRE: random number of hits that scale up in damamge\n" +
 									"GRAVITYWELL: high attack damage\n" +
+									"SAP: gain MP, can only be used if MP is below 100" +
 									"------------------------\n");
                     System.Threading.Thread.Sleep(6000);
                     Console.Write("MONK's main weapon are martial arts\n" +
@@ -298,8 +299,8 @@ namespace Ragnarok
 													Berserker.skill_points -= 5;
 													Console.ForegroundColor = ConsoleColor.DarkCyan;
 													Console.Write("\nUnable to contain it any longer\n" +
-																	"You release your fury in the form of dark energy" + 
-																	"\nthat creates a spherical explosion\n" +
+																	"You release your fury in the form of dark energy\n" + 
+																	"that creates a spherical explosion\n" +
 																	"You inflicted {0:N0} damage with Chaos Burst!\n", cb_dmg);
 													Console.ForegroundColor = ConsoleColor.Yellow;
 													Console.Write("\nPLAYER TURN END: Press enter");
@@ -395,6 +396,7 @@ namespace Ragnarok
 														"2. Fortify\t\t100 MP\n" +
 														"3. HellFire\t\t150 MP\n" +
 														"4. GravityWell\t\t250 MP\n" +
+														"5. Sap\t\t\t0 MP\n" +
 														"------------------------\n");
                                         Console.ForegroundColor = ConsoleColor.Yellow;
 										Console.Write("Type the corresponding number to the action you would like to execute:");
@@ -409,8 +411,8 @@ namespace Ragnarok
                                                     nidhogg_hp -= il_dmg_range;
                                                     Wizard.skill_points -= 25;
                                                     Console.ForegroundColor = ConsoleColor.DarkCyan;
-                                                    Console.WriteLine("\nYou conjure a glistening Ice Lance and send it" +
-																		"\nflying through the air for {0:N0} damage!" , il_dmg_range);
+                                                    Console.WriteLine("\nYou conjure a glistening Ice Lance and send it\n" +
+																		"flying through the air for {0:N0} damage!" , il_dmg_range);
                                                     Console.ForegroundColor = ConsoleColor.Yellow;
 												    Console.Write("\nPLAYER TURN END: Press enter");
 												    Console.ForegroundColor = ConsoleColor.Gray;
@@ -493,7 +495,26 @@ namespace Ragnarok
 												    Console.ReadKey(player_turn = false);
 												}
 												else Console.WriteLine("\nYou do not have enough MP to cast this spell...");
-                                            break;
+											break;
+											case "5"://Sap
+												if (Wizard.skill_points <= 100)
+												{
+													int sap_base = r.Next(5, 20);
+													int sap_gain = sap_base * 5;
+													Wizard.skill_points += sap_gain;
+													Console.ForegroundColor = ConsoleColor.Blue;
+													Console.WriteLine("\nYou gather and absorb arcane energy from your surroundings\n" +
+																		"You gained {0} MP!", sap_gain);
+													Console.ForegroundColor = ConsoleColor.Yellow;
+												    Console.Write("\nPLAYER TURN END: Press enter");
+												    Console.ForegroundColor = ConsoleColor.Gray;
+												    Console.ReadKey(player_turn = false);
+												}
+												else
+												{
+													Console.WriteLine("\nYou have too much MP to use this spell...");
+												}
+											break;
                                         }
 									break;
                                     case "3"://Wizard Item Menu
@@ -543,7 +564,7 @@ namespace Ragnarok
 												{
 													ether_amt--;
 													Wizard.skill_points += 300;
-													Console.ForegroundColor = ConsoleColor.Green;
+													Console.ForegroundColor = ConsoleColor.Blue;
 													Console.WriteLine("\nYou gained 300 MP! MP: {0}", Wizard.skill_points);
 													Console.ForegroundColor = ConsoleColor.Yellow;
 													Console.Write("\nPLAYER TURN END: Press enter");
@@ -992,7 +1013,7 @@ namespace Ragnarok
 							switch (NH_attacks[NH_attack_choice].ToString())
 							{
 								case "Claw":
-									if (Monk.skill_points == 50)//Gives 25% miss chance when focus is max
+									if (Monk.skill_points == 50)//Max Focus buff vs Claw
 									{
 										int claw_focusmax_acc = r.Next(3); 
 										if (claw_focusmax_acc == 2)
@@ -1042,29 +1063,59 @@ namespace Ragnarok
 									}
 								break;
 								case "Fang":
-									int fang_acc = r.Next(9);
-									if (fang_acc == 6)
+									if (Monk.skill_points == 50)//Max Focus buff vs Fang
 									{
-										int deflect_dmg = r.Next(1000, 1501);
-										nidhogg_hp -= deflect_dmg;
-										Console.ForegroundColor = ConsoleColor.DarkGreen;
-										Console.Write("\n\nYou deflect Nidhogg's fercious bite with a well timed kick!\n" +
-														"Inflicting {0:N0} damage in the process!\n", deflect_dmg);
-										Console.ForegroundColor = ConsoleColor.Yellow;
-										Console.Write("\nNIDHOGG TURN END: Press enter\n");
-										Console.ForegroundColor = ConsoleColor.Gray;
-										Console.ReadKey(player_turn = true);
+										int fang_focusmax_acc = r.Next(7);
+										if (fang_focusmax_acc == 4)
+										{
+											int deflect_dmg = r.Next(1000, 1501);
+											nidhogg_hp -= deflect_dmg;
+											Console.ForegroundColor = ConsoleColor.DarkGreen;
+											Console.Write("\n\nYou deflect Nidhogg's fercious bite with a well timed kick!\n" +
+															"Inflicting {0:N0} damage in the process!\n", deflect_dmg);
+											Console.ForegroundColor = ConsoleColor.Yellow;
+											Console.Write("\nNIDHOGG TURN END: Press enter\n");
+											Console.ForegroundColor = ConsoleColor.Gray;
+											Console.ReadKey(player_turn = true);
+										}
+										else
+										{
+											int fang_dmg = r.Next(1000, 1976);
+											Monk.player_hp -= fang_dmg;
+											Console.ForegroundColor = ConsoleColor.DarkMagenta;
+											Console.Write("\n\nNidhogg's fangs find their mark for {0:N0} damage!\n", fang_dmg);
+											Console.ForegroundColor = ConsoleColor.Yellow;
+											Console.Write("\nNIDHOGG TURN END: Press enter\n");
+											Console.ForegroundColor = ConsoleColor.Gray;
+											Console.ReadKey(player_turn = true);
+										}
 									}
-									else
+									else if (Monk.skill_points < 50)
 									{
-										int fang_dmg = r.Next(1100, 2076);
-										Monk.player_hp -= fang_dmg;
-										Console.ForegroundColor = ConsoleColor.DarkMagenta;
-										Console.Write("\n\nNidhogg's fangs find their mark for {0:N0} damage!\n", fang_dmg);
-										Console.ForegroundColor = ConsoleColor.Yellow;
-										Console.Write("\nNIDHOGG TURN END: Press enter\n");
-										Console.ForegroundColor = ConsoleColor.Gray;
-										Console.ReadKey(player_turn = true);
+										int fang_acc = r.Next(9);
+										if (fang_acc == 6)
+										{
+											int deflect_dmg = r.Next(1000, 1501);
+											nidhogg_hp -= deflect_dmg;
+											Console.ForegroundColor = ConsoleColor.DarkGreen;
+											Console.Write("\n\nYou deflect Nidhogg's fercious bite with a well timed kick!\n" +
+															"Inflicting {0:N0} damage in the process!\n", deflect_dmg);
+											Console.ForegroundColor = ConsoleColor.Yellow;
+											Console.Write("\nNIDHOGG TURN END: Press enter\n");
+											Console.ForegroundColor = ConsoleColor.Gray;
+											Console.ReadKey(player_turn = true);
+										}
+										else
+										{
+											int fang_dmg = r.Next(1100, 2076);
+											Monk.player_hp -= fang_dmg;
+											Console.ForegroundColor = ConsoleColor.DarkMagenta;
+											Console.Write("\n\nNidhogg's fangs find their mark for {0:N0} damage!\n", fang_dmg);
+											Console.ForegroundColor = ConsoleColor.Yellow;
+											Console.Write("\nNIDHOGG TURN END: Press enter\n");
+											Console.ForegroundColor = ConsoleColor.Gray;
+											Console.ReadKey(player_turn = true);
+										}
 									}
 								break;
 								case "TailWhip":
