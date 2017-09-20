@@ -61,32 +61,35 @@ namespace Ragnarok
 									"BERSERKER's main weapon is the sword\n" +
 									"when Berserker uses the ATTACK command, it will build Rage\n" + 
 									"and give access to more skills with the RAGE command\n" +
-									"SHOULDER CHARGE: moderate attack damage\n" +
-									"BLOODLUST: player gains HP 2.5x the damage done to the target\n" +
+									"While rage count is 5 or above, Berserker is granted a variety of buffs\n\n" +
+									"SHOULDER CHARGE: moderate attack damage\n\n" +
+									"BLOODLUST: player gains HP 2.5x the damage done to the target\n\n" +
 									"CHAOS BURST: high attack damage\n" +
 									"------------------------\n" +
 									"WIZARD's main weapon is a Magic Staff\n" +
 									"while the Wizard does not do much damage with the ATTACK command\n" +
 									"Wizard does have access to damage dealing spells\n" +
-									"with the MAGIC command at the cost of MP\n" +
-									"ICE LANCE: moderate attack damage\n" +
-									"FORTIFY: gain HP with high max and low min value\n" +
-									"HELLFIRE: random number of hits that scale up in damamge\n" +
-									"GRAVITYWELL: high attack damage\n" +
+									"with the MAGIC command at the cost of MP\n\n" +
+									"ICE LANCE: moderate attack damage\n\n" +
+									"FORTIFY: gain HP with high max and low min value\n\n" +
+									"HELLFIRE: random number of hits that scale up in damamge\n\n" +
+									"GRAVITYWELL: high attack damage\n\n" +
 									"SAP: gain MP, can only be used if MP is 100 or below\n" +
 									"------------------------\n" +
 									"MONK's main weapon are martial arts\n" +
                                     "Monk has a special command named HARNESS\n" +
                                     "by using harness you can build focus that will give you access\n" +
 									"to more skills with the ARTS command\n" +
-									"INNER HEALING: gain HP with high max and low min value\n" +
-									"RAPID PALM: combo attack with random hits and dmg that based off number of hits\n" +
-									"AURA BOLT: high attack damage\n" +
+									"while maintaining max focus, Monk is granted a variety of buffs\n\n" +
+									"INNER HEALING: gain HP with high max and low min value\n\n" +
+									"RAPID PALM: combo attack with random hits and dmg that based off number of hits\n\n" +
+									"AURA BOLT: high attack damage\n\n" +
 									"Monk also gains a small amount of focus with the ATTACK command\n" +
+									"and has a chance to gain max focus when using the HARNESS cmd at low HP\n" +
                                     "------------------------\n" +
-									"Every character has access to 5 Potions and 1 Hi-Potion\n" +
+									"Every character has access to 6 Potions and 2 Hi-Potion\n" +
 									"Potions give 5,000 HP, Hi-Potion gives 10,000\n" +
-									"Wizard is given 1 Ether to gain 300 MP on use, but no Hi-Potion\n" +
+									"Wizard is given 2 Ethers to gain 300 MP on use, but no Hi-Potions\n" +
 									"You may enter an invalid selection in any of the battle submenus\n" +
 									"to take you back to the main battle menu\n" +
 									"------------------------\n\n" ;
@@ -135,26 +138,26 @@ namespace Ragnarok
 			Player Wizard = new Player();
 			Player Monk = new Player();
 
-			Berserker.player_hp = 8500;//Berserker essentials
-            Berserker.max_hp = 12420;
+			Berserker.player_hp = 13420;//Berserker essentials
+            Berserker.max_hp = 13420;
             Berserker.skill_points = 3;
 			Berserker.base_att_dmg = 3420;
 
-			Wizard.player_hp = 5350;//Wizard essentials
-            Wizard.max_hp = 10750;
+			Wizard.player_hp = 11750;//Wizard essentials
+            Wizard.max_hp = 11750;
             Wizard.skill_points = 300;
 			Wizard.base_att_dmg = 2401;
 
-			Monk.player_hp = 9700;//Monk essentials
-            Monk.max_hp = 11500;
-            Monk.skill_points = 10;
+			Monk.player_hp = 15150;//Monk essentials
+            Monk.max_hp = 15150;
+            Monk.skill_points = 15;
 			Monk.base_att_dmg = 3778;
 
-			int nidhogg_hp = 80000;//Nidhogg essentials
+			int nidhogg_hp = 70000;//Nidhogg essentials
 			
-			int potion_amt = 5;//item variables
-			int hipotion_amt = 1;
-			int ether_amt = 1;
+			int potion_amt = 6;//item variables
+			int hipotion_amt = 2;
+			int ether_amt = 2;
 			string item_choice;
 
 			string player_choice = Console.ReadLine(); //Need this variable declared in the main body for use with battle loop
@@ -236,7 +239,7 @@ namespace Ragnarok
 										}
 										else
 										{
-											int physical_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .65) / 2 );
+											int physical_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .95) / 2 );
 											nidhogg_hp -= physical_dmg;
 											Berserker.skill_points++;
 											Console.ForegroundColor = ConsoleColor.Cyan;
@@ -265,7 +268,7 @@ namespace Ragnarok
 											case "1"://Shoulder Charge
 												if (Berserker.skill_points >= 2)
 												{
-													int sc_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + 1.67) / 1.98 );
+													int sc_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + 1.67) / 2.2 );
 													nidhogg_hp -= sc_dmg;
 													Berserker.skill_points -= 2;
 													Console.ForegroundColor = ConsoleColor.DarkCyan;
@@ -285,7 +288,7 @@ namespace Ragnarok
 													nidhogg_hp -= bl_dmg;
 													int heal_amt = (int)(bl_dmg * 2.5);
                                                     Berserker.skill_points -= 3;
-                                                    if (Berserker.player_hp + heal_amt > Berserker.max_hp)
+                                                    if (Berserker.player_hp + heal_amt >= Berserker.max_hp)
                                                     {
                                                         Console.ForegroundColor = ConsoleColor.DarkCyan;
 													    Console.Write("\nYour lust for battle gives you strength\n" + 
@@ -352,7 +355,8 @@ namespace Ragnarok
 											case "1"://Potion
 												if (potion_amt > 0)
 												{
-													if (Berserker.player_hp + 5000 > Berserker.max_hp)
+													potion_amt--;
+													if (Berserker.player_hp + 5000 >= Berserker.max_hp)
                                                     {
                                                         int heal_amt = Berserker.max_hp - Berserker.player_hp;
                                                         Berserker.player_hp = Berserker.max_hp;
@@ -366,7 +370,7 @@ namespace Ragnarok
 													else
                                                     {
                                                         Berserker.player_hp += 5000;
-													    Console.ForegroundColor = ConsoleColor.Green;
+														Console.ForegroundColor = ConsoleColor.Green;
 													    Console.WriteLine("\nYou gained 5,000 HP! HP: {0:N0}", Berserker.player_hp);
 													    Console.ForegroundColor = ConsoleColor.Yellow;
 													    Console.Write("\nPLAYER TURN END: Press enter");
@@ -380,7 +384,7 @@ namespace Ragnarok
 												if (hipotion_amt > 0)
 												{
 													hipotion_amt--;
-                                                    if (Berserker.player_hp + 10000 > Berserker.max_hp)
+                                                    if (Berserker.player_hp + 10000 >= Berserker.max_hp)
                                                     {
                                                         int heal_amt = Berserker.max_hp - Berserker.player_hp;
                                                         Berserker.player_hp = Berserker.max_hp;
@@ -417,7 +421,7 @@ namespace Ragnarok
 							{
 								System.Threading.Thread.Sleep(900);
 								Console.Write("\n------------------------\n");
-								Console.WriteLine("Current HP: {0:N0}\t" + "MP: {1}", Wizard.player_hp, Wizard.skill_points);
+								Console.WriteLine("HP: {0:N0}/{1:N0}\t" + "MP: {2}", Wizard.player_hp, Wizard.max_hp, Wizard.skill_points);
 								Console.Write("------------------------\n" +
 												"1. ATTACK\n" +
 												"2. MAGIC\n" +
@@ -474,16 +478,29 @@ namespace Ragnarok
                                             case "2" ://Fortify
                                                 if (Wizard.skill_points >= 150)
                                                 {
-                                                    int fort_heal_range = r.Next(4500, 10101);
-                                                    Wizard.player_hp += fort_heal_range;
+													int fort_heal_range = r.Next(4500, 10101);
                                                     Wizard.skill_points -= 150;
-                                                    Console.ForegroundColor = ConsoleColor.Green;
-                                                    Console.WriteLine("\nEngulfed by a shimmering light you gained {0:N0} HP! HP: {1:N0}", fort_heal_range, Wizard.player_hp);
-                                                    Console.ForegroundColor = ConsoleColor.Yellow;
-												    Console.Write("\nPLAYER TURN END: Press enter");
-												    Console.ForegroundColor = ConsoleColor.Gray;
-												    Console.ReadKey(player_turn = false);
-                                                }
+													if (Wizard.player_hp + fort_heal_range >= Wizard.max_hp)
+													{
+														Console.ForegroundColor = ConsoleColor.Green;
+														Console.WriteLine("\nEngulfed by a shimmering light you gained {0:N0} HP! HP: MAX", (Wizard.max_hp - Wizard.player_hp));
+														Wizard.player_hp = Wizard.max_hp;
+														Console.ForegroundColor = ConsoleColor.Yellow;
+														Console.Write("\nPLAYER TURN END: Press enter");
+														Console.ForegroundColor = ConsoleColor.Gray;
+														Console.ReadKey(player_turn = false);
+													}
+													else
+													{
+														Wizard.player_hp += fort_heal_range;
+														Console.ForegroundColor = ConsoleColor.Green;
+														Console.WriteLine("\nEngulfed by a shimmering light you gained {0:N0} HP! HP: {1:N0}", fort_heal_range, Wizard.player_hp);
+														Console.ForegroundColor = ConsoleColor.Yellow;
+														Console.Write("\nPLAYER TURN END: Press enter");
+														Console.ForegroundColor = ConsoleColor.Gray;
+														Console.ReadKey(player_turn = false);
+													}
+												}
                                                 else Console.WriteLine("\nYou do not have enough MP to cast this spell...");
                                             break;
                                             case "3"://Hellfire
@@ -568,7 +585,8 @@ namespace Ragnarok
 													Console.WriteLine("\nYou have too much MP to use this spell...");
 												}
 											break;
-                                        }
+										default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
+										}
 									break;
                                     case "3"://Wizard Item Menu
 										Console.Write("------------------------\n" +
@@ -639,7 +657,7 @@ namespace Ragnarok
 							{
 								System.Threading.Thread.Sleep(900);
 								Console.Write("\n------------------------\n");
-								Console.WriteLine("Current HP: {0:N0}\t" + "Focus: {1} | 50", Monk.player_hp, Monk.skill_points);
+								Console.WriteLine("HP: {0:N0}/{1:N0}\t" + "Focus: {2} | 50", Monk.player_hp, Monk.max_hp,Monk.skill_points);
 								Console.Write("------------------------\n" +
 												"1. ATTACK\n" +
 												"2. HARNESS\n" +
@@ -665,10 +683,10 @@ namespace Ragnarok
 										}
 										else
 										{
-											int physical_dmg = (int)(Monk.base_att_dmg * (r.NextDouble() + .85) / 2);
-											nidhogg_hp -= physical_dmg;
 											if (Monk.skill_points < 50)
 											{
+												int physical_dmg = (int)(Monk.base_att_dmg * (r.NextDouble() + .8) / 2);
+												nidhogg_hp -= physical_dmg;
 												Monk.skill_points += 5;
 												Console.ForegroundColor = ConsoleColor.Cyan;
 												Console.WriteLine("\nYou pummeled Nidhogg for {0:N0} damage! +5 focus gained", physical_dmg);
@@ -679,6 +697,8 @@ namespace Ragnarok
 											}
 											else
 											{
+												int physical_dmg = (int)(Monk.base_att_dmg * (r.NextDouble() + 1.35) / 2);
+												nidhogg_hp -= physical_dmg;
 												Console.ForegroundColor = ConsoleColor.Cyan;
 												Console.WriteLine("\nYou pummeled Nidhogg for {0:N0} damage!", physical_dmg);
 												Console.ForegroundColor = ConsoleColor.Yellow;
@@ -689,26 +709,61 @@ namespace Ragnarok
 										}
 										break;
 									case "2"://Monk HARNESS cmd
-										if (Monk.skill_points <= 29)
+										if (Monk.player_hp <= 5500 && Monk.skill_points != 50)
 										{
-											int focus_points = 20;
-											Monk.skill_points += focus_points;
-											Console.ForegroundColor = ConsoleColor.DarkGreen;
-											Console.WriteLine("\nYou harness your chi +20 focus gained!");
-											Console.ForegroundColor = ConsoleColor.Yellow;
-											Console.Write("\nPLAYER TURN END: Press enter");
-											Console.ForegroundColor = ConsoleColor.Gray;
-											Console.ReadKey(player_turn = false);
+											int crit_focus = r.Next(2);
+											if (crit_focus == 0)
+											{
+												Monk.skill_points = 50;
+												Console.ForegroundColor = ConsoleColor.DarkGreen;
+												Console.WriteLine("\nDesperation has lead to heighten focus!\nYour focus is now max!");
+												Console.ForegroundColor = ConsoleColor.Yellow;
+												Console.Write("\nPLAYER TURN END: Press enter");
+												Console.ForegroundColor = ConsoleColor.Gray;
+												Console.ReadKey(player_turn = false);
+											}
+											else if (crit_focus == 1 && Monk.skill_points < 35)
+											{
+												int focus_points = 15;
+												Monk.skill_points += focus_points;
+												Console.ForegroundColor = ConsoleColor.DarkGreen;
+												Console.WriteLine("\nYou harness your chi +15 focus gained!");
+												Console.ForegroundColor = ConsoleColor.Yellow;
+												Console.Write("\nPLAYER TURN END: Press enter");
+												Console.ForegroundColor = ConsoleColor.Gray;
+												Console.ReadKey(player_turn = false);
+											}
+											else if (crit_focus == 1 && Monk.skill_points >= 35)
+											{
+												Monk.skill_points = 50;
+												Console.ForegroundColor = ConsoleColor.DarkGreen;
+												Console.WriteLine("\nYour focus is now max!");
+												Console.ForegroundColor = ConsoleColor.Yellow;
+												Console.Write("\nPLAYER TURN END: Press enter");
+												Console.ForegroundColor = ConsoleColor.Gray;
+												Console.ReadKey(player_turn = false);
+											}
 										}
 										else if (Monk.skill_points == 50)
 										{
 											Console.WriteLine("\nYour focus can be heightened no further, seize the moment and strike!");
 										}
-										else if (Monk.skill_points >= 30)
+										else if (Monk.skill_points >= 35)
 										{
 											Monk.skill_points = 50;
 											Console.ForegroundColor = ConsoleColor.DarkGreen;
 											Console.WriteLine("\nYour focus is now max!");
+											Console.ForegroundColor = ConsoleColor.Yellow;
+											Console.Write("\nPLAYER TURN END: Press enter");
+											Console.ForegroundColor = ConsoleColor.Gray;
+											Console.ReadKey(player_turn = false);
+										}
+										else
+										{
+											int focus_points = 15;
+											Monk.skill_points += focus_points;
+											Console.ForegroundColor = ConsoleColor.DarkGreen;
+											Console.WriteLine("\nYou harness your chi +15 focus gained!");
 											Console.ForegroundColor = ConsoleColor.Yellow;
 											Console.Write("\nPLAYER TURN END: Press enter");
 											Console.ForegroundColor = ConsoleColor.Gray;
@@ -732,16 +787,30 @@ namespace Ragnarok
 											case "1"://Inner Healing
 												if (Monk.skill_points >= 20)
 												{
-													int inner_heal = r.Next(5420, 10421);
-													Monk.player_hp += inner_heal;
+													int inner_heal = r.Next(3420, 10421);
 													Monk.skill_points -= 20;
-													Console.ForegroundColor = ConsoleColor.Green;
-													Console.WriteLine("\nYou gather your chi in your stomach and redisturb it throughout your body" +
-																		"\ngained {0:N0} HP! HP: {1:N0}", inner_heal, Monk.player_hp);
-													Console.ForegroundColor = ConsoleColor.Yellow;
-													Console.Write("\nPLAYER TURN END: Press enter");
-													Console.ForegroundColor = ConsoleColor.Gray;
-													Console.ReadKey(player_turn = false);
+													if (Monk.player_hp + inner_heal >= Monk.max_hp)
+													{
+														Console.ForegroundColor = ConsoleColor.Green;
+														Console.WriteLine("\nYou gather your chi in your stomach and redisturb it throughout your body" +
+																			"\ngained {0:N0} HP! HP: MAX", (Monk.max_hp - Monk.player_hp));
+														Monk.player_hp = Monk.max_hp;
+														Console.ForegroundColor = ConsoleColor.Yellow;
+														Console.Write("\nPLAYER TURN END: Press enter");
+														Console.ForegroundColor = ConsoleColor.Gray;
+														Console.ReadKey(player_turn = false);
+													}
+													else
+													{
+														Monk.player_hp += inner_heal;
+														Console.ForegroundColor = ConsoleColor.Green;
+														Console.WriteLine("\nYou gather your chi in your stomach and redisturb it throughout your body" +
+																			"\ngained {0:N0} HP! HP: {1:N0}", inner_heal, Monk.player_hp);
+														Console.ForegroundColor = ConsoleColor.Yellow;
+														Console.Write("\nPLAYER TURN END: Press enter");
+														Console.ForegroundColor = ConsoleColor.Gray;
+														Console.ReadKey(player_turn = false);
+													}
 												}
 												else
 												{
@@ -839,7 +908,7 @@ namespace Ragnarok
 												if (potion_amt > 0)
 												{
 													potion_amt--;
-													if (Monk.player_hp + 5000 > Monk.max_hp)
+													if (Monk.player_hp + 5000 >= Monk.max_hp)
                                                     {
                                                         int heal_amt = Monk.max_hp - Monk.player_hp;
                                                         Monk.player_hp = Monk.max_hp;
@@ -867,7 +936,7 @@ namespace Ragnarok
 												if (hipotion_amt > 0)
 												{
 													hipotion_amt--;
-													if (Monk.player_hp + 10000 > Monk.max_hp)
+													if (Monk.player_hp + 10000 >= Monk.max_hp)
                                                     {
                                                         int heal_amt = Monk.max_hp - Monk.player_hp;
                                                         Monk.player_hp = Monk.max_hp;
@@ -908,7 +977,7 @@ namespace Ragnarok
 				NH_attacks.Add("TailWhip"); NH_attacks.Add("Fang");
 				NH_attacks.Add("DiveBomber"); NH_attacks.Add("Claw");
 
-				if (nidhogg_hp <= 20000 && nidhogg_hp > 0)
+				if (nidhogg_hp <= 30000 && nidhogg_hp > 0)
 				{
 					NH_attacks.Add("DragonBreath");
 					NH_attacks.Add("DiveBomber");
@@ -953,7 +1022,7 @@ namespace Ragnarok
 									}
 									else
 									{
-										int claw_dmg = r.Next(899, 1760);
+										int claw_dmg = r.Next(899, 1960);
 										Berserker.player_hp -= claw_dmg;
 										Console.ForegroundColor = ConsoleColor.DarkMagenta;
 										Console.Write("\n\nNidhogg delivers a sudden strike with it's claws for {0:N0} damage!\n", claw_dmg);
@@ -976,7 +1045,7 @@ namespace Ragnarok
 									}
 									else
 									{
-										int fang_dmg = r.Next (1100, 2076);
+										int fang_dmg = r.Next (1600, 2276);
 										Berserker.player_hp -= fang_dmg;
 										Console.ForegroundColor = ConsoleColor.DarkMagenta;
 										Console.Write("\n\nNidhogg's fangs find their mark for {0:N0} damage!\n", fang_dmg);
@@ -1006,7 +1075,7 @@ namespace Ragnarok
 											int tail_count = r.Next(2, 7);
 											if(tail_count == 2)
 											{
-												int tail_dmg = r.Next(670, 980);
+												int tail_dmg = r.Next(980, 1570);
 												Berserker.player_hp -= tail_dmg;
 												Console.ForegroundColor = ConsoleColor.DarkMagenta;
 												Console.Write("\n\nNidhogg lashes it's tail violently\n" +
@@ -1018,7 +1087,7 @@ namespace Ragnarok
 											}
 											else if (tail_count == 3 || tail_count == 4)
 											{
-												int tail_dmg = r.Next(1080, 1794);
+												int tail_dmg = r.Next(1600, 1994);
 												Berserker.player_hp -= tail_dmg;
 												Console.ForegroundColor = ConsoleColor.DarkMagenta;
 												Console.Write("\n\nNidhogg lashes it's tail violently\n" +
@@ -1030,7 +1099,7 @@ namespace Ragnarok
 											}
 											else if (tail_count == 5 || tail_count == 6)
 											{
-												int tail_dmg = r.Next(1940, 2200);
+												int tail_dmg = r.Next(2200, 3120);
 												Berserker.player_hp -= tail_dmg;
 												Console.ForegroundColor = ConsoleColor.DarkMagenta;
 												Console.Write("\n\nNidhogg lashes it's tail violently\n" +
@@ -1047,7 +1116,7 @@ namespace Ragnarok
 										int tail_count = r.Next(2, 7);
 										if(tail_count == 2)
 										{
-											int tail_dmg = r.Next(670, 980);
+											int tail_dmg = r.Next(980, 1570);
 											Berserker.player_hp -= tail_dmg;
 											Console.ForegroundColor = ConsoleColor.DarkMagenta;
 											Console.Write("\n\nNidhogg lashes it's tail violently\n" +
@@ -1059,7 +1128,7 @@ namespace Ragnarok
 										}
 										else if (tail_count == 3 || tail_count == 4)
 										{
-											int tail_dmg = r.Next(1080, 1794);
+											int tail_dmg = r.Next(1600, 1994);
 											Berserker.player_hp -= tail_dmg;
 											Console.ForegroundColor = ConsoleColor.DarkMagenta;
 											Console.Write("\n\nNidhogg lashes it's tail violently\n" +
@@ -1070,8 +1139,8 @@ namespace Ragnarok
 											Console.ReadKey(player_turn = true);
 										}
 										else if (tail_count == 5 || tail_count == 6)
-											{
-											int tail_dmg = r.Next(1940, 2200);
+										{
+											int tail_dmg = r.Next(2200, 3120);
 											Berserker.player_hp -= tail_dmg;
 											Console.ForegroundColor = ConsoleColor.DarkMagenta;
 											Console.Write("\n\nNidhogg lashes it's tail violently\n" +
@@ -1086,8 +1155,8 @@ namespace Ragnarok
 								case "DiveBomber":
 									if (Berserker.skill_points >= 5) //Rage buff vs. DiveBomber
 									{
-										int tail_acc = r.Next(5);
-										if (tail_acc == 4)
+										int dive_acc = r.Next(5);
+										if (dive_acc == 4)
 										{
 											Berserker.skill_points += 1;
 											Console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -1100,7 +1169,7 @@ namespace Ragnarok
 										}
 										else
 										{
-											int dive_dmg = r.Next(2200, 3320);
+											int dive_dmg = r.Next(2570, 3820);
 											Berserker.player_hp -= dive_dmg;
 											Console.ForegroundColor = ConsoleColor.DarkMagenta;
 											Console.Write("\n\nNidhogg flies beyond the clouds, returning the the ground\n" +
@@ -1114,7 +1183,7 @@ namespace Ragnarok
 									}
 									else
 									{
-										int dive_dmg = r.Next(2200, 3320);
+										int dive_dmg = r.Next(2570, 3820);
 										Berserker.player_hp -= dive_dmg;
 										Console.ForegroundColor = ConsoleColor.DarkMagenta;
 										Console.Write("\n\nNidhogg flies beyond the clouds, returning the the ground\n" +
@@ -1127,10 +1196,10 @@ namespace Ragnarok
 									}
 								break;
 								case "DragonBreath":
-									if (Berserker.player_hp >= 5) //Rage buff vs DragonBreath
+									if (Berserker.skill_points >= 5) //Rage buff vs DragonBreath
 									{
-										int tail_acc = r.Next(5);
-										if (tail_acc == 0)
+										int dragon_acc = r.Next(5);
+										if (dragon_acc == 2)
 										{
 											Berserker.skill_points += 1;
 											Console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -1143,7 +1212,7 @@ namespace Ragnarok
 										}
 										else
 										{
-											int dragon_dmg = r.Next(3005, 5525);
+											int dragon_dmg = r.Next(4005, 7525);
 											Berserker.player_hp -= dragon_dmg;
 											Console.BackgroundColor = ConsoleColor.DarkGray;
 											Console.ForegroundColor = ConsoleColor.DarkMagenta;
@@ -1159,7 +1228,7 @@ namespace Ragnarok
 									}
 									else
 									{
-										int dragon_dmg = r.Next(3005, 5525);
+										int dragon_dmg = r.Next(4005, 7525);
 										Berserker.player_hp -= dragon_dmg;
 										Console.BackgroundColor = ConsoleColor.DarkGray;
 										Console.ForegroundColor = ConsoleColor.DarkMagenta;
@@ -1197,7 +1266,7 @@ namespace Ragnarok
 									}
 									else
 									{
-										int claw_dmg = r.Next(899, 1560);
+										int claw_dmg = r.Next(899, 1960);
 										Wizard.player_hp -= claw_dmg;
 										Console.ForegroundColor = ConsoleColor.DarkMagenta;
 										Console.Write("\n\nNidhogg delivers a sudden strike with it's claws for {0:N0} damage!\n", claw_dmg);
@@ -1209,7 +1278,7 @@ namespace Ragnarok
 								break;
 								case "Fang":
 									int fang_acc = r.Next(9);
-									if (fang_acc == 0)
+									if (fang_acc == 5)
 									{
 										Console.ForegroundColor = ConsoleColor.DarkGreen;
 										Console.Write("\n\nYou create a mist image of yourself, causing Nidhogg to bite through thin air!\n");
@@ -1220,7 +1289,7 @@ namespace Ragnarok
 									}
 									else
 									{
-										int fang_dmg = r.Next(1100, 2076);
+										int fang_dmg = r.Next(1600, 2276);
 										Wizard.player_hp -= fang_dmg;
 										Console.ForegroundColor = ConsoleColor.DarkMagenta;
 										Console.Write("\n\nNidhogg's fangs find their mark for {0:N0} damage!\n", fang_dmg);
@@ -1232,13 +1301,13 @@ namespace Ragnarok
 								break;
 								case "TailWhip":
 									int tail_count = r.Next(2, 7);
-									if(tail_count == 2)
+									if (tail_count == 2)
 									{
-										int tail_dmg = r.Next(670, 980);
+										int tail_dmg = r.Next(980, 1570);
 										Wizard.player_hp -= tail_dmg;
 										Console.ForegroundColor = ConsoleColor.DarkMagenta;
 										Console.Write("\n\nNidhogg lashes it's tail violently\n" +
-														"You suffer {0} hits for {1} damage!\n", tail_count, tail_dmg);
+														"You suffer {0} hits for {1:N0} damage!\n", tail_count, tail_dmg);
 										Console.ForegroundColor = ConsoleColor.Yellow;
 										Console.Write("\nNIDHOGG TURN END: Press enter\n");
 										Console.ForegroundColor = ConsoleColor.Gray;
@@ -1246,11 +1315,11 @@ namespace Ragnarok
 									}
 									else if (tail_count == 3 || tail_count == 4)
 									{
-										int tail_dmg = r.Next(1080, 1794);
+										int tail_dmg = r.Next(1600, 1994);
 										Wizard.player_hp -= tail_dmg;
 										Console.ForegroundColor = ConsoleColor.DarkMagenta;
 										Console.Write("\n\nNidhogg lashes it's tail violently\n" +
-														"You suffer {0} hits for {1} damage!\n", tail_count, tail_dmg);
+														"You suffer {0} hits for {1:N0} damage!\n", tail_count, tail_dmg);
 										Console.ForegroundColor = ConsoleColor.Yellow;
 										Console.Write("\nNIDHOGG TURN END: Press enter\n");
 										Console.ForegroundColor = ConsoleColor.Gray;
@@ -1258,11 +1327,11 @@ namespace Ragnarok
 									}
 									else if (tail_count == 6)
 									{
-										int tail_dmg = r.Next(1940, 2200);
+										int tail_dmg = r.Next(2200, 3120);
 										Wizard.player_hp -= tail_dmg;
 										Console.ForegroundColor = ConsoleColor.DarkMagenta;
 										Console.Write("\n\nNidhogg lashes it's tail violently\n" +
-														"You suffer {0} hits for {1} damage!\n", tail_count, tail_dmg);
+														"You suffer {0} hits for {1:N0} damage!\n", tail_count, tail_dmg);
 										Console.ForegroundColor = ConsoleColor.Yellow;
 										Console.Write("\nNIDHOGG TURN END: Press enter\n");
 										Console.ForegroundColor = ConsoleColor.Gray;
@@ -1270,7 +1339,7 @@ namespace Ragnarok
 									}
 								break;
 								case "DiveBomber":
-									int dive_dmg = r.Next(2200, 3320);
+									int dive_dmg = r.Next(2570, 3820);
 									Wizard.player_hp -= dive_dmg;
 									Console.ForegroundColor = ConsoleColor.DarkMagenta;
 									Console.Write("\n\nNidhogg flies beyond the clouds, returning the the ground\n" +
@@ -1282,7 +1351,7 @@ namespace Ragnarok
 									Console.ReadKey(player_turn = true);
 								break;
 								case "DragonBreath":
-									int dragon_dmg = r.Next(3005, 5525);
+									int dragon_dmg = r.Next(4005, 7525);
 									Wizard.player_hp -= dragon_dmg;
 									Console.BackgroundColor = ConsoleColor.DarkGray;
 									Console.ForegroundColor = ConsoleColor.DarkMagenta;
@@ -1345,7 +1414,7 @@ namespace Ragnarok
 										}
 										else
 										{
-											int claw_dmg = r.Next(899, 1860);
+											int claw_dmg = r.Next(899, 1960);
 											Monk.player_hp -= claw_dmg;
 											Console.ForegroundColor = ConsoleColor.DarkMagenta;
 											Console.Write("\n\nNidhogg delivers a sudden strike with it's claws for {0:N0} damage!\n", claw_dmg);
@@ -1401,7 +1470,7 @@ namespace Ragnarok
 										}
 										else
 										{
-											int fang_dmg = r.Next(1100, 2076);
+											int fang_dmg = r.Next(1600, 2276);
 											Monk.player_hp -= fang_dmg;
 											Console.ForegroundColor = ConsoleColor.DarkMagenta;
 											Console.Write("\n\nNidhogg's fangs find their mark for {0:N0} damage!\n", fang_dmg);
@@ -1416,11 +1485,11 @@ namespace Ragnarok
 									int tail_count = r.Next(2, 7);
 									if (tail_count == 2)
 									{
-										int tail_dmg = r.Next(670, 980);
+										int tail_dmg = r.Next(980, 1570);
 										Monk.player_hp -= tail_dmg;
 										Console.ForegroundColor = ConsoleColor.DarkMagenta;
 										Console.Write("\n\nNidhogg lashes it's tail violently\n" +
-														"You suffer {0} hits for {1} damage!\n", tail_count, tail_dmg);
+														"You suffer {0} hits for {1:N0} damage!\n", tail_count, tail_dmg);
 										Console.ForegroundColor = ConsoleColor.Yellow;
 										Console.Write("\nNIDHOGG TURN END: Press enter\n");
 										Console.ForegroundColor = ConsoleColor.Gray;
@@ -1428,11 +1497,11 @@ namespace Ragnarok
 									}
 									else if (tail_count == 3 || tail_count == 4)
 									{
-										int tail_dmg = r.Next(1080, 1794);
+										int tail_dmg = r.Next(1600, 1994);
 										Monk.player_hp -= tail_dmg;
 										Console.ForegroundColor = ConsoleColor.DarkMagenta;
 										Console.Write("\n\nNidhogg lashes it's tail violently\n" +
-														"You suffer {0} hits for {1} damage!\n", tail_count, tail_dmg);
+														"You suffer {0} hits for {1:N0} damage!\n", tail_count, tail_dmg);
 										Console.ForegroundColor = ConsoleColor.Yellow;
 										Console.Write("\nNIDHOGG TURN END: Press enter\n");
 										Console.ForegroundColor = ConsoleColor.Gray;
@@ -1440,11 +1509,11 @@ namespace Ragnarok
 									}
 									else if (tail_count == 5 || tail_count == 6)
 									{
-										int tail_dmg = r.Next(1940, 2200);
+										int tail_dmg = r.Next(2200, 3120);
 										Monk.player_hp -= tail_dmg;
 										Console.ForegroundColor = ConsoleColor.DarkMagenta;
 										Console.Write("\n\nNidhogg lashes it's tail violently\n" +
-														"You suffer {0} hits for {1} damage!\n", tail_count, tail_dmg);
+														"You suffer {0} hits for {1:N0} damage!\n", tail_count, tail_dmg);
 										Console.ForegroundColor = ConsoleColor.Yellow;
 										Console.Write("\nNIDHOGG TURN END: Press enter\n");
 										Console.ForegroundColor = ConsoleColor.Gray;
@@ -1454,7 +1523,7 @@ namespace Ragnarok
 								case "DiveBomber":
 									if (Monk.skill_points == 50)//Max Focus buff vs DiveBomber
 									{
-										int dive_dmg = r.Next(1500, 2620);
+										int dive_dmg = r.Next(2000, 3020);
 										Monk.player_hp -= dive_dmg;
 										Console.ForegroundColor = ConsoleColor.DarkMagenta;
 										Console.Write("\n\nNidhogg flies beyond the clouds, returning the the ground\n" +
@@ -1467,7 +1536,7 @@ namespace Ragnarok
 									}
 									else
 									{
-										int dive_dmg = r.Next(2200, 3320);
+										int dive_dmg = r.Next(2570, 3820);
 										Monk.player_hp -= dive_dmg;
 										Console.ForegroundColor = ConsoleColor.DarkMagenta;
 										Console.Write("\n\nNidhogg flies beyond the clouds, returning the the ground\n" +
@@ -1482,13 +1551,13 @@ namespace Ragnarok
 								case "DragonBreath":
 									if (Monk.skill_points == 50)//Max Focus buff vs DragonBreath
 									{
-										int dragon_dmg = r.Next(2705, 4525);
+										int dragon_dmg = r.Next(3705, 4825);
 										Monk.player_hp -= dragon_dmg;
 										Console.BackgroundColor = ConsoleColor.DarkGray;
 										Console.ForegroundColor = ConsoleColor.DarkMagenta;
 										Console.Write("\n\nOpening its mouth to reveal a fiery gullet\n" +
 														"Nidhogg unleashes a most powerful beam of energy\n" +
-														"that leaves you reeling! {0:N0} damage", dragon_dmg);
+														"that leaves you reeling! {0:N0} damage\n", dragon_dmg);
 										Console.BackgroundColor = ConsoleColor.Black;
 										Console.ForegroundColor = ConsoleColor.Yellow;
 										Console.Write("\nNIDHOGG TURN END: Press enter\n");
@@ -1497,13 +1566,13 @@ namespace Ragnarok
 									}
 									else
 									{
-										int dragon_dmg = r.Next(3005, 5525);
+										int dragon_dmg = r.Next(4005, 7525);
 										Monk.player_hp -= dragon_dmg;
 										Console.BackgroundColor = ConsoleColor.DarkGray;
 										Console.ForegroundColor = ConsoleColor.DarkMagenta;
 										Console.Write("\n\nOpening its mouth to reveal a fiery gullet\n" +
 														"Nidhogg unleashes a most powerful beam of energy\n" +
-														"that leaves you reeling! {0:N0} damage", dragon_dmg);
+														"that leaves you reeling! {0:N0} damage\n", dragon_dmg);
 										Console.BackgroundColor = ConsoleColor.Black;
 										Console.ForegroundColor = ConsoleColor.Yellow;
 										Console.Write("\nNIDHOGG TURN END: Press enter\n");
