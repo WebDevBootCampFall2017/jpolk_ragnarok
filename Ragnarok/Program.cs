@@ -12,6 +12,7 @@ namespace Ragnarok
 		public class Player
 		{
 			public int player_hp { get; set; }
+            public int max_hp { get; set; }
 			public int skill_points { get; set; }
 			public int base_att_dmg { get; set; }
 			public int player_dmg { get; set; }
@@ -135,15 +136,18 @@ namespace Ragnarok
 			Player Monk = new Player();
 
 			Berserker.player_hp = 8500;//Berserker essentials
-			Berserker.skill_points = 3;
+            Berserker.max_hp = 12420;
+            Berserker.skill_points = 3;
 			Berserker.base_att_dmg = 3420;
 
 			Wizard.player_hp = 5350;//Wizard essentials
-			Wizard.skill_points = 300;
+            Wizard.max_hp = 10750;
+            Wizard.skill_points = 300;
 			Wizard.base_att_dmg = 2401;
 
 			Monk.player_hp = 9700;//Monk essentials
-			Monk.skill_points = 10;
+            Monk.max_hp = 11500;
+            Monk.skill_points = 10;
 			Monk.base_att_dmg = 3778;
 
 			int nidhogg_hp = 80000;//Nidhogg essentials
@@ -207,7 +211,7 @@ namespace Ragnarok
 							{
 								System.Threading.Thread.Sleep(900);
 								Console.Write("\n------------------------\n");
-								Console.WriteLine("Current HP: {0:N0}\t" + "Rage: {1}", Berserker.player_hp, Berserker.skill_points); 
+								Console.WriteLine("HP: {0:N0}/{1:N0}\t" + "Rage: {2}", Berserker.player_hp, Berserker.max_hp, Berserker.skill_points); 
 								Console.Write("------------------------\n" +
 												"1. ATTACK\n" + 
 												"2. RAGE\n" + 
@@ -279,17 +283,34 @@ namespace Ragnarok
 												{
 													int bl_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .90) / 2 );
 													nidhogg_hp -= bl_dmg;
-													Berserker.player_hp += (int)(bl_dmg * 2.5);
-													Berserker.skill_points -= 3;
-													Console.ForegroundColor = ConsoleColor.DarkCyan;
-													Console.Write("\nYour lust for battle gives you strength\n" + 
-																	"You inflicted {0:N0} HP with Bloodlust!", bl_dmg);
-													Console.ForegroundColor = ConsoleColor.Green;
-													Console.Write("\nYou gained {0:N0} HP with Bloodlust! HP: {1:N0}\n", (int)(bl_dmg * 2.5), Berserker.player_hp);
-													Console.ForegroundColor = ConsoleColor.Yellow;
-													Console.Write("\nPLAYER TURN END: Press enter");
-													Console.ForegroundColor = ConsoleColor.Gray;
-													Console.ReadKey(player_turn = false);
+													int heal_amt = (int)(bl_dmg * 2.5);
+                                                    Berserker.skill_points -= 3;
+                                                    if (Berserker.player_hp + heal_amt > Berserker.max_hp)
+                                                    {
+                                                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+													    Console.Write("\nYour lust for battle gives you strength\n" + 
+																	    "You inflicted {0:N0} HP with Bloodlust!", bl_dmg);
+													    Console.ForegroundColor = ConsoleColor.Green;
+													    Console.Write("\nYou gained {0:N0} HP with Bloodlust! HP: MAX\n", (Berserker.max_hp - Berserker.player_hp));
+                                                        Berserker.player_hp = Berserker.max_hp;
+                                                        Console.ForegroundColor = ConsoleColor.Yellow;
+													    Console.Write("\nPLAYER TURN END: Press enter");
+													    Console.ForegroundColor = ConsoleColor.Gray;
+													    Console.ReadKey(player_turn = false);
+                                                    }
+                                                    else
+                                                    {
+                                                        Berserker.player_hp += heal_amt;
+                                                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+													    Console.Write("\nYour lust for battle gives you strength\n" + 
+																	    "You inflicted {0:N0} HP with Bloodlust!", bl_dmg);
+													    Console.ForegroundColor = ConsoleColor.Green;
+													    Console.Write("\nYou gained {0:N0} HP with Bloodlust! HP: {1:N0}\n", heal_amt, Berserker.player_hp);
+													    Console.ForegroundColor = ConsoleColor.Yellow;
+													    Console.Write("\nPLAYER TURN END: Press enter");
+													    Console.ForegroundColor = ConsoleColor.Gray;
+													    Console.ReadKey(player_turn = false);
+                                                    }
 												}
 												else Console.WriteLine("\nYou haven't built enough rage to use that skill...");
 											break;
@@ -331,14 +352,27 @@ namespace Ragnarok
 											case "1"://Potion
 												if (potion_amt > 0)
 												{
-													potion_amt--;
-													Berserker.player_hp += 5000;
-													Console.ForegroundColor = ConsoleColor.Green;
-													Console.WriteLine("\nYou gained 5,000 HP! HP: {0:N0}", Berserker.player_hp);
-													Console.ForegroundColor = ConsoleColor.Yellow;
-													Console.Write("\nPLAYER TURN END: Press enter");
-													Console.ForegroundColor = ConsoleColor.Gray;
-													Console.ReadKey(player_turn = false);
+													if (Berserker.player_hp + 5000 > Berserker.max_hp)
+                                                    {
+                                                        int heal_amt = Berserker.max_hp - Berserker.player_hp;
+                                                        Berserker.player_hp = Berserker.max_hp;
+                                                        Console.ForegroundColor = ConsoleColor.Green;
+													    Console.WriteLine("\nYou gained {0:N0} HP! HP: MAX", heal_amt);
+													    Console.ForegroundColor = ConsoleColor.Yellow;
+													    Console.Write("\nPLAYER TURN END: Press enter");
+													    Console.ForegroundColor = ConsoleColor.Gray;
+													    Console.ReadKey(player_turn = false);
+                                                    }
+													else
+                                                    {
+                                                        Berserker.player_hp += 5000;
+													    Console.ForegroundColor = ConsoleColor.Green;
+													    Console.WriteLine("\nYou gained 5,000 HP! HP: {0:N0}", Berserker.player_hp);
+													    Console.ForegroundColor = ConsoleColor.Yellow;
+													    Console.Write("\nPLAYER TURN END: Press enter");
+													    Console.ForegroundColor = ConsoleColor.Gray;
+													    Console.ReadKey(player_turn = false);
+                                                    }
 												}
 												else Console.WriteLine("\nYou have no Potions left to use");
 											break;
@@ -346,13 +380,27 @@ namespace Ragnarok
 												if (hipotion_amt > 0)
 												{
 													hipotion_amt--;
-													Berserker.player_hp += 10000;
-													Console.ForegroundColor = ConsoleColor.Green;
-													Console.WriteLine("\nYou gained 10,000 HP! HP: {0:N0}", Berserker.player_hp);
-													Console.ForegroundColor = ConsoleColor.Yellow;
-													Console.Write("\nPLAYER TURN END: Press enter");
-													Console.ForegroundColor = ConsoleColor.Gray;
-													Console.ReadKey(player_turn = false);
+                                                    if (Berserker.player_hp + 10000 > Berserker.max_hp)
+                                                    {
+                                                        int heal_amt = Berserker.max_hp - Berserker.player_hp;
+                                                        Berserker.player_hp = Berserker.max_hp;
+                                                        Console.ForegroundColor = ConsoleColor.Green;
+													    Console.WriteLine("\nYou gained {0:N0} HP! HP: MAX", heal_amt);
+													    Console.ForegroundColor = ConsoleColor.Yellow;
+													    Console.Write("\nPLAYER TURN END: Press enter");
+													    Console.ForegroundColor = ConsoleColor.Gray;
+													    Console.ReadKey(player_turn = false);
+                                                    }
+													else
+                                                    {
+                                                        Berserker.player_hp += 10000;
+													    Console.ForegroundColor = ConsoleColor.Green;
+													    Console.WriteLine("\nYou gained 10,000 HP! HP: {0:N0}", Berserker.player_hp);
+													    Console.ForegroundColor = ConsoleColor.Yellow;
+													    Console.Write("\nPLAYER TURN END: Press enter");
+													    Console.ForegroundColor = ConsoleColor.Gray;
+													    Console.ReadKey(player_turn = false);
+                                                    }
 												}
 												else Console.WriteLine("\nYou have no Hi-Potions left to use");
 											break;
@@ -539,13 +587,27 @@ namespace Ragnarok
 												if (potion_amt > 0)
 												{
 													potion_amt--;
-													Wizard.player_hp += 5000;
-													Console.ForegroundColor = ConsoleColor.Green;
-													Console.WriteLine("\nYou gained 5,000 HP! HP: {0:N0}", Wizard.player_hp);
-													Console.ForegroundColor = ConsoleColor.Yellow;
-													Console.Write("\nPLAYER TURN END: Press enter");
-													Console.ForegroundColor = ConsoleColor.Gray;
-													Console.ReadKey(player_turn = false);
+													if (Wizard.player_hp + 5000 > Wizard.max_hp)
+                                                    {
+                                                        int heal_amt = Wizard.max_hp - Wizard.player_hp;
+                                                        Wizard.player_hp = Wizard.max_hp;
+                                                        Console.ForegroundColor = ConsoleColor.Green;
+													    Console.WriteLine("\nYou gained {0:N0} HP! HP: MAX", heal_amt);
+													    Console.ForegroundColor = ConsoleColor.Yellow;
+													    Console.Write("\nPLAYER TURN END: Press enter");
+													    Console.ForegroundColor = ConsoleColor.Gray;
+													    Console.ReadKey(player_turn = false);
+                                                    }
+													else
+                                                    {
+                                                        Wizard.player_hp += 5000;
+													    Console.ForegroundColor = ConsoleColor.Green;
+													    Console.WriteLine("\nYou gained 5,000 HP! HP: {0:N0}", Wizard.player_hp);
+													    Console.ForegroundColor = ConsoleColor.Yellow;
+													    Console.Write("\nPLAYER TURN END: Press enter");
+													    Console.ForegroundColor = ConsoleColor.Gray;
+													    Console.ReadKey(player_turn = false);
+                                                    }
 												}
 												else Console.WriteLine("\nYou have no Potions left to use");
 											break;
@@ -777,13 +839,27 @@ namespace Ragnarok
 												if (potion_amt > 0)
 												{
 													potion_amt--;
-													Monk.player_hp += 5000;
-													Console.ForegroundColor = ConsoleColor.Green;
-													Console.WriteLine("\nYou gained 5,000 HP! HP: {0:N0}", Monk.player_hp);
-													Console.ForegroundColor = ConsoleColor.Yellow;
-													Console.Write("\nPLAYER TURN END: Press enter");
-													Console.ForegroundColor = ConsoleColor.Gray;
-													Console.ReadKey(player_turn = false);
+													if (Monk.player_hp + 5000 > Monk.max_hp)
+                                                    {
+                                                        int heal_amt = Monk.max_hp - Monk.player_hp;
+                                                        Monk.player_hp = Monk.max_hp;
+                                                        Console.ForegroundColor = ConsoleColor.Green;
+													    Console.WriteLine("\nYou gained {0:N0} HP! HP: MAX", heal_amt);
+													    Console.ForegroundColor = ConsoleColor.Yellow;
+													    Console.Write("\nPLAYER TURN END: Press enter");
+													    Console.ForegroundColor = ConsoleColor.Gray;
+													    Console.ReadKey(player_turn = false);
+                                                    }
+													else
+                                                    {
+                                                        Monk.player_hp += 5000;
+													    Console.ForegroundColor = ConsoleColor.Green;
+													    Console.WriteLine("\nYou gained 5,000 HP! HP: {0:N0}", Monk.player_hp);
+													    Console.ForegroundColor = ConsoleColor.Yellow;
+													    Console.Write("\nPLAYER TURN END: Press enter");
+													    Console.ForegroundColor = ConsoleColor.Gray;
+													    Console.ReadKey(player_turn = false);
+                                                    }
 												}
 												else Console.WriteLine("\nYou have no Potions left to use");
 											break;
@@ -791,13 +867,27 @@ namespace Ragnarok
 												if (hipotion_amt > 0)
 												{
 													hipotion_amt--;
-													Monk.player_hp += 10000;
-													Console.ForegroundColor = ConsoleColor.Green;
-													Console.WriteLine("\nYou gained 10,000 HP! HP: {0:N0}", Monk.player_hp);
-													Console.ForegroundColor = ConsoleColor.Yellow;
-													Console.Write("\nPLAYER TURN END: Press enter");
-													Console.ForegroundColor = ConsoleColor.Gray;
-													Console.ReadKey(player_turn = false);
+													if (Monk.player_hp + 10000 > Monk.max_hp)
+                                                    {
+                                                        int heal_amt = Monk.max_hp - Monk.player_hp;
+                                                        Monk.player_hp = Monk.max_hp;
+                                                        Console.ForegroundColor = ConsoleColor.Green;
+													    Console.WriteLine("\nYou gained {0:N0} HP! HP: MAX", heal_amt);
+													    Console.ForegroundColor = ConsoleColor.Yellow;
+													    Console.Write("\nPLAYER TURN END: Press enter");
+													    Console.ForegroundColor = ConsoleColor.Gray;
+													    Console.ReadKey(player_turn = false);
+                                                    }
+													else
+                                                    {
+                                                        Monk.player_hp += 10000;
+													    Console.ForegroundColor = ConsoleColor.Green;
+													    Console.WriteLine("\nYou gained 10,000 HP! HP: {0:N0}", Monk.player_hp);
+													    Console.ForegroundColor = ConsoleColor.Yellow;
+													    Console.Write("\nPLAYER TURN END: Press enter");
+													    Console.ForegroundColor = ConsoleColor.Gray;
+													    Console.ReadKey(player_turn = false);
+                                                    }
 												}
 												else Console.WriteLine("\nYou have no Hi-Potions left to use");
 											break;
