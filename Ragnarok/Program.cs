@@ -637,8 +637,9 @@ namespace Ragnarok
 													Wizard.skill_points += 300;
 													Console.BackgroundColor = ConsoleColor.Gray;
 													Console.ForegroundColor = ConsoleColor.Blue;
-													Console.WriteLine("\nYou gained 300 MP! MP: {0}", Wizard.skill_points);
+													Console.Write("\nYou gained 300 MP! MP: {0}", Wizard.skill_points);
 													Console.BackgroundColor = ConsoleColor.Black;
+                                                    Console.Write("\n");
 													Console.ForegroundColor = ConsoleColor.Yellow;
 													Console.Write("\nPLAYER TURN END: Press enter");
 													Console.ForegroundColor = ConsoleColor.Gray;
