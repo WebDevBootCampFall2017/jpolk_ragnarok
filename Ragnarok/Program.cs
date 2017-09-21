@@ -141,7 +141,7 @@ namespace Ragnarok
 			Berserker.player_hp = 13420;//Berserker essentials
             Berserker.max_hp = 13420;
             Berserker.skill_points = 3;
-			Berserker.base_att_dmg = 3420;
+			Berserker.base_att_dmg = 3099;
 
 			Wizard.player_hp = 11750;//Wizard essentials
             Wizard.max_hp = 11750;
@@ -151,7 +151,7 @@ namespace Ragnarok
 			Monk.player_hp = 15150;//Monk essentials
             Monk.max_hp = 15150;
             Monk.skill_points = 15;
-			Monk.base_att_dmg = 3778;
+			Monk.base_att_dmg = 3378;
 
 			int nidhogg_hp = 70000;//Nidhogg essentials
 			
@@ -572,10 +572,11 @@ namespace Ragnarok
 													Wizard.skill_points += sap_gain;
 													Console.BackgroundColor = ConsoleColor.Gray;
 													Console.ForegroundColor = ConsoleColor.Blue;
-													Console.WriteLine("\nYou gather and absorb arcane energy from your surroundings\n" +
+													Console.Write("\nYou gather and absorb arcane energy from your surroundings\n" +
 																		"You gained {0} MP!", sap_gain);
 													Console.BackgroundColor = ConsoleColor.Black;
-													Console.ForegroundColor = ConsoleColor.Yellow;
+                                                    Console.Write("\n");
+                                                    Console.ForegroundColor = ConsoleColor.Yellow;
 												    Console.Write("\nPLAYER TURN END: Press enter");
 												    Console.ForegroundColor = ConsoleColor.Gray;
 												    Console.ReadKey(player_turn = false);
@@ -685,7 +686,7 @@ namespace Ragnarok
 										{
 											if (Monk.skill_points < 50)
 											{
-												int physical_dmg = (int)(Monk.base_att_dmg * (r.NextDouble() + .8) / 2);
+												int physical_dmg = (int)(Monk.base_att_dmg * (r.NextDouble() + .73) / 2);
 												nidhogg_hp -= physical_dmg;
 												Monk.skill_points += 5;
 												Console.ForegroundColor = ConsoleColor.Cyan;
@@ -697,7 +698,7 @@ namespace Ragnarok
 											}
 											else
 											{
-												int physical_dmg = (int)(Monk.base_att_dmg * (r.NextDouble() + 1.35) / 2);
+												int physical_dmg = (int)(Monk.base_att_dmg * (r.NextDouble() + 1.15) / 2);
 												nidhogg_hp -= physical_dmg;
 												Console.ForegroundColor = ConsoleColor.Cyan;
 												Console.WriteLine("\nYou pummeled Nidhogg for {0:N0} damage!", physical_dmg);
@@ -1243,7 +1244,7 @@ namespace Ragnarok
 									}
 								break;
 							}
-							break;
+							
 						}
 						break;
 						case "2"://Attack against Wizard
@@ -1365,7 +1366,7 @@ namespace Ragnarok
 									Console.ReadKey(player_turn = true);
 								break;
 							}
-							break;
+							
 						}
 						break;
 						case "3"://Attack against Monk
@@ -1581,7 +1582,7 @@ namespace Ragnarok
 									}
 								break;
 							}
-							break;
+							
 						}
 						break;
 						default: break;
