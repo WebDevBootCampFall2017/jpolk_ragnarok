@@ -25,22 +25,22 @@ namespace Ragnarok
 			Console.ForegroundColor = ConsoleColor.DarkRed;//Font color
 			System.Threading.Thread.Sleep(2000);//provides a time interval before running the next line of code
 			Console.WriteLine("	 ______   _______ _______ __    _ _______ ______   _______ ___   _ "); //Title Block
-			System.Threading.Thread.Sleep(2000);
+			System.Threading.Thread.Sleep(1200);
 			Console.WriteLine("	|    _ | |   _   |       |  |  | |   _   |    _ | |       |   | | |");
-			System.Threading.Thread.Sleep(2000);
+			System.Threading.Thread.Sleep(1200);
 			Console.WriteLine("	|   | || |  |_|  |    ___|   |_| |  |_|  |   | || |   _   |   |_| |");
-			System.Threading.Thread.Sleep(2000);
+			System.Threading.Thread.Sleep(1200);
 			Console.WriteLine("	|   |_||_|       |   | __|       |       |   |_||_|  | |  |      _|");
-			System.Threading.Thread.Sleep(2000);
+			System.Threading.Thread.Sleep(1200);
 			Console.WriteLine("	|    __  |       |   ||  |  _    |       |    __  |  |_|  |     |_ ");
-			System.Threading.Thread.Sleep(2000);
+			System.Threading.Thread.Sleep(1200);
 			Console.WriteLine("	|   |  | |   _   |   |_| | | |   |   _   |   |  | |       |    _  |");
-			System.Threading.Thread.Sleep(2000);
+			System.Threading.Thread.Sleep(1200);
 			Console.WriteLine("	|___|  |_|__| |__|_______|_|  |__|__| |__|___|  |_|_______|___| |_|");
 			Console.ForegroundColor = ConsoleColor.Gray;
 			System.Threading.Thread.Sleep(5000);
 			Console.WriteLine("\n\nThe promised end is upon you\nSummon the courage to fight for your possibility of a future"); //Tagline
-			System.Threading.Thread.Sleep(5000);
+			System.Threading.Thread.Sleep(2000);
 			Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("\nDo you need instuctions? Type 1 (yes) or 0 (no), then press enter:"); //instruction question
 			Console.ForegroundColor = ConsoleColor.Gray;
@@ -96,7 +96,7 @@ namespace Ragnarok
 					foreach (char a in instruct_block)
 					{
 						Console.Write(a);
-						System.Threading.Thread.Sleep(20);
+						System.Threading.Thread.Sleep(40);
 					}
 					System.Threading.Thread.Sleep(3000);
 					Console.ForegroundColor = ConsoleColor.Yellow;
@@ -228,10 +228,10 @@ namespace Ragnarok
 								switch (player_action)
 								{
 									case "1": //Berserker standard attack
+										turn_count++;
 										int acc = r.Next(11);
 										if (acc == 6) //Provides a 8.3% chance for Nidhogg to dodge 
 										{
-                                            turn_count++;
                                             Console.ForegroundColor = ConsoleColor.Red;
 											Console.WriteLine("\nNidhogg anticpates your attack and swiftly dodges!");
 											Console.ForegroundColor = ConsoleColor.Yellow;
@@ -241,7 +241,6 @@ namespace Ragnarok
                                         }
 										else
 										{
-                                            turn_count++;
                                             int physical_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .95) / 2 );
 											nidhogg_hp -= physical_dmg;
 											Berserker.skill_points++;
@@ -288,13 +287,13 @@ namespace Ragnarok
 											case "2"://Bloodlust
 												if (Berserker.skill_points >= 3)
 												{
+													turn_count++;
 													int bl_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .90) / 2 );
 													nidhogg_hp -= bl_dmg;
 													int heal_amt = (int)(bl_dmg * 2.5);
                                                     Berserker.skill_points -= 3;
                                                     if (Berserker.player_hp + heal_amt >= Berserker.max_hp)
                                                     {
-                                                        turn_count++;
                                                         Console.ForegroundColor = ConsoleColor.DarkCyan;
 													    Console.Write("\nYour lust for battle gives you strength\n" + 
 																	    "You inflicted {0:N0} HP with Bloodlust!", bl_dmg);
@@ -308,7 +307,6 @@ namespace Ragnarok
                                                     }
                                                     else
                                                     {
-                                                        turn_count++;
                                                         Berserker.player_hp += heal_amt;
                                                         Console.ForegroundColor = ConsoleColor.DarkCyan;
 													    Console.Write("\nYour lust for battle gives you strength\n" + 
@@ -445,6 +443,7 @@ namespace Ragnarok
 								switch (player_action)
 								{
 									case "1": //Wizard standard attack
+										turn_count++;
 										int physical_dmg = (int)(Wizard.base_att_dmg * (r.NextDouble() + .56) / 2);
 										nidhogg_hp -= physical_dmg;
 										Console.ForegroundColor = ConsoleColor.Cyan;
@@ -472,8 +471,9 @@ namespace Ragnarok
                                         {
                                             case "1" ://Ice Lance
                                                 if (Wizard.skill_points >= 25)
-                                                { 
-                                                    int il_dmg_range = r.Next(2000, 3511);//using Next method for random dmg range
+                                                {
+													turn_count++;
+													int il_dmg_range = r.Next(2000, 3511);//using Next method for random dmg range
                                                     nidhogg_hp -= il_dmg_range;
                                                     Wizard.skill_points -= 25;
                                                     Console.ForegroundColor = ConsoleColor.DarkCyan;
@@ -489,6 +489,7 @@ namespace Ragnarok
                                             case "2" ://Fortify
                                                 if (Wizard.skill_points >= 150)
                                                 {
+													turn_count++;
 													int fort_heal_range = r.Next(4500, 10101);
                                                     Wizard.skill_points -= 150;
 													if (Wizard.player_hp + fort_heal_range >= Wizard.max_hp)
@@ -517,7 +518,8 @@ namespace Ragnarok
                                             case "3"://Hellfire
                                                 if (Wizard.skill_points >= 200)
                                                 {
-                                                    int hf_hit_range = r.Next(24, 99);
+													turn_count++;
+													int hf_hit_range = r.Next(24, 99);
                                                     Wizard.skill_points -= 200;
                                                     if (hf_hit_range >= 24 && hf_hit_range <=37)
                                                     {
@@ -561,6 +563,7 @@ namespace Ragnarok
                                             case "4" ://GravityWell
 												if (Wizard.skill_points >= 275)
 												{
+													turn_count++;
 													Wizard.skill_points -= 275;
 													int gw_dmg = r.Next(8650, 12441);
 													nidhogg_hp -= gw_dmg;
@@ -578,6 +581,7 @@ namespace Ragnarok
 											case "5"://Sap
 												if (Wizard.skill_points <= 100)
 												{
+													turn_count++;
 													int sap_base = r.Next(5, 61);
 													int sap_gain = sap_base * 5;
 													Wizard.skill_points += sap_gain;
@@ -592,10 +596,7 @@ namespace Ragnarok
 												    Console.ForegroundColor = ConsoleColor.Gray;
 												    Console.ReadKey(player_turn = false);
 												}
-												else
-												{
-													Console.WriteLine("\nYou have too much MP to use this spell...");
-												}
+												else Console.WriteLine("\nYou have too much MP to use this spell...");
 											break;
 										default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
 										}
@@ -616,6 +617,7 @@ namespace Ragnarok
 											case "1"://Potion
 												if (potion_amt > 0)
 												{
+													turn_count++;
 													potion_amt--;
 													if (Wizard.player_hp + 5000 > Wizard.max_hp)
                                                     {
@@ -644,6 +646,7 @@ namespace Ragnarok
 											case "2"://Ether
 												if (ether_amt > 0)
 												{
+													turn_count++;
 													ether_amt--;
 													Wizard.skill_points += 300;
 													Console.BackgroundColor = ConsoleColor.Gray;
@@ -657,7 +660,7 @@ namespace Ragnarok
 													Console.ReadKey(player_turn = false);
 												}
 												else Console.WriteLine("\nYou have no Ethers left to use");
-												break;
+											break;
 											default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
 										}
 									break;
@@ -684,6 +687,7 @@ namespace Ragnarok
 								switch (player_action)
 								{
 									case "1"://Monk standard attack
+										turn_count++;
 										int acc = r.Next(9);
 										if (acc == 3) //Provides a 10% chance for Nidhogg to dodge 
 										{
@@ -710,7 +714,7 @@ namespace Ragnarok
 											}
 											else
 											{
-												int physical_dmg = (int)(Monk.base_att_dmg * (r.NextDouble() + 1.15) / 2);
+												int physical_dmg = (int)(Monk.base_att_dmg * (r.NextDouble() + .93) / 2);
 												nidhogg_hp -= physical_dmg;
 												Console.ForegroundColor = ConsoleColor.Cyan;
 												Console.WriteLine("\nYou pummeled Nidhogg for {0:N0} damage!", physical_dmg);
@@ -724,6 +728,7 @@ namespace Ragnarok
 									case "2"://Monk HARNESS cmd
 										if (Monk.player_hp <= 5500 && Monk.skill_points != 50)
 										{
+											turn_count++;
 											int crit_focus = r.Next(2);
 											if (crit_focus == 0)
 											{
@@ -763,6 +768,7 @@ namespace Ragnarok
 										}
 										else if (Monk.skill_points >= 35)
 										{
+											turn_count++;
 											Monk.skill_points = 50;
 											Console.ForegroundColor = ConsoleColor.DarkGreen;
 											Console.WriteLine("\nYour focus is now max!");
@@ -773,6 +779,7 @@ namespace Ragnarok
 										}
 										else
 										{
+											turn_count++;
 											int focus_points = 15;
 											Monk.skill_points += focus_points;
 											Console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -800,6 +807,7 @@ namespace Ragnarok
 											case "1"://Inner Healing
 												if (Monk.skill_points >= 20)
 												{
+													turn_count++;
 													int inner_heal = r.Next(3420, 10421);
 													Monk.skill_points -= 20;
 													if (Monk.player_hp + inner_heal >= Monk.max_hp)
@@ -825,14 +833,12 @@ namespace Ragnarok
 														Console.ReadKey(player_turn = false);
 													}
 												}
-												else
-												{
-													Console.WriteLine("\nYou must harness more focus to use this skill.");
-												}
+												else Console.WriteLine("\nYou must harness more focus to use this skill.");
 											break;
 											case "2"://Rapid Palm
 												if (Monk.skill_points >= 30)
 												{
+													turn_count++;
 													int palm_combo = r.Next(2, 5);
 													Monk.skill_points -= 30;
 													switch (palm_combo)
@@ -873,17 +879,14 @@ namespace Ragnarok
 															Console.ForegroundColor = ConsoleColor.Gray;
 															Console.ReadKey(player_turn = false);
 														break;
-														default : break;
 													}
 												}
-												else
-												{
-													Console.WriteLine("\nYou must harness more focus to use this skill.");
-												}
+												else Console.WriteLine("\nYou must harness more focus to use this skill.");
 											break;
 											case "3"://Aura Bolt
 												if (Monk.skill_points >= 50)
 												{
+													turn_count++;
 													Monk.skill_points -= 50;
 													int ab_dmg = (int)(Monk.base_att_dmg * (r.NextDouble() + 4.85) / 2);
 													nidhogg_hp -= ab_dmg;
@@ -896,10 +899,7 @@ namespace Ragnarok
 													Console.ForegroundColor = ConsoleColor.Gray;
 													Console.ReadKey(player_turn = false);
 												}
-												else
-												{
-													Console.WriteLine("\nYou must harness more focus to use this skill.");
-												}
+												else Console.WriteLine("\nYou must harness more focus to use this skill.");
 											break;
 											default: Console.Write("\nTHE PROPHECY IS WRITTEN IN STONE! Enter a proper response...\n"); break;
 										}
@@ -920,6 +920,7 @@ namespace Ragnarok
 											case "1"://Potion
 												if (potion_amt > 0)
 												{
+													turn_count++;
 													potion_amt--;
 													if (Monk.player_hp + 5000 >= Monk.max_hp)
                                                     {
@@ -948,6 +949,7 @@ namespace Ragnarok
 											case "2"://Hi-Potion
 												if (hipotion_amt > 0)
 												{
+													turn_count++;
 													hipotion_amt--;
 													if (Monk.player_hp + 10000 >= Monk.max_hp)
                                                     {
@@ -1634,10 +1636,10 @@ namespace Ragnarok
 					{
 						Console.ForegroundColor = ConsoleColor.DarkRed;
 						Console.Write(a);
-						System.Threading.Thread.Sleep(150);
+						System.Threading.Thread.Sleep(120);
 					}
                     Console.WriteLine("\n");
-                    Console.Write("\t\t\tin {0} turns", turn_count);
+                    Console.Write("\t\t\t\tin {0} turns", turn_count);
                     Console.Write("\n\nTHE ");
 					System.Threading.Thread.Sleep(1500);
 					Console.Write("FUTURE ");
