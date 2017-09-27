@@ -15,7 +15,6 @@ namespace Ragnarok
             public int max_hp { get; set; }
 			public int skill_points { get; set; }
 			public int base_att_dmg { get; set; }
-			public int player_dmg { get; set; }
 		}
 
 		static void Main(string[] args)
@@ -160,6 +159,8 @@ namespace Ragnarok
 			int ether_amt = 2;
 			string item_choice;
 
+            int turn_count = 0;
+
 			string player_choice = Console.ReadLine(); //Need this variable declared in the main body for use with battle loop
 
 			bool wasexecuted = false; //Declared before the batteloops for use with nidhogg low hp music change
@@ -230,16 +231,18 @@ namespace Ragnarok
 										int acc = r.Next(11);
 										if (acc == 6) //Provides a 8.3% chance for Nidhogg to dodge 
 										{
-											Console.ForegroundColor = ConsoleColor.Red;
+                                            turn_count++;
+                                            Console.ForegroundColor = ConsoleColor.Red;
 											Console.WriteLine("\nNidhogg anticpates your attack and swiftly dodges!");
 											Console.ForegroundColor = ConsoleColor.Yellow;
 											Console.Write("\nPLAYER TURN END: Press enter");
 											Console.ForegroundColor = ConsoleColor.Gray;
-											Console.ReadKey(player_turn = false);
-										}
+                                            Console.ReadKey(player_turn = false);
+                                        }
 										else
 										{
-											int physical_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .95) / 2 );
+                                            turn_count++;
+                                            int physical_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + .95) / 2 );
 											nidhogg_hp -= physical_dmg;
 											Berserker.skill_points++;
 											Console.ForegroundColor = ConsoleColor.Cyan;
@@ -247,7 +250,7 @@ namespace Ragnarok
 											Console.ForegroundColor = ConsoleColor.Yellow;
 											Console.Write("\nPLAYER TURN END: Press enter");
 											Console.ForegroundColor = ConsoleColor.Gray;
-											Console.ReadKey(player_turn = false);
+                                            Console.ReadKey(player_turn = false);
 										}
 										break;
 									case "2": //Berserker Rage Skill Menu
@@ -268,7 +271,8 @@ namespace Ragnarok
 											case "1"://Shoulder Charge
 												if (Berserker.skill_points >= 2)
 												{
-													int sc_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + 1.67) / 2.2 );
+                                                    turn_count++;
+                                                    int sc_dmg = (int)(Berserker.base_att_dmg * (r.NextDouble() + 1.67) / 2.2 );
 													nidhogg_hp -= sc_dmg;
 													Berserker.skill_points -= 2;
 													Console.ForegroundColor = ConsoleColor.DarkCyan;
@@ -290,6 +294,7 @@ namespace Ragnarok
                                                     Berserker.skill_points -= 3;
                                                     if (Berserker.player_hp + heal_amt >= Berserker.max_hp)
                                                     {
+                                                        turn_count++;
                                                         Console.ForegroundColor = ConsoleColor.DarkCyan;
 													    Console.Write("\nYour lust for battle gives you strength\n" + 
 																	    "You inflicted {0:N0} HP with Bloodlust!", bl_dmg);
@@ -303,6 +308,7 @@ namespace Ragnarok
                                                     }
                                                     else
                                                     {
+                                                        turn_count++;
                                                         Berserker.player_hp += heal_amt;
                                                         Console.ForegroundColor = ConsoleColor.DarkCyan;
 													    Console.Write("\nYour lust for battle gives you strength\n" + 
@@ -320,7 +326,8 @@ namespace Ragnarok
 											case "3"://Chaos Burst
 												if (Berserker.skill_points >= 5)
 												{
-													int berserker_chaos = 9000;
+                                                    turn_count++;
+                                                    int berserker_chaos = 9000;
 													int cb_dmg = (int)(berserker_chaos * (r.NextDouble() + 1.96) / 2 );
 													nidhogg_hp -= cb_dmg;
 													Berserker.skill_points -= 5;
@@ -358,6 +365,7 @@ namespace Ragnarok
 													potion_amt--;
 													if (Berserker.player_hp + 5000 >= Berserker.max_hp)
                                                     {
+                                                        turn_count++;
                                                         int heal_amt = Berserker.max_hp - Berserker.player_hp;
                                                         Berserker.player_hp = Berserker.max_hp;
                                                         Console.ForegroundColor = ConsoleColor.Green;
@@ -369,6 +377,7 @@ namespace Ragnarok
                                                     }
 													else
                                                     {
+                                                        turn_count++;
                                                         Berserker.player_hp += 5000;
 														Console.ForegroundColor = ConsoleColor.Green;
 													    Console.WriteLine("\nYou gained 5,000 HP! HP: {0:N0}", Berserker.player_hp);
@@ -386,6 +395,7 @@ namespace Ragnarok
 													hipotion_amt--;
                                                     if (Berserker.player_hp + 10000 >= Berserker.max_hp)
                                                     {
+                                                        turn_count++;
                                                         int heal_amt = Berserker.max_hp - Berserker.player_hp;
                                                         Berserker.player_hp = Berserker.max_hp;
                                                         Console.ForegroundColor = ConsoleColor.Green;
@@ -397,6 +407,7 @@ namespace Ragnarok
                                                     }
 													else
                                                     {
+                                                        turn_count++;
                                                         Berserker.player_hp += 10000;
 													    Console.ForegroundColor = ConsoleColor.Green;
 													    Console.WriteLine("\nYou gained 10,000 HP! HP: {0:N0}", Berserker.player_hp);
@@ -1625,7 +1636,9 @@ namespace Ragnarok
 						Console.Write(a);
 						System.Threading.Thread.Sleep(150);
 					}
-					Console.Write("\n\nTHE ");
+                    Console.WriteLine("\n");
+                    Console.Write("\t\t\tin {0} turns", turn_count);
+                    Console.Write("\n\nTHE ");
 					System.Threading.Thread.Sleep(1500);
 					Console.Write("FUTURE ");
 					System.Threading.Thread.Sleep(1500);
@@ -1655,7 +1668,9 @@ namespace Ragnarok
 						Console.Write(a);
 						System.Threading.Thread.Sleep(100);
 					}
-					Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.WriteLine("\n");
+                    Console.Write("\t\t\tin {0} turns", turn_count);
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
 					System.Threading.Thread.Sleep(2500);
 					Console.WriteLine("\n\nYOU WERE VICTORIOUS" + "\nHumanity now has a future because of you!" + "\nTHANKS FOR PLAYING!!!!");
 					break;
