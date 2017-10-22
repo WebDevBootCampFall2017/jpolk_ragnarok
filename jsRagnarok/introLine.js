@@ -1,6 +1,6 @@
 var c=document.getElementById("intro");
 var ctx=c.getContext("2d");
-var stopCount = 0;
+
 var introLine = function()
 {
 	ctx.beginPath();
@@ -32,7 +32,7 @@ var introLine = function()
 		ctx.beginPath();
 		ctx.strokeStyle="#FFFFFF";
 		ctx.shadowBlur = 200;
-		ctx.shadowColor = "#990000";
+		ctx.shadowColor = "#cc0000";
 		ctx.moveTo(0,520);
 		ctx.lineTo(1520, 520);
 		ctx.lineWidth = widthFlux;
@@ -51,14 +51,14 @@ var introLine = function()
 		ctx.beginPath();
 		ctx.strokeStyle = "#FFFFFF";
 		ctx.shadowBlur = 300;
-		ctx.shadowColor = "#990000";
+		ctx.shadowColor = "#ff1a1a";
 		ctx.lineWidth = widthFlux2;
 		widthFlux2--;
 		ctx.moveTo(0, 520);
 		ctx.lineTo(1520, 520);
 		ctx.stroke();
 		ctx.closePath();
-		if (widthFlux2 < 170 && widthFlux2 > 3)
+		if (widthFlux2 < 170 && widthFlux2 >= 1)
 		{
 			window.setTimeout(widthAniS, 25)
 		}
