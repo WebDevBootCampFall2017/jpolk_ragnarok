@@ -39,7 +39,7 @@ var titleGlowup = function()
 {
 	ctx.clearRect(0, 0, c.width, c.height);
 	ctx.beginPath();
-	ctx.shadowBlur = 20;
+	ctx.shadowBlur = 35;
 	ctx.lineWidth = glow;
 	ctx.strokeStyle = "#000000";
 	ctx.moveTo(0,520);
@@ -118,4 +118,4 @@ var titleGlowdown = function()
 		window.setTimeout(titleGlowdown, 35)
 	}
 }
-window.setTimeout(titleGlowup, 8700);
+window.setTimeout(titleGlowup, 10000);

@@ -20,9 +20,9 @@ var introLine = function()
 		ctx.closePath();
 		if (x1 != 0 && x2 != 1520)
 		{
-			x1-=2;
-			x2+=2;
-			window.setTimeout(lineAni, 3);
+			x1-=5;
+			x2+=5;
+			window.setTimeout(lineAni, 7);
 		}
 		
 	}
@@ -31,7 +31,7 @@ var introLine = function()
 		ctx.clearRect(0, 0, c.width, c.height);
 		ctx.beginPath();
 		ctx.strokeStyle="#FFFFFF";
-		ctx.shadowBlur = 200;
+		ctx.shadowBlur = 250;
 		ctx.shadowColor = "#cc0000";
 		ctx.moveTo(0,520);
 		ctx.lineTo(1520, 520);
@@ -50,7 +50,7 @@ var introLine = function()
 		ctx.clearRect(0, 0, c.width, c.height);
 		ctx.beginPath();
 		ctx.strokeStyle = "#FFFFFF";
-		ctx.shadowBlur = 300;
+		ctx.shadowBlur = 1000;
 		ctx.shadowColor = "#ff1a1a";
 		ctx.lineWidth = widthFlux2;
 		widthFlux2--;
@@ -62,6 +62,11 @@ var introLine = function()
 		{
 			window.setTimeout(widthAniS, 25)
 		}
+		else
+		{
+			ctx.clearRect(0, 0, c.width, c.height);
+		}
+		
 	}
 	lineAni();
 	window.setTimeout(widthAniG, 2000);
