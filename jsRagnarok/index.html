@@ -24,7 +24,7 @@
 		{
 			$("#warning, #tagline").hide();
 			$("#lowMenu").slideUp("fast");
-			$("#lowMenu").delay(10000).slideDown(2000);
+			$("#lowMenu").delay(12000).slideDown(2000);
 			$("a:contains(How)").click(function() { $("#intro").fadeOut(4000, function(){ 
 				$("#warning").fadeIn(3000, function(){ 
 					$("#tagline").slideDown(5000, function(){ 
@@ -50,8 +50,7 @@
 			*Ragnarok is a turn-based RPG built with JavaScript. To ensure correct timing of the script,
 			 do not minimize your browser during animations or run HTML5 streaming content in other tabs.
 		</p>
-		<br><br>
-		<p id="tagline" style="white-space: nowrap">
+		<p id="tagline" style="white-space: nowrap; position: absolute; top: 140px;">
 			The Promised End is Upon You<br>
 			Summon the Courage to Fight for your Possibility of a Future
 		</p>

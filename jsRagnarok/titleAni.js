@@ -16,22 +16,22 @@ var titleAni = function()
 	ctx.fillText("RAGNAROK", 100, 520)
 	ctx.stroke();
 }
-window.setTimeout(titleAni, 4700);
-window.setTimeout(titleAni, 4800);
-window.setTimeout(titleAni, 5000);
-window.setTimeout(titleAni, 5200);
-window.setTimeout(titleAni, 6200);
 window.setTimeout(titleAni, 6700);
-window.setTimeout(titleAni, 6900);
-window.setTimeout(titleAni, 7400);
-window.setTimeout(titleAni, 7700);
-window.setTimeout(titleAni, 7900);
-window.setTimeout(titleAni, 8000);
-window.setTimeout(titleAni, 8100);
-window.setTimeout(titleAni, 8150);
+window.setTimeout(titleAni, 6800);
+window.setTimeout(titleAni, 7000);
+window.setTimeout(titleAni, 7200);
 window.setTimeout(titleAni, 8200);
-window.setTimeout(titleAni, 8300);
-window.setTimeout(titleAni, 8400);
+window.setTimeout(titleAni, 8700);
+window.setTimeout(titleAni, 8900);
+window.setTimeout(titleAni, 9400);
+window.setTimeout(titleAni, 9700);
+window.setTimeout(titleAni, 9900);
+window.setTimeout(titleAni, 10000);
+window.setTimeout(titleAni, 10100);
+window.setTimeout(titleAni, 10150);
+window.setTimeout(titleAni, 10200);
+window.setTimeout(titleAni, 10300);
+window.setTimeout(titleAni, 10400);
 
 var glow = 1;
 
@@ -118,5 +118,4 @@ var titleGlowdown = function()
 		window.setTimeout(titleGlowdown, 35)
 	}
 }
-window.setTimeout(titleGlowup, 10000);
-$('#lowMenu').slideDown();
+window.setTimeout(titleGlowup, 12000);

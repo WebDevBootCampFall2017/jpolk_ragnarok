@@ -69,11 +69,11 @@ var introLine = function()
 		
 	}
 	lineAni();
-	window.setTimeout(widthAniG, 2000);
-	window.setTimeout(widthAniS, 4700);
+	window.setTimeout(widthAniG, 4000);
+	window.setTimeout(widthAniS, 6700);
 }
 
-introLine();
+window.setTimeout(introLine, 2000)
 
 
 
