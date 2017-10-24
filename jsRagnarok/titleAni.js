@@ -119,3 +119,4 @@ var titleGlowdown = function()
 	}
 }
 window.setTimeout(titleGlowup, 10000);
+$('#lowMenu').slideDown();

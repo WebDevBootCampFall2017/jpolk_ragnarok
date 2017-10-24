@@ -1,0 +1,6 @@
+@keyframes taglineMove
+{
+	from { font-size: 3em; opacity: 1; }
+	to	{ font-size: 7em; opacity: 0;  }
+}
+
