@@ -2,6 +2,8 @@ var c=document.getElementById("intro");
 var ctx=c.getContext("2d");
 c.width = window.innerWidth;
 c.height = window.innerHeight;
+var canWidth = c.width
+var canHeight = c.height
 
 var titleAni = function()
 {
@@ -46,7 +48,7 @@ var titleGlowup = function()
 	ctx.lineWidth = glow;
 	ctx.strokeStyle = "#000000";
 	ctx.moveTo(0,520);
-	ctx.lineTo(1520, 520);
+	ctx.lineTo(canWidth, 520);
 	ctx.stroke();
 	ctx.closePath();
 	ctx.beginPath();
@@ -88,7 +90,7 @@ var titleGlowdown = function()
 	ctx.lineWidth = glow;
 	ctx.shadowColor = "#ff1a1a";
 	ctx.moveTo(0,520);
-	ctx.lineTo(1520, 520);
+	ctx.lineTo(canWidth, 520);
 	ctx.stroke();
 	ctx.closePath();
 	ctx.beginPath();
