@@ -4,3 +4,12 @@
 	to	{ font-size: 8.21em; opacity: 0;  color: red; }
 }
 
+@keyframes toTop
+{
+	from { top: 100%; opacity: 0; z-index: -2; }
+	to	{ top: 0%; opacity: 1; z-index: -1; }
+}
+
+
+
+

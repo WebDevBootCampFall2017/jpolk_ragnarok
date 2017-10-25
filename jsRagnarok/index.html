@@ -4,6 +4,7 @@
 	<title></title>
 	<link rel="stylesheet" href="style.css"></link>
 	<style type="text/css">
+		html, body { width: 100%; height: 100%; margin: 0px; border: 0; overflow: hidden; display: block; }
 		#lowMenu { position: fixed; bottom: 0; width: 100%; background-color: #262626; } 
 		
 		.nav { display: inline-block; text-decoration: none; padding: 1em 2em; color: black;
@@ -14,26 +15,27 @@
 		.nav:active { color: #737373; 
 					text-shadow: -.05em -.05em .05em black,
 								.03em .03em .05em #f2f2f2; }
-		#warning  { font-family: Palatino, URW Palladio L, serif; font-size: .87em; }
-		#tagline { font-family: Impact, Charcoal, sans-serif; font-size: 3em; }					
-		
+		.read { font-family: Palatino, URW Palladio L, serif; letter-spacing: 1px; }
+		.simple { font-family: Impact, Charcoal, sans-serif; }
+							
 	</style>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
 	<script>
 		$(document).ready(function() 
 		{
 			$("#warning, #tagline").hide();
-			$("#lowMenu").slideUp("fast");
+			/*$("#lowMenu").slideUp("fast");*/
 			$("#lowMenu").delay(12000).slideDown(2000);
 			$("a:contains(How)").click(function() { $("#intro").fadeOut(4000, function(){ 
 				$("#warning").fadeIn(3000, function(){ 
 					$("#tagline").slideDown(5000, function(){ 
-						$("#warning").delay(3000).fadeOut("slow", function(){
-							$("#tagline").delay(3000).css({"animation": "taglineMove 7s 1", "animation-fill-mode": "forwards"})}); }); }); }); });
+						$("#warning").delay(5500).fadeOut("slow", function(){
+							$("#tagline").css({"animation": "taglineMove 7s 1", "animation-fill-mode": "forwards"}).delay(3000, function(){
+								$("#genInstruct").css({"animation": "toTop 8s 1", "animation-fill-mode": "forwards"})}); }); }); }); })}); 
 		});
 	</script>
 </head>
-<body style="background-color: black; color: white; font-size: 100%;">
+<body style="background-color: black; color: white; font-size: 100%; z-index: 2;">
 	<div id="lowMenu">
 		<a class="nav" href="index.html">Title</a>
 		<a class="nav" style="cursor: pointer;">How to Play</a>
@@ -41,19 +43,26 @@
 		<a class="nav" href="https://github.com/WebDevBootCampFall2017/jpolk_ragnarok">GitHub</a>
 	</div>
 	
-	<canvas id="intro" width="1520" height="800"></canvas>
+	<canvas id="intro" style="position: absolute; left: 0px; top: 0px; z-index: -3;"></canvas>
 	<script src="introLine.js"></script>
 	<script src="titleAni.js"></script>
 	
-	<div id="instructions">
-		<p id="warning">	
-			*Ragnarok is a turn-based RPG built with JavaScript. To ensure correct timing of the script,
-			 do not minimize your browser during animations or run HTML5 streaming content in other tabs.
+	<div id="tag" style="z-index:-2;">
+		<p id="warning" class="read" style="font-size: .87em;">	
+			*Ragnarok is a turn-based RPG built with JavaScript. To ensure correct timing of the script, keep window fullscreen,
+			 do not minimize or your browser during animations or run HTML5 streaming content in other tabs.
 		</p>
-		<p id="tagline" style="white-space: nowrap; position: absolute; top: 140px;">
+		<p id="tagline" class="simple" style="white-space: nowrap; position: absolute; top: 140px; font-size: 3em;">
 			The Promised End is Upon You<br>
 			Summon the Courage to Fight for your Possibility of a Future
 		</p>
 	</div>
+	<div id="instructions" style="z-index-1;">
+		<p id="genInstruct" class="read" style="font-size: 2em; text-align: center; position: absolute; top: 100%; left: 10%;">
+			Engage in a deseperate turn based battle to rid the world of Nidhogg:<br>the source of decay and blight
+			upon the land. Nidhogg is the dragon that threatens<br>humanity and the future of this world as the 
+			prophecy demands.
+		</p>
+	
 </body>
 </html>

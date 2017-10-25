@@ -1,5 +1,7 @@
 var c=document.getElementById("intro");
 var ctx=c.getContext("2d");
+c.width = window.innerWidth;
+c.height = window.innerHeight;
 
 var introLine = function()
 {

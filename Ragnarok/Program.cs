@@ -53,7 +53,7 @@ namespace Ragnarok
 				{string instruct_block =				
 									"In this game you will have your choice of 3 classes:\n" +
 									"BESERKER, WIZARD, or MONK\n" +
-									"Engage is a desperate turn based battle to rid the world of\n" +
+									"Engage in a desperate turn based battle to rid the world of\n" +
 									"NIDHOGG: The source of decay and blight upon this land\n" +
 									"Nidhogg is the dragon that threatens humanity as the prophecy demands\n" +
 									"------------------------\n" +
