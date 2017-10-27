@@ -22,7 +22,7 @@ var introLine = function()
 		ctx.lineTo(x2, 520);
 		ctx.stroke();
 		ctx.closePath();
-		if (x1 >= 0 && x2 <= canWidth)
+		if (x1 >= -100 && x2 <= canWidth)
 		{
 			x1-=5;
 			x2+=5;
