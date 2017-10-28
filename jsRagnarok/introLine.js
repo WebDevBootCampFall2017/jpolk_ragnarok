@@ -4,15 +4,16 @@ c.width = window.innerWidth;
 c.height = window.innerHeight;
 var canWidth = c.width
 var canHeight = c.height
+var halfWidth = (canWidth / 2)
 
 var introLine = function()
 {
 	ctx.beginPath();
 	ctx.strokeStyle="#FFFFFF";
-	ctx.moveTo(760,520);
+	ctx.moveTo(halfWidth,520);
 	ctx.lineWidth = 1;
-	var x1 = 760;
-	var x2 = 760;
+	var x1 = halfWidth;
+	var x2 = halfWidth;
 	var widthFlux = 2;
 	var widthFlux2 = 140;
 	var lineAni = function()
@@ -22,7 +23,7 @@ var introLine = function()
 		ctx.lineTo(x2, 520);
 		ctx.stroke();
 		ctx.closePath();
-		if (x1 >= -100 && x2 <= canWidth)
+		if (x1 >= 0 && x2 <= canWidth)
 		{
 			x1-=5;
 			x2+=5;

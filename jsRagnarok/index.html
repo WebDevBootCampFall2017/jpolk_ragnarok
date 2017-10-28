@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<title></title>
+	<title>Ragnarok</title>
 	<link rel="stylesheet" href="style.css"></link>
 	<style type="text/css">
 		html, body { width: 100%; height: 100%; margin: 0px; border: 0; overflow: hidden; }
@@ -16,9 +16,9 @@
 					text-shadow: -.05em -.05em .05em black,
 								.03em .03em .05em #f2f2f2; }
 		.read { font-family: Palatino, URW Palladio L, serif; letter-spacing: 1px; }
-		.simple { font-family: Impact, Charcoal, sans-serif; }
+		.simple { font-family: Impact, Charcoal, sans-serif; letter-spacing: 1px; }
 		.character { height: 100px; width: 100px; }				
-		#cSelect { display: inline-block; }
+		#cSelect { display: inline-block; padding: 3px }
 		figure { float: left; text-align: center; }
 	</style>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -26,14 +26,14 @@
 		$(document).ready(function() 
 		{
 			$("#warning, #tagline").hide();
-			/*$("#lowMenu").slideUp("fast");*/
+			$("#lowMenu").slideUp("fast");
 			$("#lowMenu").delay(12000).slideDown(2000);
 			$("a:contains(How)").one("click", function() { $("#intro").fadeOut(4000, function(){ 
 				$("#warning").fadeIn(3000, function(){ 
-					$("#tagline").delay(8250).slideDown(5000, function(){ 
+					$("#tagline").delay(2250).slideDown(5000, function(){ 
 						$("#warning").delay(2000).fadeOut("slow", function(){
-							$("#tagline").css({"animation": "taglineMove 7s 1", "animation-fill-mode": "forwards"}).delay(8000).hide("fast", function(){
-								$("#instructions").css({"animation": "toTop 10s 1", "animation-fill-mode": "forwards"})}); }); }); }); })}); 
+							$("#tagline").css({"animation": "taglineMove 6s 1", "animation-fill-mode": "forwards"}).delay(6010).hide(100, function(){
+								$("#instructions").css({"animation": "toTop 8s 1", "animation-fill-mode": "forwards"})}); }); }); }); })}); 
 		});
 	</script>
 </head>
@@ -60,30 +60,28 @@
 		</p>
 	</div>
 	<div id="instructions" style="position: absolute; top: 100%; left: 5%; z-index: 0;">
-		<p id="genInstruct" class="read" style="font-size: 1.85em; text-align: center;">
+		<p id="genInstruct" class="read" style="font-size: 1.85em; text-align: center; margin-top: 5px; margin-bottom: 30px;">
 			Engage in a deseperate turn based battle to rid the world of <span class="simple" style="color: indigo;">NIDHOGG</span>:<br>the source of decay and blight
 			upon the land. <span class="simple" style="color: indigo;">NIDHOGG</span> is the dragon that threatens<br>humanity and the future of this world as the 
 			prophecy demands.<br>You have your choice between 3 character classes in which to decide your destiny... 
 		</p>
-		<br><br><br>
 		<div id="cSelect">
-			<figure id="berserkClickInstruct">
-				<img src="http://via.placeholder.com/350x250">
+			<figure id="berserkClickInstruct" style="cursor: pointer;">
+				<img src="BerserkerIcon.png" style="width: 350px; height: 300px;">
 				<figcaption class="simple" style="color: red; font-size: 1.9em;">BERSERKER</figcaption>
 			</figure>
-			<figure id="monkClickInstruct">
-				<img src="http://via.placeholder.com/350x250">
+			<figure id="monkClickInstruct" style="cursor: pointer;">
+				<img src="MonkIcon.png" style="width: 350px; height: 300px;">
 				<figcaption class="simple" style="color: green; font-size: 1.9em;">MONK</figcaption>
 			</figure>
-			<figure id="wizClickInstruct">
-				<img src="http://via.placeholder.com/350x250">
+			<figure id="wizClickInstruct" style="cursor: pointer;">
+				<img src="WizardIcon.png" style="width: 350px; height: 300px;">
 				<figcaption class="simple" style="color: blue; font-size: 1.9em;">WIZARD</figcaption>
-			<figure>
-			<br>
+			</figure>
 		</div>
-			<p class="read" style="font-size: 1.85em; text-align: center; cursor: pointer;">
-				Click the character you would like to learn more about
-			</p>
+		<p class="read" style="font-size: 1.85em; text-align: center; margin-top: 30px;">
+			Click the character you would like to learn more about
+		</p>
 	</div>
 </body>
 </html>
