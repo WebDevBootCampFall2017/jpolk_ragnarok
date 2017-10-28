@@ -20,13 +20,17 @@
 		.character { height: 100px; width: 100px; }				
 		#cSelect { display: inline-block; padding: 3px }
 		figure { float: left; text-align: center; }
+		.icon { cursor: pointer; position: relative; }
+		.icon:hover { animation: shadowPop 2s 1; animation-fill-mode: forwards; }
+		.icon:active { animation: clickIn 6s 1;  }
+		
 	</style>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
 	<script>
 		$(document).ready(function() 
 		{
-			$("#warning, #tagline").hide();
-			$("#lowMenu").slideUp("fast");
+			$("#warning, #tagline, #berserkInstruct").hide();
+			/*$("#lowMenu").slideUp("fast");*/
 			$("#lowMenu").delay(12000).slideDown(2000);
 			$("a:contains(How)").one("click", function() { $("#intro").fadeOut(4000, function(){ 
 				$("#warning").fadeIn(3000, function(){ 
@@ -34,6 +38,9 @@
 						$("#warning").delay(2000).fadeOut("slow", function(){
 							$("#tagline").css({"animation": "taglineMove 6s 1", "animation-fill-mode": "forwards"}).delay(6010).hide(100, function(){
 								$("#instructions").css({"animation": "toTop 8s 1", "animation-fill-mode": "forwards"})}); }); }); }); })}); 
+			$("#berserkClickInstruct").mousedown(function(){
+				$("#genInstruct, #monkClickInstruct, #wizClickInstruct, #clickInstruct").delay(3000).fadeOut(3000, function(){
+					$("#berserkClickInstruct").removeClass("icon")}); });
 		});
 	</script>
 </head>
@@ -66,21 +73,26 @@
 			prophecy demands.<br>You have your choice between 3 character classes in which to decide your destiny... 
 		</p>
 		<div id="cSelect">
-			<figure id="berserkClickInstruct" style="cursor: pointer;">
+			<figure id="berserkClickInstruct" class="icon">
 				<img src="img/BerserkerIcon.png" style="width: 350px; height: 300px;">
 				<figcaption class="simple" style="color: red; font-size: 1.9em;">BERSERKER</figcaption>
 			</figure>
-			<figure id="monkClickInstruct" style="cursor: pointer;">
+			<figure id="monkClickInstruct" class="icon">
 				<img src="img/MonkIcon.png" style="width: 350px; height: 300px;">
 				<figcaption class="simple" style="color: green; font-size: 1.9em;">MONK</figcaption>
 			</figure>
-			<figure id="wizClickInstruct" style="cursor: pointer;">
+			<figure id="wizClickInstruct" class="icon">
 				<img src="img/WizardIcon.png" style="width: 350px; height: 300px;">
 				<figcaption class="simple" style="color: blue; font-size: 1.9em;">WIZARD</figcaption>
 			</figure>
 		</div>
-		<p class="read" style="font-size: 1.85em; text-align: center; margin-top: 30px;">
-			Click the character you would like to learn more about
+		<p id="clickInstruct" class="read" style="font-size: 1.85em; text-align: center; margin-top: 30px;">
+			Click and hold on the character you would like to learn more about
+		</p>
+	</div>
+	<div id="berserkInstruct" class="read">
+		<p>
+			BERSERKERs are brutal fighters that go into combat with very little regard for their own safety.
 		</p>
 	</div>
 </body>
