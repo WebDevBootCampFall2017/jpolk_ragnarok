@@ -22,7 +22,7 @@
 		figure { float: left; text-align: center; }
 		.icon { cursor: pointer; position: relative; }
 		.icon:hover { animation: shadowPop 2s 1; animation-fill-mode: forwards; }
-		.icon:active { animation: clickIn 3s 1;  }
+		.icon:active { animation: clickIn 2s 1;  }
 		
 	</style>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -36,13 +36,42 @@
 				$("#warning").fadeIn(3000, function(){ 
 					$("#tagline").delay(2250).slideDown(5000, function(){ 
 						$("#warning").delay(2000).fadeOut("slow", function(){
-							$("#tagline").css({"animation": "taglineMove 6s 1", "animation-fill-mode": "forwards"}).delay(6010).hide(100, function(){
-								$("#instructions").css({"animation": "toTop 8s 1", "animation-fill-mode": "forwards"})}); }); }); }); })}); 
+							$("#tagline").css({"animation": "taglineMove 6s 1", "animation-fill-mode": "forwards"}).delay(6010).hide(100);
+							$("#instructions").css({"animation": "toTop 8s 1", "animation-fill-mode": "forwards"})
+						}); 
+					}); 
+				}); 
+			})}); 
 			$("#berserkClickInstruct").mousedown(function(){
-				$("#genInstruct, #monkClickInstruct, #wizClickInstruct, #clickInstruct").fadeOut(3000, function(){
-					$("#berserkClickInstruct").removeClass("icon").delay("fast", function(){
-						$("#bIcon").animate({ width: "450px", height: "400px",}).delay("fast", function(){
-							$("#berserkInstruct").fadeIn(3000)}); }); }); });
+				$("#genInstruct, #clickInstruct").delay(500).fadeOut(3000, function(){
+					$("#berserkClickInstruct").removeClass("icon").css("position", "absolute").animate({left: "200px", top: "50px", opacity: ".2"}).delay("fast", function(){
+						$("#bIcon").animate({width: "850px", height: "550px"});
+						$("#berserkInstruct").fadeIn(3000);
+						$("#monkClickInstruct").mousedown(function(){
+							$("#berserkClickInstruct").hide();
+							$("#monkClickInstruct").removeClass("icon").css("position", "absolute").animate({left: "200px", top: "10px", opacity: ".2"});
+							$("#mIcon").animate({width: "850px", height: "550px"}).delay("fast", function(){
+								$("#wizClickInstruct").mousedown(function(){
+									$("#monkClickInstruct").hide();
+									$("#wizClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "10px", opacity: ".2"});
+									$("#wIcon").animate({width: "850px", height: "550px"});
+								});
+							});
+						});
+						$("#wizClickInstruct").mousedown(function(){
+							$("#berserkClickInstruct").hide();
+							$("#wizClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "10px", opacity: ".2"});
+							$("#wIcon").animate({width: "850px", height: "550px"}).delay("fast", function(){
+								$("#monkClickInstruct").mousedown(function(){
+									$("#wizClickInstruct").hide();
+									$("#monkClickInstruct").removeClass("icon").css("position", "absolute").animate({left: "200px", top: "10px", opacity: ".2"});
+									$("#mIcon").animate({width: "850px", height: "550px"});
+								});
+							});
+						});
+					}); 
+				}); 
+			});
 		});
 	</script>
 </head>
@@ -80,11 +109,11 @@
 				<figcaption class="simple" style="color: red; font-size: 1.9em;">BERSERKER</figcaption>
 			</figure>
 			<figure id="monkClickInstruct" class="icon">
-				<img src="img/MonkIcon.png" style="width: 350px; height: 300px;">
+				<img src="img/MonkIcon.png" id="mIcon" style="width: 350px; height: 300px;">
 				<figcaption class="simple" style="color: green; font-size: 1.9em;">MONK</figcaption>
 			</figure>
 			<figure id="wizClickInstruct" class="icon">
-				<img src="img/WizardIcon.png" style="width: 350px; height: 300px;">
+				<img src="img/WizardIcon.png" id="wIcon" style="width: 350px; height: 300px;">
 				<figcaption class="simple" style="color: blue; font-size: 1.9em;">WIZARD</figcaption>
 			</figure>
 		</div>
@@ -92,7 +121,7 @@
 			Click and hold on the character you would like to learn more about
 		</p>
 	</div>
-	<div id="berserkInstruct" class="read instructFont" style="width: 500px; position:absolute; left: 60%; line-height: 150%; z-index: 0;">
+	<div id="berserkInstruct" class="read instructFont" style="width: 500px; margin: 0px; position:absolute; left: 60%; line-height: 140%; z-index: 0;">
 		<p>
 			<span class="simple" style="color: red;">BERSERKER</span>s are brutal fighters that go into combat with very little regard for their own safety.
 			Build your Rage counter by landing successful standard attacks.  Once the Rage counter is above 5,
