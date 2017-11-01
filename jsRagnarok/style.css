@@ -22,5 +22,10 @@
 	to	{ top: 0%; opacity: 1; color: #ffff99; }
 }
 
+@keyframes berserkerIcon
+{
+	from: { left: 0%; height: 0px; width: 0px; }
+	to: 	{ left: 10%; height: 500px; width: 550px; }
+}
 
 

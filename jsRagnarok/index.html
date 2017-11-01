@@ -17,12 +17,12 @@
 								.03em .03em .05em #f2f2f2; }
 		.read { font-family: Palatino, URW Palladio L, serif; letter-spacing: 1px; }
 		.simple { font-family: Impact, Charcoal, sans-serif; letter-spacing: 1px; }
-		.character { height: 100px; width: 100px; }				
+		.instructFont { font-size: 1.85em; color: #ffff99; }				
 		#cSelect { display: inline-block; padding: 3px }
 		figure { float: left; text-align: center; }
 		.icon { cursor: pointer; position: relative; }
 		.icon:hover { animation: shadowPop 2s 1; animation-fill-mode: forwards; }
-		.icon:active { animation: clickIn 6s 1;  }
+		.icon:active { animation: clickIn 3s 1;  }
 		
 	</style>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -39,8 +39,10 @@
 							$("#tagline").css({"animation": "taglineMove 6s 1", "animation-fill-mode": "forwards"}).delay(6010).hide(100, function(){
 								$("#instructions").css({"animation": "toTop 8s 1", "animation-fill-mode": "forwards"})}); }); }); }); })}); 
 			$("#berserkClickInstruct").mousedown(function(){
-				$("#genInstruct, #monkClickInstruct, #wizClickInstruct, #clickInstruct").delay(3000).fadeOut(3000, function(){
-					$("#berserkClickInstruct").removeClass("icon")}); });
+				$("#genInstruct, #monkClickInstruct, #wizClickInstruct, #clickInstruct").fadeOut(3000, function(){
+					$("#berserkClickInstruct").removeClass("icon").delay("fast", function(){
+						$("#bIcon").animate({ width: "450px", height: "400px",}).delay("fast", function(){
+							$("#berserkInstruct").fadeIn(3000)}); }); }); });
 		});
 	</script>
 </head>
@@ -67,14 +69,14 @@
 		</p>
 	</div>
 	<div id="instructions" style="position: absolute; top: 100%; left: 5%; z-index: 0;">
-		<p id="genInstruct" class="read" style="font-size: 1.85em; text-align: center; margin-top: 5px; margin-bottom: 30px;">
+		<p id="genInstruct" class="read instructFont" style="text-align: center; margin-top: 5px; margin-bottom: 30px;">
 			Engage in a deseperate turn based battle to rid the world of <span class="simple" style="color: indigo;">NIDHOGG</span>:<br>the source of decay and blight
 			upon the land. <span class="simple" style="color: indigo;">NIDHOGG</span> is the dragon that threatens<br>humanity and the future of this world as the 
 			prophecy demands.<br>You have your choice between 3 character classes in which to decide your destiny... 
 		</p>
 		<div id="cSelect">
 			<figure id="berserkClickInstruct" class="icon">
-				<img src="img/BerserkerIcon.png" style="width: 350px; height: 300px;">
+				<img src="img/BerserkerIcon.png" id="bIcon" style="width: 350px; height: 300px;">
 				<figcaption class="simple" style="color: red; font-size: 1.9em;">BERSERKER</figcaption>
 			</figure>
 			<figure id="monkClickInstruct" class="icon">
@@ -86,13 +88,19 @@
 				<figcaption class="simple" style="color: blue; font-size: 1.9em;">WIZARD</figcaption>
 			</figure>
 		</div>
-		<p id="clickInstruct" class="read" style="font-size: 1.85em; text-align: center; margin-top: 30px;">
+		<p id="clickInstruct" class="read instructFont" style="text-align: center; margin-top: 30px;">
 			Click and hold on the character you would like to learn more about
 		</p>
 	</div>
-	<div id="berserkInstruct" class="read">
+	<div id="berserkInstruct" class="read instructFont" style="width: 500px; position:absolute; left: 60%; line-height: 150%; z-index: 0;">
 		<p>
-			BERSERKERs are brutal fighters that go into combat with very little regard for their own safety.
+			<span class="simple" style="color: red;">BERSERKER</span>s are brutal fighters that go into combat with very little regard for their own safety.
+			Build your Rage counter by landing successful standard attacks.  Once the Rage counter is above 5,
+			<span class="simple" style="color: red;">BERSERKER</span> gains access to a variety of buffs.  Use
+			the Rage you've built to access Special Abilities through the Rage command:<br>
+			<span class="simple" style="color: red;">SHOULDER CHARGE</span>: Attack with moderate attack damage<br>
+			<span class="simple" style="color: red;">BLOODLUST</span>: Player gains HP 2.5x the damage done with the attack<br>
+			<span class="simple" style="color: red;">CHAOS BURST</span>: Attack with high attack damage
 		</p>
 	</div>
 </body>
