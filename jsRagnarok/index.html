@@ -17,7 +17,8 @@
 								.03em .03em .05em #f2f2f2; }
 		.read { font-family: Palatino, URW Palladio L, serif; letter-spacing: 1px; }
 		.simple { font-family: Impact, Charcoal, sans-serif; letter-spacing: 1px; }
-		.instructFont { font-size: 1.85em; color: #ffff99; }				
+		.instructFont { font-size: 1.85em; color: #ffff99; }
+		.characterInstruct { width: 500px; margin-top: 0px; position: absolute; left: 62%; line-height: 135%; z-index: 0; }
 		#cSelect { display: inline-block; padding: 3px }
 		figure { float: left; text-align: center; }
 		.icon { cursor: pointer; position: relative; }
@@ -29,53 +30,58 @@
 	<script>
 		$(document).ready(function() 
 		{
-			$("#warning, #tagline, #berserkInstruct, #monkInstruct, #wizInstruct, #genInfo").hide();
-			/*$("#lowMenu").slideUp("fast");*/
+			$("#warning, #tagline, #berserkInstruct, #monkInstruct, #wizInstruct, #genInfo, #playInstruct").hide();
+			$("#lowMenu").slideUp("fast");
 			$("#lowMenu").delay(12000).slideDown(2000);
 			$("a:contains(How)").one("click", function() { $("#intro").fadeOut(4000, function(){ 
-				/*$("#warning").fadeIn(3000, function(){ 
+				$("#warning").fadeIn(3000, function(){ 
 					$("#tagline").delay(2250).slideDown(5000, function(){ 
-						$("#warning").delay(2000).fadeOut("slow", function(){*/
+						$("#warning").delay(2000).fadeOut("slow", function(){
 							$("#tagline").css({"animation": "taglineMove 6s 1", "animation-fill-mode": "forwards"}).delay(6010).hide(100);
 							$("#instructions").css({"animation": "toTop 8s 1", "animation-fill-mode": "forwards"})
-						/*}); 
+						}); 
 					}); 
-				});*/ 
+				}); 
 			})}); 
 			$("#berserkClickInstruct").click(function(){
+				$("#wizClickInstruct, #monkClickInstruct").off("click");
 				$("#genInstruct, #clickInstruct").fadeOut(3000, function(){
-					$("#berserkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"}).delay("fast", function(){
+					$("#berserkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"}, "slow", function(){
 						$("#bIcon").animate({width: "850px", height: "550px"});
 						$("#berserkInstruct").fadeIn(3000);
-						$("#genInfo").slideDown(3000);
+						$("#genInfo").slideDown(2500);
 						$("#monkClickInstruct").click(function(){
+							$("#wizClickInstruct").off("click");
 							$("#berserkClickInstruct").hide();
-							$("#berserkInstruct").fadeOut(3000, function(){
-								$("#monkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"});
+							$("#berserkInstruct").fadeOut(1500, function(){
+								$("#monkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"}, "slow");
 								$("#mIcon").animate({width: "850px", height: "550px"});
 								$("#monkInstruct").fadeIn(3000);
 								$("#wizClickInstruct").click(function(){
 									$("#monkClickInstruct").hide();
-									$("#monkInstruct").fadeOut(3000, function(){
-										$("#wizClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"});
+									$("#monkInstruct").fadeOut(1500, function(){
+										$("#wizClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"}, "slow");
 										$("#wIcon").animate({width: "850px", height: "550px"});
-										$("#wizInstruct").delay(3000).fadeIn(3000);
+										$("#wizInstruct").fadeIn(3000);
+										$("#playInstruct").slideDown(5000);
 									});
 								});
 							});
 						});
 						$("#wizClickInstruct").click(function(){
+							$("#monkClickInstruct").off("click");
 							$("#berserkClickInstruct").hide();
-							$("#berserkInstruct").fadeOut(3000, function(){
-								$("#wizClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"});
+							$("#berserkInstruct").fadeOut(1500, function(){
+								$("#wizClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"}, "slow");
 								$("#wIcon").animate({width: "850px", height: "550px"});
 								$("#wizInstruct").fadeIn(3000);
 								$("#monkClickInstruct").click(function(){
 									$("#wizClickInstruct").hide();
-									$("#wizInstruct").fadeOut(3000, function(){
-										$("#monkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"});
+									$("#wizInstruct").fadeOut(1500, function(){
+										$("#monkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"}, "slow");
 										$("#mIcon").animate({width: "850px", height: "550px"});
-										$("#monkInstruct").delay(3000).fadeIn(3000);
+										$("#monkInstruct").fadeIn(3000);
+										$("#playInstruct").slideDown(5000);
 									});
 								});
 							});
@@ -84,39 +90,44 @@
 				}); 
 			});
 			$("#monkClickInstruct").click(function(){
+				$("#wizClickInstruct, #berserkClickInstruct").off("click");
 				$("#genInstruct, #clickInstruct").fadeOut(3000, function(){
-					$("#monkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"}).delay("fast", function(){
+					$("#monkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"}, "slow", function(){
 						$("#mIcon").animate({width: "850px", height: "550px"});
 						$("#monkInstruct").fadeIn(3000);
-						$("#genInfo").slideDown(3000);
+						$("#genInfo").slideDown(2500);
 						$("#berserkClickInstruct").click(function(){
+						$("#wizClickInstruct").off("click");
 							$("#monkClickInstruct").hide();
-							$("#monkInstruct").fadeOut(3000, function(){
-								$("#berserkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"});
+							$("#monkInstruct").fadeOut(1500, function(){
+								$("#berserkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"}, "slow");
 								$("#bIcon").animate({width: "850px", height: "550px"});
 								$("#berserkInstruct").fadeIn(3000);
 								$("#wizClickInstruct").click(function(){
 									$("#berserkClickInstruct").hide();
-									$("#berserkInstruct").fadeOut(3000, function(){
-										$("#wizClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"});
+									$("#berserkInstruct").fadeOut(1500, function(){
+										$("#wizClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"}, "slow");
 										$("#wIcon").animate({width: "850px", height: "550px"});
-										$("#wizInstruct").delay(3000).fadeIn(3000);
+										$("#wizInstruct").fadeIn(3000);
+										$("#playInstruct").slideDown(5000);
 									});
 								});
 							});
 						});
 						$("#wizClickInstruct").click(function(){
+							$("#berserkClickInstruct").off("click");
 							$("#monkClickInstruct").hide();
-							$("#monkInstruct").fadeOut(3000, function(){
-								$("#wizClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"});
+							$("#monkInstruct").fadeOut(1500, function(){
+								$("#wizClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"}, "slow");
 								$("#wIcon").animate({width: "850px", height: "550px"});
 								$("#wizInstruct").fadeIn(3000);
 								$("#berserkClickInstruct").click(function(){
 									$("#wizClickInstruct").hide();
-									$("#wizInstruct").fadeOut(3000, function(){
-										$("#berserkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"});
+									$("#wizInstruct").fadeOut(1500, function(){
+										$("#berserkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"}, "slow");
 										$("#bIcon").animate({width: "850px", height: "550px"});
-										$("#berserkInstruct").delay(3000).fadeIn(3000);
+										$("#berserkInstruct").fadeIn(3000);
+										$("#playInstruct").slideDown(5000);
 									});
 								});
 							});
@@ -125,39 +136,44 @@
 				}); 
 			});
 			$("#wizClickInstruct").click(function(){
+				$("#berserkClickInstruct, #monkClickInstruct").off("click");
 				$("#genInstruct, #clickInstruct").fadeOut(3000, function(){
-					$("#wizClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"}).delay("fast", function(){
+					$("#wizClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"}, "slow", function(){
 						$("#wIcon").animate({width: "850px", height: "550px"});
 						$("#wizInstruct").fadeIn(3000);
-						$("#genInfo").slideDown(3000);
+						$("#genInfo").slideDown(2500);
 						$("#berserkClickInstruct").click(function(){
+							$("#monkClickInstruct").off("click");
 							$("#wizClickInstruct").hide();
-							$("#wizInstruct").fadeOut(3000, function(){
-								$("#berserkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"});
+							$("#wizInstruct").fadeOut(1500, function(){
+								$("#berserkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"}, "slow");
 								$("#bIcon").animate({width: "850px", height: "550px"});
 								$("#berserkInstruct").fadeIn(3000);
 								$("#monkClickInstruct").click(function(){
 									$("#berserkClickInstruct").hide();
-									$("#berserkInstruct").fadeOut(3000, function(){
-										$("#monkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"});
+									$("#berserkInstruct").fadeOut(1500, function(){
+										$("#monkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"}, "slow");
 										$("#mIcon").animate({width: "850px", height: "550px"});
-										$("#monkInstruct").delay(3000).fadeIn(3000);
+										$("#monkInstruct").fadeIn(3000);
+										$("#playInstruct").slideDown(5000);
 									});
 								});
 							});
 						});
 						$("#monkClickInstruct").click(function(){
+							$("#berserkClickInstruct").off("click");
 							$("#wizClickInstruct").hide();
-							$("#wizInstruct").fadeOut(3000, function(){
-								$("#monkClickInstruct").removeClass("icon").css("position", "absolute").animate({left: "200px", top: "50px", opacity: ".2"});
+							$("#wizInstruct").fadeOut(1500, function(){
+								$("#monkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"}, "slow");
 								$("#mIcon").animate({width: "850px", height: "550px"});
 								$("#monkInstruct").fadeIn(3000);
 								$("#berserkClickInstruct").click(function(){
 									$("#monkClickInstruct").hide();
-									$("#monkInstruct").fadeOut(3000, function(){
-										$("#berserkClickInstruct").removeClass("icon").css("position", "absolute").animate({left: "200px", top: "50px", opacity: ".2"});
+									$("#monkInstruct").fadeOut(1500, function(){
+										$("#berserkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "200px", top: "50px", opacity: ".2"}, "slow");
 										$("#bIcon").animate({width: "850px", height: "550px"});
-										$("#berserkInstruct").delay(3000).fadeIn(3000);
+										$("#berserkInstruct").fadeIn(3000);
+										$("#playInstruct").slideDown(5000);
 									});
 								});
 							});
@@ -214,19 +230,19 @@
 			Click on the character icon you would like to learn more about
 		</p>
 	</div>
-	<div id="berserkInstruct" class="read instructFont" style="width: 500px; margin: 0px; position: absolute; left: 60%; line-height: 140%; z-index: 0;">
-		<p>
+	<div id="berserkInstruct" class="read instructFont characterInstruct">
+		<p style="margin-top: 15px;">
 			<span class="simple" style="color: red;">BERSERKER</span>s are brutal fighters that go into combat with very little regard for their own safety.
 			Build your Rage with the successful use of the Attack command.  Once the Rage counter is above 5,
 			<span class="simple" style="color: red;">BERSERKER</span> gains access to a variety of buffs.  Use
 			the Rage you've built to access Special Abilities through the Rage CMD:<br>
 			<span class="simple" style="color: red;">SHOULDER CHARGE</span>: Attack that deals moderate damage<br>
-			<span class="simple" style="color: red;">BLOODLUST</span>: Player gains HP 2.5x the damage done with the attack<br>
+			<span class="simple" style="color: red;">BLOODLUST</span>: Light attack damage, but player gains HP 2.5x the damage dealt with the attack<br>
 			<span class="simple" style="color: red;">CHAOS BURST</span>: Attack that deals substantial damage 
 		</p>
 	</div>
-	<div id="monkInstruct" class= "read instructFont" style="width: 500px; margin: 0px; position: absolute; left: 60%; line-height: 140%; z-index: 0;">
-		<p>
+	<div id="monkInstruct" class= "read instructFont characterInstruct">
+		<p style="margin-top: 15px;">
 			<span class="simple" style="color: green;">MONK</span> draws upon inner strength in battle.  Use the Harness Command to heighten your focus counter. 
 			The use of the Attack CMD also grants a smaller amount of Focus. When <span class="simple" style="color: green;">MONK</span> 
 			has achieved Max Focus, a variety of buffs are granted.   Use your Focus Points with the Arts CMD to access Special Abilites:<br>
@@ -235,9 +251,9 @@
 			<span class="simple" style="color: green;">AURA BOLT</span>: Attack that deals substantial damage
 		</p>
 	</div>
-	<div id="wizInstruct" class= "read instructFont" style="width: 500px; margin: 0px; position: absolute; left: 60%; line-height: 140%; z-index: 0;">
-		<p>
-			<span class="simple" style="color: blue;">WIZARD</span> is of course, a master of magic.  While use of the Attack command may yeild little damage. 
+	<div id="wizInstruct" class= "read instructFont characterInstruct">
+		<p style="margin-top: 15px;">
+			<span class="simple" style="color: blue;">WIZARD</span> is of course, a master of magic.  While use of the Attack command may yield little damage. 
 			<span class="simple" style="color: blue;">WIZARD</span> has access to damage dealing spells with use of the Magic CMD:
 			<span class="simple" style="color: blue;">SAP</span>: Gain MP, can only be used if MP is 100 or below<br>
 			<span class="simple" style="color: blue;">ICE LANCE</span>: Attack that deals moderate damage<br>
@@ -252,6 +268,11 @@
 			<span class="simple" style="color: red;">BERSERK</span> and <span class="simple" style="color: green;">MONK</span> are given 2 Hi-Potions.<br>Hi-Potions recover 10,000 HP on use.<br>
 			Instead of Hi-Potions, <span class="simple" style="color: blue;">WIZARD</span> is given 2 Ethers.<br>Ethers recover 300 MP on use.<br>
 			Click a character icon to continue tutorial or click Play Game.
+		</p>
+	</div>
+	<div id="playInstruct" class="simple icon" style="text-align: center; width: 500px; position: absolute; left: 15%; top: 10%; font-size: 3em; z-index: 0;">
+		<p>
+			SUMMON THE COURAGE<br>TO FIGHT
 		</p>
 	</div>
 </body>
