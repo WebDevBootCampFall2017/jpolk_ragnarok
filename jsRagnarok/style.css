@@ -1,3 +1,10 @@
+@keyframes tHover
+{
+	0% { content: "T"; }
+	50% { color: #262626; }
+	100% { content: "B"; }
+}
+
 @keyframes clickIn
 {
 	from {  box-shadow: 20px 20px 150px #ffffcc; }
