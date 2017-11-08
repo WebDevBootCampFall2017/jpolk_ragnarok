@@ -8,6 +8,7 @@ var halfWidth = (canWidth / 2)
 
 var introLine = function()
 {
+	ctx.clearRect(0, 0, c.width, c.height);
 	ctx.beginPath();
 	ctx.strokeStyle="#FFFFFF";
 	ctx.moveTo(halfWidth,520);
