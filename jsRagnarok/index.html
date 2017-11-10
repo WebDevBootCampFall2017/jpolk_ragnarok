@@ -29,21 +29,25 @@
 		.icon:hover { animation: shadowPop 2s 1; animation-fill-mode: forwards; }
 		.icon:active { animation: clickIn 1s 1;  }
 		#steelAni { animation: selectFlux 15s infinite; }
+		.selectButton { font-size: 3em; margin: 15px 50px; border: 0; cursor: pointer; padding: 25px 100px; 
+						border-radius: 15px; outline: none; }
+		.selectButton:hover { animation: shadowPop 2s 1; animation-fill-mode: forwards; }
+		.selectButton:active { animation: clickIn 1s 1; }
 	</style>
 	
 	<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
 	<script>
 		$(document).ready(function() 
 		{
-			$("#warning, #tagline, #berserkInstruct, #monkInstruct, #wizInstruct, #genInfo, #playInstruct, #sideMenu, #characterSelect").hide();
-			/*$("#lowMenu").slideUp("fast");*/
-			$("#lowMenu").delay(12000).slideDown(2000);
-			$("a:contains(How to Play)").one("click", function() { $("#titleScreen").fadeOut(4000, function(){ 
+			$("#intro, #warning, #tagline, #berserkInstruct, #monkInstruct, #wizInstruct, #genInfo, #playInstruct, #sideMenu, #characterSelect").hide();
+			/*$("#lowMenu").slideUp("fast");
+			$("#lowMenu").delay(12000).slideDown(2000);*/
+			$("a:contains(How to Play)").one("click", function() { $("#intro").fadeOut(4000, function(){ 
 				/*$("#warning").fadeIn(3000, function(){ 
 					$("#tagline").delay(2250).slideDown(5000, function(){ 
 						$("#warning").delay(2000).fadeOut("slow", function(){*/
 							$("#tagline").css({"animation": "taglineMove 6s 1", "animation-fill-mode": "forwards"}).delay(6010).hide(100);
-							$("#instructions").css({"animation": "toTop 8s 1", "animation-fill-mode": "forwards"})
+							$("#instructions").css({"animation": "toTop 6s 1", "animation-fill-mode": "forwards"})
 						/*}); 
 					}); 
 				});*/ 
@@ -196,7 +200,7 @@
 			});
 			$("a:contains(Play Game)").click(function(){
 				$("#lowMenu").slideUp("slow", function(){
-					$("#titleScreen, #howPlay").fadeOut(5000, function(){
+					$("#intro, #howPlay").fadeOut(5000, function(){
 						$("#characterSelect").fadeIn(5000);
 						$("#sideMenu").slideDown("slow");
 					});
@@ -222,11 +226,9 @@
 		</a>
 	</div>
 	
-	<section id="titleScreen">
-		<canvas id="intro" style="position: absolute; left: 0px; top: 0px; z-index: -4;"></canvas>
-		<script src="introLine.js"></script>
-		<script	src="titleAni.js"></script>
-	</section>
+	<canvas id="intro" style="position: absolute; left: 0px; top: 0px; z-index: -4;"></canvas>
+	<script src="introLine.js"></script>
+	<script	src="titleAni.js"></script>
 	
 	<section id= "howPlay">
 		<div id="tag" style="z-index: -3;">
@@ -318,14 +320,19 @@
 			STEEL YOUR NERVE, CHOOSE YOUR PATH
 		</div>
 		<div style="display: inline-block; position: absolute; left: 8%; top:20%;">
-			<img src="img/BerserkerIcon.png" style="width: 400px; height: 350px; padding-right: 50px">
+			<img src="img/BerserkerIcon.png" style="width: 400px; height: 350px; padding-right: 25px">
 			<img src="img/MonkIcon.png" style="width: 400px; height: 350px; padding-left: 25px; padding-right: 25px">
-			<img src="img/WizardIcon.png" style="width: 400px; height: 350px; padding-left: 50px;">
+			<img src="img/WizardIcon.png" style="width: 400px; height: 350px; padding-left: 25px;">
+		</div>
+		<div style="position: absolute; display: inline-block; left: 5%; top: 70%;">
+			<button id="bsrkButton" class="simple selectButton" style="background-color: #930101;">BERSERK</button>
+			<button id="monkButton" class="simple selectButton" style="background-color: #199101;">MONK</button>
+			<button id="wizButton" class="simple selectButton" style="background-color: #013192;">WIZARD</button>
 		</div>
 	</section>
 	
-	<section id="battleField">
-		<canvas id="battle" style="position: absolute; left: 0px; top: 0px; z-index: -4;"></canvas>
-	</section>
+	<canvas id="battle" style="position: absolute; left: 0px; top: 0px; z-index: -3;"></canvas>
+	<script src="battleHorizon.js"></script>
+	
 </body>
 </html>
