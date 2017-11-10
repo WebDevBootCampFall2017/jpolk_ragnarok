@@ -152,7 +152,7 @@ namespace Ragnarok
             Monk.skill_points = 15;
 			Monk.base_att_dmg = 3378;
 
-			int nidhogg_hp = 20000;//Nidhogg essentials
+			int nidhogg_hp = 70000;//Nidhogg essentials
 			
 			int potion_amt = 6;//item variables
 			int hipotion_amt = 2;
