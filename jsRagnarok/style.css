@@ -2,11 +2,11 @@
 {
 	0% { opacity: 1; top: 10%; font-size: 3em; color: #930101 }
 	23% { left: 12%; top: 8%; opacity: 0; font-size: 5em; color: #930101; }
-	33% { left: 30%; top: 10%; opacity: 1; font-size: 3em; }
+	33% { left: 25%; top: 10%; opacity: 1; font-size: 3em; }
 	56% { left: 12%; top: 8%; opacity: 0; font-size: 5em; color: #199101; }
-	66% { left: 30%; top: 10%; opacity: 1; font-size: 3em; }
+	66% { left: 25%; top: 10%; opacity: 1; font-size: 3em; }
 	90% { left: 12%; top: 8%; opacity: 0; font-size: 5em; color: #013192; }
-	100% { left: 30%; top: 10%; opacity: 1; font-size: 3em; color: #013192; }
+	100% { left: 25%; top: 10%; opacity: 1; font-size: 3em; color: #013192; }
 }
 
 @keyframes clickIn
