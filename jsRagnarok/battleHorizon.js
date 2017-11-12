@@ -83,21 +83,17 @@ var background = function()
 }
 background();
 
-
-
-
 var moon = function()
 {
 	ct.beginPath();
-	var moonGrad = ct.createRadialGradient(canWidth * .791, canHeight * .04, 3, canWidth * .79, canHeight * .052, 42);
+	var moonGrad = ct.createRadialGradient(canWidth * .784, canHeight * .025, 3, canWidth * .78, canHeight * .06, 48);
 	moonGrad.addColorStop(0, "#3b0066");
 	moonGrad.addColorStop(0.2, "white");
 	moonGrad.addColorStop(0.6, "#590099");
 	moonGrad.addColorStop(0.8, "#1e0033");
 	moonGrad.addColorStop(1, "black");
 	ct.fillStyle = moonGrad;
-	ct.fillRect(canWidth * .69, 0, canWidth * .145, canHeight * .11);
+	ct.fillRect(canWidth * .69, 0, canWidth * .145, canHeight * .13);
 	ct.stroke();
 }
-
 moon();

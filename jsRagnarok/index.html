@@ -31,13 +31,26 @@
 						border-radius: 15px; outline: none; }
 		.selectButton:hover { animation: shadowPop 2s 1; animation-fill-mode: forwards; }
 		.selectButton:active { animation: clickIn 1s 1; }
+		.charMenu { position: fixed; bottom: 0; background-color: #262626; left: 75%; width: 25%; height: 30%; 
+					border-width: 7px; border-style: double; border-color: #b39800; z-index: 2; color: black; }
+		.cmdFont { cursor: pointer; }
+		progress[value]::-webkit-progress-bar { background: black; }
+		progress { border-style: groove; border-color: #b39800; border-width: 5px; border-radius: 5px; height: 1em; }
+		#brkHP::-webkit-progress-value { background-color: #930101; }
+		#monkHP::-webkit-progress-value { background-color: #199101; }
+		#wizHP::-webkit-progress-value { background-color: #199101; }
+		.brkFont { font-size: 1.8em; text-shadow: 0 0 3px #930101; letter-spacing: 3px; position: relative; left: 5%; }
+		
+		.backButton { position: fixed; bottom: 1%; font-size: .9em; left: 95%; }
+		#brkAtt:active, #brkRage:active, #brkItem:active, #sCharge:active, #bLust:active, #cBurst:active, #brkPotion:active, #brkHipotion:active, #brkBack:active { color: #930101; }
+		#brkAtt:hover, #brkRage:hover, #brkItem:hover, #sCharge:hover, #bLust:hover, #cBurst:hover, #brkPotion:hover, #brkHipotion:hover, #brkBack:hover { text-shadow: 0 0 6px #fd4e4e }
 	</style>
 	
 	<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
 	<script>
 		$(document).ready(function() 
 		{
-			$("#battle, #warning, #tagline, #berserkInstruct, #monkInstruct, #wizInstruct, #genInfo, #playInstruct, #sideMenu, #characterSelect").hide();
+			$("#brkCMDs, #brkIMenu, #rageCMDs, #brkStats, #battle, #warning, #tagline, #berserkInstruct, #monkInstruct, #wizInstruct, #genInfo, #playInstruct, #sideMenu, #characterSelect").hide();
 			$("#lowMenu").slideUp("fast");
 			$("#lowMenu").delay(12000).slideDown(2000);
 			$("a:contains(How to Play)").one("click", function() { $("#intro").fadeOut(4000, function(){ 
@@ -203,9 +216,11 @@
 					});
 				});
 			});
-			$("#bsrkButton").click(function(){
+			$("#brkButton").click(function(){
 				$("#characterSelect").fadeOut("slow", function(){
-					$("#battle").fadeIn(8000);
+					$("#battle").fadeIn(8000, function(){
+						$("#brkCMDs, #brkStats").slideDown("slow");
+					});
 				});
 			});
 			$("#monkButton").click(function(){
@@ -216,6 +231,21 @@
 			$("#wizButton").click(function(){
 				$("#characterSelect").fadeOut("slow", function(){
 					$("#battle").fadeIn(8000);
+				});
+			});
+			$("#brkBack").click(function() {
+				$("#rageCMDs, #brkIMenu").slideUp("slow", function(){
+					$("#brkCMDs").slideDown("slow");
+				});
+			});
+			$("#brkRage").click(function(){
+				$("#brkCMDs").slideUp("slow", function(){
+					$("#rageCMDs").slideDown("slow");
+				});
+			});
+			$("#brkItem").click(function(){
+				$("#brkCMDs").slideUp("slow", function(){
+					$("#brkIMenu").slideDown("slow");
 				});
 			});
 		});	
@@ -337,12 +367,46 @@
 			<img src="img/WizardIcon.png" style="width: 400px; height: 350px; padding-left: 25px;">
 		</div>
 		<div style="position: absolute; display: inline-block; left: 5%; top: 70%;">
-			<button id="bsrkButton" class="simple selectButton" style="background-color: #930101;">BERSERK</button>
+			<button id="brkButton" class="simple selectButton" style="background-color: #930101;">BERSERK</button>
 			<button id="monkButton" class="simple selectButton" style="background-color: #199101;">MONK</button>
 			<button id="wizButton" class="simple selectButton" style="background-color: #013192;">WIZARD</button>
 		</div>
 	</section>
-	
+	<section id="battleMenu">
+			<div id="brkStats" class="charMenu simple">
+				<p class="brkFont">
+				HP:	<span id="hpCount" style="position: relative; left: 3%;">13420</span>
+				<progress id="brkHP" value="13420" max="13420"></progress>
+				<br><br>
+				RP:<span id="rageCount" style="position: relative; left: 3%;">2</span>
+				<span id="brkBack" class="backButton cmdFont">BACK</span>
+				</p>
+			</div>
+			<div id="brkCMDs" class="simple charMenu" style="left: 55%; width: 20%;">
+				<p class="brkFont">
+				<span id="brkAtt" class="cmdFont">ATTACK</span>
+				<br><br>
+				<span id="brkRage" class="cmdFont">RAGE</span>
+				<br><br>
+				<span id="brkItem" class="cmdFont">ITEM</span>
+				</p>
+			</div>
+			<div id="rageCMDs" class="simple charMenu" style="left: 47%; width: 28%;">
+				<p class="brkFont">
+				<span id="sCharge" class="cmdFont">SHOULDER CHARGE</span><span style="position: relative; left: 18.5%">2<span style="font-size: .7em;">RP</span></span>
+				<br><br>
+				<span id="bLust" class="cmdFont">BLOODLUST</span><span style="position: relative; left: 42%">3<span style="font-size: .7em;">RP</span></span>
+				<br><br>
+				<span id="cBurst" class="cmdFont">CHAOS BURST</span><span style="position: relative; left: 34%">5<span style="font-size: .7em;">RP</span></span>
+			</div>
+			<div id="brkIMenu" class="simple charMenu" style="left: 55%; width: 20%;">
+				<p class="brkFont">
+				<span id="brkPotion" class="cmdFont">POTION</span><span id="brkPcount" style="position: relative; left: 50%;">6</span>
+				<br><br>
+				<span id="brkHipotion" class="cmdFont">HI-POTION</span><span id="brkHiPcount" style="position: relative; left: 36.5%;">2</span>
+				</p>
+			</div>
+	</section>
 	<canvas id="battle" style="position: absolute; left: 0px; top: 0px; z-index: 0;"></canvas>
 	<script src="battleHorizon.js"></script>
 	
