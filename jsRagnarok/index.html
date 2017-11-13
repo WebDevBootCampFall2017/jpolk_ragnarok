@@ -38,19 +38,25 @@
 		progress { border-style: groove; border-color: #b39800; border-width: 5px; border-radius: 5px; height: 1em; }
 		#brkHP::-webkit-progress-value { background-color: #930101; }
 		#monkHP::-webkit-progress-value { background-color: #199101; }
-		#wizHP::-webkit-progress-value { background-color: #199101; }
+		#wizHP::-webkit-progress-value { background-color: #013192; }
+		#wizMP::-webkit-progress-value { background-color: whiteSmoke; }
 		.brkFont { font-size: 1.8em; text-shadow: 0 0 3px #930101; letter-spacing: 3px; position: relative; left: 5%; }
-		
+		.monkFont { font-size: 1.8em; text-shadow: 0 0 3px #199101; letter-spacing: 3px; position: relative; left: 5%; }
+		.wizFont { font-size: 1.8em; text-shadow: 0 0 3px #013192; letter-spacing: 3px; position: relative; left: 5%; }
 		.backButton { position: fixed; bottom: 1%; font-size: .9em; left: 95%; }
 		#brkAtt:active, #brkRage:active, #brkItem:active, #sCharge:active, #bLust:active, #cBurst:active, #brkPotion:active, #brkHipotion:active, #brkBack:active { color: #930101; }
-		#brkAtt:hover, #brkRage:hover, #brkItem:hover, #sCharge:hover, #bLust:hover, #cBurst:hover, #brkPotion:hover, #brkHipotion:hover, #brkBack:hover { text-shadow: 0 0 6px #fd4e4e }
+		#brkAtt:hover, #brkRage:hover, #brkItem:hover, #sCharge:hover, #bLust:hover, #cBurst:hover, #brkPotion:hover, #brkHipotion:hover, #brkBack:hover { text-shadow: 0 0 6px #fd4e4e; }
+		#monkAtt:active, #monkHar:active, #monkArts:active, #monkItem:active, #monkBack:active, #iHeal:active, #rPalm:active, #aBolt:active, #monkPotion:active, #monkHipotion:active { color: #199101; }
+		#monkAtt:hover, #monkHar:hover, #monkArts:hover, #monkItem:hover, #monkBack:hover, #iHeal:hover, #rPalm:hover, #aBolt:hover, #monkPotion:hover, #monkHipotion:hover { text-shadow: 0 0 6px #6bfe4d; }
+		#wizAtt:active, #wizMagic:active, #wizItem:active, #wizBack:active, #sap:active, #fort:active, #iLance:active, #hFire:active, #gWell:active, #wizPotion:active, #wizEther:active { color: #013192; }
+		#wizAtt:hover, #wizMagic:hover, #wizItem:hover, #wizBack:hover, #sap:hover, #fort:hover, #iLance:hover, #hFire:hover, #gWell:hover, #wizPotion:hover, #wizEther:hover { text-shadow: 0 0 6px #4d88fe; }
 	</style>
 	
 	<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
 	<script>
 		$(document).ready(function() 
 		{
-			$("#brkCMDs, #brkIMenu, #rageCMDs, #brkStats, #battle, #warning, #tagline, #berserkInstruct, #monkInstruct, #wizInstruct, #genInfo, #playInstruct, #sideMenu, #characterSelect").hide();
+			$("#battle, #wizStats, #magicCMDs, #wizIMenu, #wizCMDs, #monkCMDs, #monkIMenu, #artCMDs, #monkStats, #brkCMDs, #brkIMenu, #rageCMDs, #brkStats, #warning, #tagline, #berserkInstruct, #monkInstruct, #wizInstruct, #genInfo, #playInstruct, #sideMenu, #characterSelect").hide();
 			$("#lowMenu").slideUp("fast");
 			$("#lowMenu").delay(12000).slideDown(2000);
 			$("a:contains(How to Play)").one("click", function() { $("#intro").fadeOut(4000, function(){ 
@@ -205,7 +211,7 @@
 				$("#lowMenu").slideUp("slow", function(){
 					$("#howPlay").fadeOut(2000);
 					$("#characterSelect").fadeIn(8000);
-					$("#sideMenu").slideDown("slideDown");
+					$("#sideMenu").slideDown("slow");
 				});
 			});
 			$("a:contains(Play Game)").click(function(){
@@ -219,18 +225,8 @@
 			$("#brkButton").click(function(){
 				$("#characterSelect").fadeOut("slow", function(){
 					$("#battle").fadeIn(8000, function(){
-						$("#brkCMDs, #brkStats").slideDown("slow");
+						$("#brkCMDs, #brkStats").slideDown(3000);
 					});
-				});
-			});
-			$("#monkButton").click(function(){
-				$("#characterSelect").fadeOut("slow", function(){
-					$("#battle").fadeIn(8000);
-				});
-			});
-			$("#wizButton").click(function(){
-				$("#characterSelect").fadeOut("slow", function(){
-					$("#battle").fadeIn(8000);
 				});
 			});
 			$("#brkBack").click(function() {
@@ -246,6 +242,50 @@
 			$("#brkItem").click(function(){
 				$("#brkCMDs").slideUp("slow", function(){
 					$("#brkIMenu").slideDown("slow");
+				});
+			});
+			$("#monkButton").click(function(){
+				$("#characterSelect").fadeOut("slow", function(){
+					$("#battle").fadeIn(8000, function(){
+						$("#monkCMDs, #monkStats").slideDown(3000);
+					});
+				});
+			});
+			$("#monkBack").click(function(){
+				$("#artCMDs, #monkIMenu").slideUp("slow", function(){
+					$("#monkCMDs").slideDown("slow");
+				});
+			});
+			$("#monkArts").click(function(){
+				$("#monkCMDs").slideUp("slow", function(){
+					$("#artCMDs").slideDown("slow");
+				});
+			});
+			$("#monkItem").click(function(){
+				$("#monkCMDs").slideUp("slow", function(){
+					$("#monkIMenu").slideDown("slow");
+				});
+			});
+			$("#wizButton").click(function(){
+				$("#characterSelect").fadeOut("slow", function(){
+					$("#battle").fadeIn(8000, function(){
+						$("#wizCMDs, #wizStats").slideDown(3000);
+					});
+				});
+			});
+			$("#wizBack").click(function(){
+				$("#magicCMDs, #wizIMenu").slideUp("slow", function(){
+					$("#wizCMDs").slideDown("slow");
+				});
+			});
+			$("#wizMagic").click(function(){
+				$("#wizCMDs").slideUp("slow", function(){
+					$("#magicCMDs").slideDown("slow");
+				});
+			});
+			$("#wizItem").click(function(){
+				$("#wizCMDs").slideUp("slow", function(){
+					$("#wizIMenu").slideDown("slow");
 				});
 			});
 		});	
@@ -373,39 +413,115 @@
 		</div>
 	</section>
 	<section id="battleMenu">
-			<div id="brkStats" class="charMenu simple">
-				<p class="brkFont">
-				HP:	<span id="hpCount" style="position: relative; left: 3%;">13420</span>
+		<div id="brkStats" class="charMenu simple">
+			<p class="brkFont">
+				HP:	<span id="brkHpCount" style="position: relative; left: 3%;">13420</span>
 				<progress id="brkHP" value="13420" max="13420"></progress>
 				<br><br>
 				RP:<span id="rageCount" style="position: relative; left: 3%;">2</span>
 				<span id="brkBack" class="backButton cmdFont">BACK</span>
-				</p>
-			</div>
-			<div id="brkCMDs" class="simple charMenu" style="left: 55%; width: 20%;">
-				<p class="brkFont">
+			</p>
+		</div>
+		<div id="brkCMDs" class="simple charMenu" style="left: 55%; width: 20%;">
+			<p class="brkFont">
 				<span id="brkAtt" class="cmdFont">ATTACK</span>
 				<br><br>
 				<span id="brkRage" class="cmdFont">RAGE</span>
 				<br><br>
 				<span id="brkItem" class="cmdFont">ITEM</span>
-				</p>
-			</div>
-			<div id="rageCMDs" class="simple charMenu" style="left: 47%; width: 28%;">
-				<p class="brkFont">
+			</p>
+		</div>
+		<div id="rageCMDs" class="simple charMenu" style="left: 47%; width: 28%;">
+			<p class="brkFont">
 				<span id="sCharge" class="cmdFont">SHOULDER CHARGE</span><span style="position: relative; left: 18.5%">2<span style="font-size: .7em;">RP</span></span>
 				<br><br>
 				<span id="bLust" class="cmdFont">BLOODLUST</span><span style="position: relative; left: 42%">3<span style="font-size: .7em;">RP</span></span>
 				<br><br>
 				<span id="cBurst" class="cmdFont">CHAOS BURST</span><span style="position: relative; left: 34%">5<span style="font-size: .7em;">RP</span></span>
-			</div>
-			<div id="brkIMenu" class="simple charMenu" style="left: 55%; width: 20%;">
-				<p class="brkFont">
+			</p>
+		</div>
+		<div id="brkIMenu" class="simple charMenu" style="left: 55%; width: 20%;">
+			<p class="brkFont">
 				<span id="brkPotion" class="cmdFont">POTION</span><span id="brkPcount" style="position: relative; left: 50%;">6</span>
 				<br><br>
 				<span id="brkHipotion" class="cmdFont">HI-POTION</span><span id="brkHiPcount" style="position: relative; left: 36.5%;">2</span>
-				</p>
-			</div>
+			</p>
+		</div>
+		<div id="monkStats" class="charMenu simple">
+			<p class="monkFont">
+				HP: <span id="monkHpCount" style="position: relative; left: 3%;">15150</span>
+				<progress id="monkHP" value="15150" max="15150"></progress>
+				<br><br>
+				FP:<span id="focusCount" style="position: relative; left: 3%;">15</span>
+				<span id="monkBack" class="backButton cmdFont">BACK</span>
+			</p>
+		</div>
+		<div id="monkCMDs" class="simple charMenu" style="left: 55%; width: 20%;">
+			<p class="monkFont" style="line-height: 155%;">
+				<span id="monkAtt" class="cmdFont">ATTACK</span>
+				<br>
+				<span id="monkHar" class="cmdFont">HARNESS</span>
+				<br>
+				<span id="monkArts" class="cmdFont">ARTS</span>
+				<br>
+				<span id="monkItem" class="cmdFont">ITEM</span>
+			</p>
+		</div>
+		<div id="artCMDs" class="simple charMenu" style="left: 47%; width: 28%;">
+			<p class="monkFont">
+				<span id="iHeal" class="cmdFont">INNER HEALING</span><span style="position: relative; left: 18.5%">20<span style="font-size: .7em;">FP</span></span>
+				<br><br>
+				<span id="rPalm" class="cmdFont">RAPID PALM</span><span style="position: relative; left: 28%">30<span style="font-size: .7em;">FP</span></span>
+				<br><br>
+				<span id="aBolt" class="cmdFont">AURA BOLT</span><span style="position: relative; left: 32.5%">50<span style="font-size: .7em;">FP</span></span>
+			</p>
+		</div>
+		<div id="monkIMenu" class="simple charMenu" style="left: 55%; width: 20%;">
+			<p class="monkFont">
+				<span id="monkPotion" class="cmdFont">POTION</span><span id="monkPcount" style="position: relative; left: 50%;">6</span>
+				<br><br>
+				<span id="monkHipotion" class="cmdFont">HI-POTION</span><span id="monkHiPcount" style="position: relative; left: 36.5%;">2</span>
+			</p>
+		</div>
+		<div id="wizStats" class="charMenu simple">
+			<p class="wizFont">
+				HP: <span id="wizHpCount" style="position: relative; left: 3%;">11750</span>
+				<progress id="wizHP" value="11750" max="11750"></progress>
+				<br><br>
+				MP:<span id="magicCount" style="position: relative; left: 3%;">300</span>
+				<progress id="wizMP" style="position: relative; left: 3%; height: .8em; width: 5.8em; margin-bottom: 1.5%" value="300" max="300"></progress>
+				<span id="wizBack" class="backButton cmdFont">BACK</span>
+			</p>
+		</div>
+		<div id="wizCMDs" class="simple charMenu" style="left: 55%; width: 20%;">
+			<p class="wizFont">
+				<span id="wizAtt" class="cmdFont">ATTACK</span>
+				<br><br>
+				<span id="wizMagic" class="cmdFont">MAGIC</span>
+				<br><br>
+				<span id="wizItem" class="cmdFont">ITEM</span>
+			</p>
+		</div>
+		<div id="magicCMDs" class="simple charMenu" style="left: 47%; width: 28%; height: 40%;">
+			<p class="wizFont" style="line-height: 90%;">
+				<span id="sap" class="cmdFont">SAP</span><span style="position: relative; left: 59.5%">0<span style="font-size: .7em;">MP</span></span>
+				<br><br>
+				<span id="iLance" class="cmdFont">ICE LANCE</span><span style="position: relative; left: 35.5%">25<span style="font-size: .7em;">MP</span></span>
+				<br><br>
+				<span id="fort" class="cmdFont">FORTIFY</span><span style="position: relative; left: 38.5%">150<span style="font-size: .7em;">MP</span></span>
+				<br><br>
+				<span id="hFire" class="cmdFont">HELLFIRE</span><span style="position: relative; left: 35.5%">200<span style="font-size: .7em;">MP</span></span>
+				<br><br>
+				<span id="gWell" class="cmdFont">GRAVITY WELL</span><span style="position: relative; left: 19.5%">275<span style="font-size: .7em;">MP</span></span>
+			</p>
+		</div>
+		<div id="wizIMenu" class="simple charMenu" style="left: 55%; width: 20%;">
+			<p class="wizFont">
+				<span id="wizPotion" class="cmdFont">POTION</span><span id="wizPcount" style="position: relative; left: 50%;">6</span>
+				<br><br>
+				<span id="wizEther" class="cmdFont">ETHER</span><span id="wizEcount" style="position: relative; left: 36.5%;">2</span>
+			</p>
+		</div>
 	</section>
 	<canvas id="battle" style="position: absolute; left: 0px; top: 0px; z-index: 0;"></canvas>
 	<script src="battleHorizon.js"></script>
