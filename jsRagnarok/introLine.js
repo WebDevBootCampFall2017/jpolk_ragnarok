@@ -11,7 +11,7 @@ var introLine = function()
 	ctx.clearRect(0, 0, c.width, c.height);
 	ctx.beginPath();
 	ctx.strokeStyle="#FFFFFF";
-	ctx.moveTo(halfWidth,520);
+	ctx.moveTo(halfWidth, canHeight * .65);
 	ctx.lineWidth = 1;
 	var x1 = halfWidth;
 	var x2 = halfWidth;
@@ -20,8 +20,8 @@ var introLine = function()
 	var lineAni = function()
 	{
 		ctx.clearRect(0, 0, c.width, c.height);
-		ctx.lineTo(x1, 520);
-		ctx.lineTo(x2, 520);
+		ctx.lineTo(x1, canHeight * .65);
+		ctx.lineTo(x2, canHeight * .65);
 		ctx.stroke();
 		ctx.closePath();
 		if (x1 >= 0 && x2 <= canWidth)
@@ -39,8 +39,8 @@ var introLine = function()
 		ctx.strokeStyle="#FFFFFF";
 		ctx.shadowBlur = 250;
 		ctx.shadowColor = "#cc0000";
-		ctx.moveTo(0,520);
-		ctx.lineTo(canWidth, 520);
+		ctx.moveTo(0, canHeight * .65);
+		ctx.lineTo(canWidth, canHeight * .65);
 		ctx.lineWidth = widthFlux;
 		widthFlux++;
 		ctx.stroke();
@@ -60,8 +60,8 @@ var introLine = function()
 		ctx.shadowColor = "#ff1a1a";
 		ctx.lineWidth = widthFlux2;
 		widthFlux2--;
-		ctx.moveTo(0, 520);
-		ctx.lineTo(canWidth, 520);
+		ctx.moveTo(0, canHeight * .65);
+		ctx.lineTo(canWidth, canHeight * .65);
 		ctx.stroke();
 		ctx.closePath();
 		if (widthFlux2 < 170 && widthFlux2 >= 1)

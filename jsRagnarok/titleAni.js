@@ -10,7 +10,7 @@ var titleAni = function()
 	ctx.closePath();
 	ctx.beginPath();
 	ctx.shadowBlur = 0;
-	ctx.font = "300px Impact";
+	ctx.font = "20vw Impact";
 	var gradient = ctx.createLinearGradient(0, 0, c.width, 0)
 	gradient.addColorStop("0.2", "#4d0000");
 	gradient.addColorStop("0.4", "white");
@@ -18,7 +18,7 @@ var titleAni = function()
 	gradient.addColorStop("0.65", "white");
 	gradient.addColorStop(".87", "#4d0000");
 	ctx.fillStyle = gradient;
-	ctx.fillText("RAGNAROK", 100, 520)
+	ctx.fillText("RAGNAROK", canWidth * .05, canHeight * .65)
 	ctx.stroke();
 }
 window.setTimeout(titleAni, 6700);
@@ -47,14 +47,14 @@ var titleGlowup = function()
 	ctx.shadowBlur = 35;
 	ctx.lineWidth = glow;
 	ctx.strokeStyle = "#000000";
-	ctx.moveTo(0,520);
-	ctx.lineTo(canWidth, 520);
+	ctx.moveTo(0, canHeight * .65);
+	ctx.lineTo(canWidth, canHeight * .65);
 	ctx.stroke();
 	ctx.closePath();
 	ctx.beginPath();
 	ctx.shadowBlur = 0;
 	ctx.lineWidth = 1;
-	ctx.rect(120, 420, 1220, 100);
+	ctx.rect(canWidth * .07, canHeight * .4, canWidth * .8, canHeight * .25);
 	ctx.fillStyle = "#000000";
 	ctx.fill();
 	ctx.stroke();
@@ -62,7 +62,7 @@ var titleGlowup = function()
 	ctx.beginPath();
 	ctx.shadowColor = "#cc0000";
 	ctx.shadowBlur = glow;
-	ctx.font = "300px Impact";
+	ctx.font = "20vw Impact";
 	var gradient = ctx.createLinearGradient(0, 0, c.width, 0)
 	gradient.addColorStop("0.2", "#4d0000");
 	gradient.addColorStop("0.4", "white");
@@ -70,7 +70,7 @@ var titleGlowup = function()
 	gradient.addColorStop("0.65", "white");
 	gradient.addColorStop(".87", "#4d0000");
 	ctx.fillStyle = gradient;
-	ctx.fillText("RAGNAROK", 100, 520)
+	ctx.fillText("RAGNAROK", canWidth * .05, canHeight * .65)
 	ctx.stroke();
 	glow++;
 	if(glow >= 100)
@@ -89,21 +89,21 @@ var titleGlowdown = function()
 	ctx.beginPath();
 	ctx.lineWidth = glow;
 	ctx.shadowColor = "#ff1a1a";
-	ctx.moveTo(0,520);
-	ctx.lineTo(canWidth, 520);
+	ctx.moveTo(0, canHeight * .65);
+	ctx.lineTo(canWidth, canHeight * .65);
 	ctx.stroke();
 	ctx.closePath();
 	ctx.beginPath();
 	ctx.shadowBlur = 0;
 	ctx.lineWidth = 1;
-	ctx.rect(120, 420, 1220, 100);
+	ctx.rect(canWidth * .07, canHeight * .4, canWidth * .8, canHeight * .25);
 	ctx.fillStyle = "#000000";
 	ctx.fill();
 	ctx.stroke();
 	ctx.closePath();
 	ctx.beginPath();
 	ctx.shadowBlur = glow;
-	ctx.font = "300px Impact";
+	ctx.font = "20vw Impact";
 	var gradient = ctx.createLinearGradient(0, 0, c.width, 0)
 	gradient.addColorStop("0.2", "#4d0000");
 	gradient.addColorStop("0.4", "white");
@@ -111,7 +111,7 @@ var titleGlowdown = function()
 	gradient.addColorStop("0.65", "white");
 	gradient.addColorStop(".87", "#4d0000");
 	ctx.fillStyle = gradient;
-	ctx.fillText("RAGNAROK", 100, 520)
+	ctx.fillText("RAGNAROK", canWidth * .05, canHeight * .65)
 	ctx.stroke();
 	glow--;
 	if (glow <= 1)

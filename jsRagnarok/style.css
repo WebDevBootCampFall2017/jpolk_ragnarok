@@ -23,8 +23,8 @@
 
 @keyframes taglineMove
 {
-	from { font-size: 3em; opacity: 1; color: white; }
-	to	{ font-size: 8.21em; opacity: 0;  color: red; }
+	from { font-size: 3vw; opacity: 1; color: white; }
+	to	{ font-size: 10vw; opacity: 0;  color: red; }
 }
 
 @keyframes toTop
