@@ -20,30 +20,30 @@
 		.read { font-family: Palatino, URW Palladio L, serif; letter-spacing: 1px; }
 		.simple { font-family: Impact, Charcoal, sans-serif; letter-spacing: 1px; }
 		.instructFont { font-size: 2.3vmax; color: #ffff99; }
-		.characterInstruct { width: 35vw; margin-top: 0px; position: absolute; left: 62%; line-height: 120%; z-index: 0; }
+		.characterInstruct { width: 35vw; height: 90vh; overflow: auto; margin-top: 0px; position: absolute; left: 62%; line-height: 120%; z-index: 0; }
 		#cSelect { display: inline-block; }
 		figure { float: left; text-align: center; }
 		.icon { cursor: pointer; position: relative; margin-left: 2vw; margin-right: 1vw; }
 		.icon:hover { animation: shadowPop 2s 1; animation-fill-mode: forwards; }
 		.icon:active { animation: clickIn 1s 1;  }
 		#steelAni { animation: selectFlux 10s infinite; }
-		.selectButton { font-size: 3em; margin: 15px 50px; border: 0; cursor: pointer; padding: 25px 100px; 
-						border-radius: 15px; outline: none; }
+		.selectButton { font-size: 3vw; border: 0; cursor: pointer; padding: 1vh 6vw; 
+						border-radius: .9vw; outline: none; }
 		.selectButton:hover { animation: shadowPop 2s 1; animation-fill-mode: forwards; }
 		.selectButton:active { animation: clickIn 1s 1; }
 		.charMenu { position: fixed; bottom: 0; background-color: #262626; left: 75%; width: 25%; height: 30%; 
 					border-width: 7px; border-style: double; border-color: #b39800; z-index: 2; color: black; }
 		.cmdFont { cursor: pointer; }
 		progress[value]::-webkit-progress-bar { background: black; }
-		progress { border-style: groove; border-color: #b39800; border-width: 5px; border-radius: 5px; height: 1em; }
+		progress { border-style: groove; border-color: #b39800; border-width: 5px; border-radius: 5px; height: 2vw; }
 		#brkHP::-webkit-progress-value { background-color: #930101; }
 		#monkHP::-webkit-progress-value { background-color: #199101; }
 		#wizHP::-webkit-progress-value { background-color: #013192; }
 		#wizMP::-webkit-progress-value { background-color: whiteSmoke; }
-		.brkFont { font-size: 1.8em; text-shadow: 0 0 3px #930101; letter-spacing: 3px; position: relative; left: 5%; }
-		.monkFont { font-size: 1.8em; text-shadow: 0 0 3px #199101; letter-spacing: 3px; position: relative; left: 5%; }
-		.wizFont { font-size: 1.8em; text-shadow: 0 0 3px #013192; letter-spacing: 3px; position: relative; left: 5%; }
-		.backButton { position: fixed; bottom: 1%; font-size: .9em; left: 95%; }
+		.brkFont { font-size: 1.8vw; text-shadow: 0 0 3px #930101; letter-spacing: 3px; position: relative; left: 5%; }
+		.monkFont { font-size: 1.8vw; text-shadow: 0 0 3px #199101; letter-spacing: 3px; position: relative; left: 5%; }
+		.wizFont { font-size: 1.8vw; text-shadow: 0 0 3px #013192; letter-spacing: 3px; position: relative; left: 5%; }
+		.backButton { position: fixed; bottom: 1%; font-size: 1.6vw; left: 95%; }
 		#brkAtt:active, #brkRage:active, #brkItem:active, #sCharge:active, #bLust:active, #cBurst:active, #brkPotion:active, #brkHipotion:active, #brkBack:active { color: #930101; }
 		#brkAtt:hover, #brkRage:hover, #brkItem:hover, #sCharge:hover, #bLust:hover, #cBurst:hover, #brkPotion:hover, #brkHipotion:hover, #brkBack:hover { text-shadow: 0 0 6px #fd4e4e; }
 		#monkAtt:active, #monkHar:active, #monkArts:active, #monkItem:active, #monkBack:active, #iHeal:active, #rPalm:active, #aBolt:active, #monkPotion:active, #monkHipotion:active { color: #199101; }
@@ -57,8 +57,8 @@
 		$(document).ready(function() 
 		{
 			$("#battle, #wizStats, #magicCMDs, #wizIMenu, #wizCMDs, #monkCMDs, #monkIMenu, #artCMDs, #monkStats, #brkCMDs, #brkIMenu, #rageCMDs, #brkStats, #warning, #tagline, #berserkInstruct, #monkInstruct, #wizInstruct, #genInfo, #playInstruct, #sideMenu, #characterSelect").hide();
-			/*$("#lowMenu").slideUp("fast");
-			$("#lowMenu").delay(12000).slideDown(2000);*/
+			$("#lowMenu").slideUp("fast");
+			$("#lowMenu").delay(12000).slideDown(2000);
 			$("a:contains(How to Play)").one("click", function() { $("#intro").fadeOut(4000, function(){ 
 				$("#warning").fadeIn(3000, function(){ 
 					$("#tagline").delay(2250).slideDown(5000, function(){ 
@@ -127,42 +127,46 @@
 						$("#monkInstruct").fadeIn(3000);
 						$("#genInfo").slideDown(2500);
 						$("#berserkClickInstruct").click(function(){
-						$("#wizClickInstruct").off("click");
+							$("#wizClickInstruct").off("click");
 							$("#monkClickInstruct").hide();
 							$("#monkInstruct").fadeOut(1500, function(){
-								$("#berserkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "10vw", top: "5vh", opacity: ".2"}, "slow");
-								$("#bIcon").animate({width: "80vw", height: "75vh"});
-								$("#berserkInstruct").fadeIn(3000);
-								$("#wizClickInstruct").click(function(){
-									$("#berserkClickInstruct").hide();
-									$("#berserkInstruct").fadeOut(1500, function(){
-										$("#wizClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "10vw", top: "5vh", opacity: ".2"}, "slow");
-										$("#wIcon").animate({width: "80vw", height: "75vh"});
-										$("#wizInstruct").fadeIn(3000);
-										$("#playInstruct").slideDown(5000);
+								$("#berserkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "10vw", top: "5vh", opacity: ".2"}, "slow", function(){
+									$("#bIcon").animate({width: "80vw", height: "75vh"});
+									$("#berserkInstruct").fadeIn(3000);
+									$("#wizClickInstruct").click(function(){
+										$("#berserkClickInstruct").hide();
+										$("#berserkInstruct").fadeOut(1500, function(){
+											$("#wizClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "10vw", top: "5vh", opacity: ".2"}, "slow", function(){
+												$("#wIcon").animate({width: "80vw", height: "75vh"});
+												$("#wizInstruct").fadeIn(3000);
+												$("#playInstruct").slideDown(5000);
+											});
+										});
 									});
 								});
 							});
 						});
-						$("#wizClickInstruct").click(function(){
-							$("#berserkClickInstruct").off("click");
-							$("#monkClickInstruct").hide();
-							$("#monkInstruct").fadeOut(1500, function(){
-								$("#wizClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "10vw", top: "5vh", opacity: ".2"}, "slow");
+					});
+					$("#wizClickInstruct").click(function(){
+						$("#berserkClickInstruct").off("click");
+						$("#monkClickInstruct").hide();
+						$("#monkInstruct").fadeOut(1500, function(){
+							$("#wizClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "10vw", top: "5vh", opacity: ".2"}, "slow", function(){
 								$("#wIcon").animate({width: "80vw", height: "75vh"});
 								$("#wizInstruct").fadeIn(3000);
 								$("#berserkClickInstruct").click(function(){
 									$("#wizClickInstruct").hide();
 									$("#wizInstruct").fadeOut(1500, function(){
-										$("#berserkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "10vw", top: "5vh", opacity: ".2"}, "slow");
-										$("#bIcon").animate({width: "80vw", height: "75vh"});
-										$("#berserkInstruct").fadeIn(3000);
-										$("#playInstruct").slideDown(5000);
+										$("#berserkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "10vw", top: "5vh", opacity: ".2"}, "slow", function(){
+											$("#bIcon").animate({width: "80vw", height: "75vh"});
+											$("#berserkInstruct").fadeIn(3000);
+											$("#playInstruct").slideDown(5000);
+										});
 									});
 								});
 							});
 						});
-					}); 
+					});
 				}); 
 			});
 			$("#wizClickInstruct").click(function(){
@@ -176,39 +180,43 @@
 							$("#monkClickInstruct").off("click");
 							$("#wizClickInstruct").hide();
 							$("#wizInstruct").fadeOut(1500, function(){
-								$("#berserkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "10vw", top: "5vh", opacity: ".2"}, "slow");
-								$("#bIcon").animate({width: "80vw", height: "75vh"});
-								$("#berserkInstruct").fadeIn(3000);
-								$("#monkClickInstruct").click(function(){
-									$("#berserkClickInstruct").hide();
-									$("#berserkInstruct").fadeOut(1500, function(){
-										$("#monkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "10vw", top: "5vh", opacity: ".2"}, "slow");
-										$("#mIcon").animate({width: "80vw", height: "75vh"});
-										$("#monkInstruct").fadeIn(3000);
-										$("#playInstruct").slideDown(5000);
+								$("#berserkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "10vw", top: "5vh", opacity: ".2"}, "slow", function(){
+									$("#bIcon").animate({width: "80vw", height: "75vh"});
+									$("#berserkInstruct").fadeIn(3000);
+									$("#monkClickInstruct").click(function(){
+										$("#berserkClickInstruct").hide();
+										$("#berserkInstruct").fadeOut(1500, function(){
+											$("#monkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "10vw", top: "5vh", opacity: ".2"}, "slow", function(){
+												$("#mIcon").animate({width: "80vw", height: "75vh"});
+												$("#monkInstruct").fadeIn(3000);
+												$("#playInstruct").slideDown(5000);
+											});
+										});
 									});
 								});
 							});
 						});
-						$("#monkClickInstruct").click(function(){
-							$("#berserkClickInstruct").off("click");
-							$("#wizClickInstruct").hide();
-							$("#wizInstruct").fadeOut(1500, function(){
-								$("#monkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "10vw", top: "5vh", opacity: ".2"}, "slow");
+					});
+					$("#monkClickInstruct").click(function(){
+						$("#berserkClickInstruct").off("click");
+						$("#wizClickInstruct").hide();
+						$("#wizInstruct").fadeOut(1500, function(){
+							$("#monkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "10vw", top: "5vh", opacity: ".2"}, "slow", function(){
 								$("#mIcon").animate({width: "80vw", height: "75vh"});
 								$("#monkInstruct").fadeIn(3000);
 								$("#berserkClickInstruct").click(function(){
 									$("#monkClickInstruct").hide();
 									$("#monkInstruct").fadeOut(1500, function(){
-										$("#berserkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "10vw", top: "5vh", opacity: ".2"}, "slow");
-										$("#bIcon").animate({width: "80vw", height: "75vh"});
-										$("#berserkInstruct").fadeIn(3000);
-										$("#playInstruct").slideDown(5000);
+										$("#berserkClickInstruct").removeClass("icon").css({"position": "absolute", "z-index": "-1"}).animate({left: "10vw", top: "5vh", opacity: ".2"}, "slow", function(){
+											$("#bIcon").animate({width: "80vw", height: "75vh"});
+											$("#berserkInstruct").fadeIn(3000);
+											$("#playInstruct").slideDown(5000);
+										});
 									});
 								});
 							});
 						});
-					}); 
+					});
 				}); 
 			});
 			$("#playInstruct").click(function(){
@@ -304,11 +312,11 @@
 	</div>
 	
 	<div id="sideMenu">
-		<a href="index.html" style="display: block; margin-top: 40px; margin-bottom: 50px;">
-			<img src="img/home.png" style="height: 50px; width: 50px; margin-left: 12px; margin-right: 10px;">
+		<a href="index.html" style="display: block; margin-top: 2vmax; margin-bottom: 2vmax;">
+			<img src="img/home.png" style="height: 4vmax; width: 4vmax; margin-left: .5vmax; margin-right: .5vmax;">
 		</a>
-		<a href="https://github.com/WebDevBootCampFall2017/jpolk_ragnarok" style="display: block; margin-bottom: 25px;">
-			<img src="img/github.png" style="height: 50px; width: 50px; margin-left: 12px; margin-right: 10px;">
+		<a href="https://github.com/WebDevBootCampFall2017/jpolk_ragnarok" style="display: block; margin-bottom: 1.5vh;">
+			<img src="img/github.png" style="height: 4vmax; width: 4vmax; margin-left: .5vmax; margin-right: .5vmax;">
 		</a>
 	</div>
 	
@@ -328,7 +336,7 @@
 			</p>
 		</div>
 		<div id="instructions" style="position: absolute; top: 100%; z-index: 0;">
-			<p id="genInstruct" class="read instructFont" style="text-align: center; margin-top: 1vh; margin-bottom: 6vh;">
+			<p id="genInstruct" class="read instructFont" style="text-align: center; margin-top: 1vh; margin-bottom: 3vh;">
 				Engage in a deseperate turn based battle to rid the world of <span class="simple" style="color: #3b0066;">NIDHOGG</span>:<br>the source of decay and blight
 				upon the land. <span class="simple" style="color: #3b0066;">NIDHOGG</span> is the dragon that threatens<br>humanity and the future of this world as the 
 				prophecy demands.<br>You have your choice between 3 character classes in which to decide your destiny... 
@@ -399,21 +407,21 @@
 	</section>
 	
 	<section id="characterSelect">
-		<div class="simple" style="position: absolute; left: 25%; top: 10%; font-size: 3em; z-index: 0;">
+		<div class="simple" style="position: absolute; left: 25%; top: 10%; font-size: 3vw; z-index: 0;">
 			STEEL YOUR NERVE, CHOOSE YOUR PATH
 		</div>
-		<div id="steelAni" class="simple" style="position: absolute; left: 25%; top: 8%; font-size: 3em; z-index: -1;">
+		<div id="steelAni" class="simple" style="position: absolute; left: 25%; top: 10%; font-size: 3vw; z-index: -1;">
 			STEEL YOUR NERVE, CHOOSE YOUR PATH
 		</div>
-		<div style="display: inline-block; position: absolute; left: 8%; top:20%;">
-			<img src="img/BerserkerIcon.png" style="width: 400px; height: 350px; padding-right: 25px">
-			<img src="img/MonkIcon.png" style="width: 400px; height: 350px; padding-left: 25px; padding-right: 25px">
-			<img src="img/WizardIcon.png" style="width: 400px; height: 350px; padding-left: 25px;">
+		<div style="display: inline-block; position: absolute; left: 3%; top:50%;">
+			<img src="img/BerserkerIcon.png" style="width: 30vw; height: 40vh; padding-right: 1vw;">
+			<img src="img/MonkIcon.png" style="width: 30vw; height: 40vh; padding-left: 1vw;; padding-right: 1vw;">
+			<img src="img/WizardIcon.png" style="width: 30vw; height: 40vh; padding-left: 1vw;;">
 		</div>
-		<div style="position: absolute; display: inline-block; left: 5%; top: 70%;">
+		<div style="position: absolute; display: inline-block; left: 8%; top: 25%;">
 			<button id="brkButton" class="simple selectButton" style="background-color: #930101;">BERSERK</button>
-			<button id="monkButton" class="simple selectButton" style="background-color: #199101;">MONK</button>
-			<button id="wizButton" class="simple selectButton" style="background-color: #013192;">WIZARD</button>
+			<button id="monkButton" class="simple selectButton" style="background-color: #199101; position: relative; left: 15%;">MONK</button>
+			<button id="wizButton" class="simple selectButton" style="background-color: #013192; position: relative; left: 35%;">WIZARD</button>
 		</div>
 	</section>
 	<section id="battleMenu">
@@ -493,7 +501,7 @@
 				<progress id="wizHP" value="11750" max="11750"></progress>
 				<br><br>
 				MP:<span id="magicCount" style="position: relative; left: 3%;">300</span>
-				<progress id="wizMP" style="position: relative; left: 3%; height: .8em; width: 5.8em; margin-bottom: 1.5%" value="300" max="300"></progress>
+				<progress id="wizMP" style="position: relative; left: 3%; height: 1.7vw; width: 8vw; margin-bottom: 1.5%" value="300" max="300"></progress>
 				<span id="wizBack" class="backButton cmdFont">BACK</span>
 			</p>
 		</div>
