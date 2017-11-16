@@ -125,7 +125,4 @@ var titleGlowdown = function()
 }
 window.setTimeout(titleGlowup, 12000);
 
-var clearCanvas = function()
-{
-	ctx.clearRect(0, 0, c.width, c.height);
-}
+

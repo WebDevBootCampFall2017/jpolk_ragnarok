@@ -2,8 +2,8 @@ var canvas = document.getElementById("battle");
 var ct = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-var canWidth = canvas.width
-var canHeight = canvas.height
+var canWidth = canvas.width;
+var canHeight = canvas.height;
 
 var background = function()
 {
@@ -83,10 +83,14 @@ var background = function()
 }
 background();
 
+var moonshine = 60
+var moonsize = 3
+
 var moon = function()
 {
+	ct.clearRect(canWidth * .69, 0, canWidth * .145, canHeight * .13);
 	ct.beginPath();
-	var moonGrad = ct.createRadialGradient(canWidth * .784, canHeight * .025, 3, canWidth * .78, canHeight * .06, 48);
+	var moonGrad = ct.createRadialGradient(canWidth * .784, canHeight * .025, moonsize, canWidth * .78, canHeight * .06, moonshine);
 	moonGrad.addColorStop(0, "#3b0066");
 	moonGrad.addColorStop(0.2, "white");
 	moonGrad.addColorStop(0.6, "#590099");
@@ -95,5 +99,41 @@ var moon = function()
 	ct.fillStyle = moonGrad;
 	ct.fillRect(canWidth * .69, 0, canWidth * .145, canHeight * .13);
 	ct.stroke();
+	moonshine++;
+	moonsize = moonsize - .1;
+	if(moonshine >= 60)
+	{
+		window.setTimeout(moonFlux, 200)
+	}
+	else
+	{
+		window.setTimeout(moon, 300)
+	}
+}
+
+var moonFlux = function()
+{
+	ct.clearRect(canWidth * .69, 0, canWidth * .145, canHeight * .13);
+	ct.beginPath();
+	var moonGrad = ct.createRadialGradient(canWidth * .784, canHeight * .025, moonsize, canWidth * .78, canHeight * .06, moonshine);
+	moonGrad.addColorStop(0, "#3b0066");
+	moonGrad.addColorStop(0.2, "white");
+	moonGrad.addColorStop(0.6, "#590099");
+	moonGrad.addColorStop(0.8, "#1e0033");
+	moonGrad.addColorStop(1, "black");
+	ct.fillStyle = moonGrad;
+	ct.fillRect(canWidth * .69, 0, canWidth * .145, canHeight * .13);
+	ct.stroke();
+	moonshine--;
+	moonsize = moonsize + .1;
+	if(moonshine <= 52)
+	{
+		window.setTimeout(moon, 300)
+	}
+	else
+	{
+		window.setTimeout(moonFlux, 200)
+	}
 }
 moon();
+
